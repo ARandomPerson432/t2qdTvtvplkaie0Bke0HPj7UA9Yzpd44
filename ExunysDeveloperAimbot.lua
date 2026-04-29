@@ -1,3 +1,57 @@
+local game, workspace = game, workspace
+local getrawmetatable, getmetatable, setmetatable, pcall, getgenv, next, tick = getrawmetatable, getmetatable, setmetatable, pcall, getgenv, next, tick
+local Vector2new, Vector3zero, CFramenew, Color3fromRGB, Color3fromHSV, Drawingnew, TweenInfonew = Vector2.new, Vector3.zero, CFrame.new, Color3.fromRGB, Color3.fromHSV, Drawing.new, TweenInfo.new
+local getupvalue, mousemoverel, tablefind, tableremove, stringlower, stringsub, mathclamp = debug.getupvalue, mousemoverel or (Input and Input.MouseMove), table.find, table.remove, string.lower, string.sub, math.clamp
+
+local GameMetatable = getrawmetatable and getrawmetatable(game) or {
+    __index = function(self, Index) return self[Index] end,
+    __newindex = function(self, Index, Value) self[Index] = Value end
+}
+local __index = GameMetatable.__index
+local __newindex = GameMetatable.__newindex
+local getrenderproperty, setrenderproperty = getrenderproperty or __index, setrenderproperty or __newindex
+local GetService = setmetatable({}, {
+    __index = function(self, name)
+        local success, cache = pcall(function()
+            return cloneref(game:GetService(name))
+        end)
+        if success then
+            rawset(self, name, cache)
+            return cache
+        end
+    end
+})
+
+--// Services
+local RunService = GetService.RunService
+local UserInputService = GetService.UserInputService
+local TweenService = GetService.TweenService
+local Players = GetService.Players
+local CoreGui = GetService.CoreGui
+
+--// Service Methods
+local LocalPlayer = __index(Players, "LocalPlayer")
+local Camera = __index(workspace, "CurrentCamera")
+local FindFirstChild, FindFirstChildOfClass = __index(game, "FindFirstChild"), __index(game, "FindFirstChildOfClass")
+local WorldToViewportPoint = __index(Camera, "WorldToViewportPoint")
+local GetMouseLocation = __index(UserInputService, "GetMouseLocation")
+local GetPlayers = __index(Players, "GetPlayers")
+
+--// Variables
+local RequiredDistance, Typing, Running, ServiceConnections, Animation, OriginalSensitivity = 2000, false, false, {}
+local Connect, Disconnect = __index(game, "DescendantAdded").Connect
+
+local PlayerGui = LocalPlayer:FindFirstChildOfClass("PlayerGui")
+local MainMobileGui = PlayerGui and PlayerGui:FindFirstChild("MobileButtonGUI")
+
+local IsOnMobile = false
+
+-- Cache blacklists for characters
+local localBlacklist = {}
+local targetBlacklists = {}
+local visibilityCache = {}
+local VIS_INTERVAL = 0.25
+
 if getgenv().ExunysDeveloperAimbot and getgenv().ExunysDeveloperAimbot.Exit then
 	getgenv().ExunysDeveloperAimbot:Exit()
 end
