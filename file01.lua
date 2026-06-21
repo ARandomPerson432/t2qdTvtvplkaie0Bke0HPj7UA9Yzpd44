@@ -6139,88 +6139,74 @@ do
 	
 	local EmotesSection = MiscTab:AddSection("Emotes")
 
-	local EMOTES = {
-	billie = "rbxassetid://97788430027274",
-	chrono = "rbxassetid://133471368520672",
-	drip = "rbxassetid://89616731719213",
-	goth = "rbxassetid://104550908976541",
-	hustle = "rbxassetid://72328510486966",
-	poplock = "rbxassetid://131348460063092",
-	shuffle = "rbxassetid://101724393380941",
-	soviet1 = "rbxassetid://101535811525741",
-	soviet2 = "rbxassetid://103335495300175",
-	sponge = "rbxassetid://120039726805243",
-	stomp = "rbxassetid://120924074533444",
-	thriller = "rbxassetid://100347498923734",
-	twist = "rbxassetid://77734471624185",
+local EMOTES = {
+    billie = "rbxassetid://97788430027274",
+    chrono = "rbxassetid://133471368520672",
+    drip = "rbxassetid://89616731719213",
+    goth = "rbxassetid://104550908976541",
+    hustle = "rbxassetid://72328510486966",
+    poplock = "rbxassetid://131348460063092",
+    shuffle = "rbxassetid://101724393380941",
+    soviet1 = "rbxassetid://101535811525741",
+    soviet2 = "rbxassetid://103335495300175",
+    sponge = "rbxassetid://120039726805243",
+    stomp = "rbxassetid://120924074533444",
+    thriller = "rbxassetid://100347498923734",
+    twist = "rbxassetid://77734471624185",
 }
 
-	local SelectedEmote
-	
-	EmotesSection:AddDropdown("SELECT_EMOTES",{
-	 Title = "Select Emote",
-	 Values = EMOTES,
-	 Default = 1,
-	 Callback = function(Value)
-		SelectedEmote = Value
-	 end
-	})
+local SelectedEmote
 
-	EmotesSection:AddButton({
-		Title = "Play Emote",
-		Description = "Plays the selected emote.",
-		Callback = function()
-			if not SelectedEmote then
-				Fluent:Notify({
-					Title = "No Emote Selected",
-					Content = "Please select an emote from the dropdown menu.",
-					Duration = 3,
-				})
-				return
-			end
+-- feed the dropdown the KEYS of EMOTES
+local emoteKeys = {}
+for key in pairs(EMOTES) do
+    table.insert(emoteKeys, key)
+end
 
-			local character = LocalPlayer.Character
-			if not character then
-				Fluent:Notify({
-					Title = "Character Not Found",
-					Content = "Your character could not be found. Please try again.",
-					Duration = 3,
-				})
-				return
-			end
+EmotesSection:AddDropdown("SELECT_EMOTES", {
+    Title = "Select Emote",
+    Values = emoteKeys,
+    Default = 1,
+    Callback = function(Value)
+        SelectedEmote = Value -- this will be the key, e.g. "billie"
+    end
+})
 
-			local humanoid = character:FindFirstChildOfClass("Humanoid")
-			if not humanoid then
-				Fluent:Notify({
-					Title = "Humanoid Not Found",
-					Content = "Your character's humanoid could not be found. Please try again.",
-					Duration = 3,
-				})
-				return
-			end
+EmotesSection:AddButton({
+    Title = "Play Emote",
+    Description = "Plays the selected emote.",
+    Callback = function()
+        if not SelectedEmote then
+            Fluent:Notify({
+                Title = "No Emote Selected",
+                Content = "Please select an emote from the dropdown menu.",
+                Duration = 3,
+            })
+            return
+        end
 
-			local emoteId = EMOTES[SelectedEmote]
-			if not emoteId then
-				Fluent:Notify({
-					Title = "Invalid Emote",
-					Content = "The selected emote is invalid. Please try again.",
-					Duration = 3,
-				})
-				return
-			end
-			local animation = Instance.new("Animation")
-			animation.AnimationId = emoteId
-			local animTrack = humanoid:WaitForChild("Animator"):LoadAnimation(animation)
+        local character = LocalPlayer.Character
+        if not character then return end
 
-			--only play when player is standing still / alive, stop when dead/moving, do not add notify
-			if humanoid.MoveDirection.Magnitude == 0 and humanoid.Health > 1 then
-				animTrack:Play()
-				else
-				animTrack:Stop()
-			end
-			
-		end
-	})
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        if not humanoid then return end
+
+        local emoteId = EMOTES[SelectedEmote]
+        if not emoteId then return end
+
+        local animation = Instance.new("Animation")
+        animation.AnimationId = emoteId
+        local animTrack = humanoid:WaitForChild("Animator"):LoadAnimation(animation)
+
+        -- only play when standing still & alive
+        if humanoid.MoveDirection.Magnitude == 0 and humanoid.Health > 1 then
+            animTrack:Play()
+        else
+            animTrack:Stop()
+        end
+    end
+})
+
 	
 end
 
