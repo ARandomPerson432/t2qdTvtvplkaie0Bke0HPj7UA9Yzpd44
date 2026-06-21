@@ -2777,854 +2777,855 @@ do
 end
 
 -- that one specific epic skin changer
+
 do
-local SKINS = {
-	["AKM"]={
-		{name="akm_gildedfury",display="Gilded Fury",rarity="limited",textureID="15282807876",skinClass="Guns",sa={color="rbxassetid://15282807876",normal="rbxassetid://15282804930",roughness="rbxassetid://15282805071",metalness="rbxassetid://15282804808",customColor={145,127,175}}},
-		{name="akm_gildedfury",display="Gilded Fury AKM",rarity="limited",textureID="15282807876",skinClass="Guns",sa={color="rbxassetid://15282807876",normal="rbxassetid://15282804930",roughness="rbxassetid://15282805071",metalness="rbxassetid://15282804808",customColor={145,127,175}}},
-	},
-	["AKS-74U"]={
-		{name="aks_battleworncamo",display="Battleworn Camo",rarity="common",textureID="13842105937",skinClass="Guns",sa={color="rbxassetid://13842104374",normal="rbxassetid://13841838347",roughness="rbxassetid://13841839392",metalness="rbxassetid://13841837380"}},
-		{name="aks_decay",display="DECAY-74U",rarity="common",textureID="138901102926673",skinClass="Guns",sa={color="rbxassetid://138901102926673",normal="",roughness="",metalness=""}},
-		{name="aks_draco",display="Draco",rarity="common",textureID="13388089214",skinClass="Guns",sa={color="rbxassetid://13388090322",normal="rbxassetid://13388091442",roughness="rbxassetid://13388092218",metalness="rbxassetid://13388090867"}},
-		{name="aks_crimcola",display="Crim Cola!",rarity="uncommon",textureID="13387566361",skinClass="Guns",sa={color="rbxassetid://13387556541",normal="rbxassetid://13387558142",roughness="rbxassetid://13387559359",metalness="rbxassetid://13387557277"}},
-		{name="aks_formula",display="Formula",rarity="rare",textureID="16010501274",skinClass="Guns",sa={color="rbxassetid://16010501274",normal="rbxassetid://16010501274",roughness="rbxassetid://16010501274",metalness="rbxassetid://16010501274"}},
-		{name="aks_gravebound",display="Gravebound",rarity="rare",textureID="107225184415547",skinClass="Guns",sa={color="rbxassetid://107225184415547",normal="rbxassetid://107225184415547",roughness="rbxassetid://107225184415547",metalness="rbxassetid://107225184415547"}},
-		{name="aks_sharkbite",display="Sharkbite",rarity="rare",textureID="11684759812",skinClass="Guns",sa={color="rbxassetid://11684759812",normal="rbxassetid://11684763552",roughness="rbxassetid://11684764559",metalness="rbxassetid://11684761413"}},
-		{name="aks_cherish",display="Cherish",rarity="legendary",textureID="16355375052",skinClass="Guns",sa={color="rbxassetid://16355375052",normal="rbxassetid://16355375052",roughness="rbxassetid://16355375052",metalness="rbxassetid://16355375052"}},
-		{name="aks_frostbite",display="Frostbite",rarity="legendary",textureID="86574930426293",skinClass="Guns",sa={color="rbxassetid://82590391241285",normal="rbxassetid://92519255518461",roughness="rbxassetid://131453922856800",metalness="rbxassetid://107561609026444"}},
-		{name="aks_jadestone",display="Jadestone",rarity="legendary",textureID="13712930979",skinClass="Guns",sa={color="rbxassetid://13712920992",normal="rbxassetid://13712922823",roughness="rbxassetid://13712861089",metalness="rbxassetid://13712921779"}},
-		{name="aks_mire",display="Mire",rarity="legendary",textureID="15177307123",skinClass="Guns",sa={color="rbxassetid://15177307123",normal="rbxassetid://15177307123",roughness="rbxassetid://15177307123",metalness="rbxassetid://15177307123"}},
-		{name="aks_pluto",display="PLUTO",rarity="limited",textureID="119124175056081",skinClass="Guns",sa={color="rbxassetid://119124175056081",normal="rbxassetid://8969901925",roughness="rbxassetid://8969903071",metalness="rbxassetid://8969900202",customColor={141,0,127}}},
-	},
-	["AWM"]={
-		{name="awm_bob",display="Bob",rarity="limited",textureID="97069820896111",skinClass="Guns",sa={color="rbxassetid://97069820896111",normal="rbxassetid://16272297797",roughness="rbxassetid://16272298674",metalness="rbxassetid://16272296814"}},
-	},
-	["BBaton"]={
-		{name="baton_magicwand",display="Magic Wand",rarity="common",textureID="15447733301",skinClass="Melees",sa={color="rbxassetid://15447733301",normal="rbxassetid://15447733301",roughness="rbxassetid://15447733301",metalness="rbxassetid://15447733301"}},
-		{name="baton_silverbanded",display="Silverbanded",rarity="common",textureID="16688298201",skinClass="Melees",sa=nil},
-		{name="baton_marbleized",display="Marbleized",rarity="rare",textureID="16688079257",skinClass="Melees",sa=nil},
-	},
-	["BFG-1"]={
-		{name="bfg_federal",display="Federal",rarity="uncommon",textureID="13948530321",skinClass="Guns",sa={color="rbxassetid://13948416273",normal="rbxassetid://13948408785",roughness="rbxassetid://13948409253",metalness="rbxassetid://13948408225"}},
-		{name="bfg_savior",display=".50 Savior",rarity="rare",textureID="18316883517",skinClass="Guns",sa={color="rbxassetid://18316883517",normal="rbxassetid://18316883517",roughness="rbxassetid://18316883517",metalness="rbxassetid://18316883517"}},
-		{name="bfg_cupid",display="Cupid",rarity="limited",textureID="16355412948",skinClass="Guns",sa={color="rbxassetid://16355412948",normal="rbxassetid://16355412388",roughness="rbxassetid://16355412639",metalness="rbxassetid://16355411427"}},
-	},
-	["Balisong"]={
-		{name="balisong_tan",display="Tan",rarity="common",textureID="15445188373",skinClass="Melees",sa=nil},
-		{name="balisong_viper",display="Viper",rarity="uncommon",textureID="14983742104",skinClass="Melees",sa={color="rbxassetid://14983742104",normal="rbxassetid://14983728828",roughness="rbxassetid://14983729641",metalness="rbxassetid://14983727617"}},
-		{name="balisong_fade",display="Fade",rarity="rare",textureID="16688046816",skinClass="Melees",sa={color="rbxassetid://16688046451",normal="rbxassetid://16688048275",roughness="rbxassetid://16688047264",metalness="rbxassetid://16688048586"}},
-		{name="balisong_vampiric",display="Vampiric SKIBIDI OPIUM",rarity="rare",textureID="15177238158",skinClass="Melees",sa={color="rbxassetid://15177238158",normal="rbxassetid://14983728828",roughness="rbxassetid://14983729641",metalness="rbxassetid://14983727617"}},
-		{name="balisong_stiletto_blackpearl",display="Stiletto: Blackpearl",rarity="exotic",textureID="16259029052",skinClass="Melees",sa={color="rbxassetid://16259029052",normal="rbxassetid://16259029052",roughness="rbxassetid://16259029052",metalness="rbxassetid://16259029052"}},
-		{name="balisong_stiletto_bluegem",display="Stiletto: Bluegem",rarity="exotic",textureID="16259042388",skinClass="Melees",sa={color="rbxassetid://16259042388",normal="rbxassetid://16259042388",roughness="rbxassetid://16259042388",metalness="rbxassetid://16259042388"}},
-		{name="balisong_stiletto_damascus",display="Stiletto: Damascus",rarity="exotic",textureID="16259055593",skinClass="Melees",sa={color="rbxassetid://16259055593",normal="rbxassetid://16259055593",roughness="rbxassetid://16259055593",metalness="rbxassetid://16259055593"}},
-		{name="balisong_stiletto_emerald",display="Stiletto: Emerald",rarity="exotic",textureID="16302919829",skinClass="Melees",sa={color="rbxassetid://16302919829",normal="rbxassetid://16302919829",roughness="rbxassetid://16302919829",metalness="rbxassetid://16302919829"}},
-		{name="balisong_stiletto_forest",display="Stiletto: Forest",rarity="exotic",textureID="16259072166",skinClass="Melees",sa={color="rbxassetid://16259072166",normal="rbxassetid://16259072166",roughness="rbxassetid://16259072166",metalness="rbxassetid://16259072166"}},
-		{name="balisong_stiletto_olivedrift",display="Stiletto: Olivedrift",rarity="exotic",textureID="16259085913",skinClass="Melees",sa={color="rbxassetid://16259085913",normal="rbxassetid://16259085913",roughness="rbxassetid://16259085913",metalness="rbxassetid://16259085913"}},
-		{name="balisong_stiletto_rustic",display="Stiletto: Rustic",rarity="exotic",textureID="16259093221",skinClass="Melees",sa={color="rbxassetid://16259093221",normal="rbxassetid://16259093221",roughness="rbxassetid://16259093221",metalness="rbxassetid://16259093221"}},
-		{name="balisong_stiletto_vanilla",display="Stiletto: Vanilla",rarity="exotic",textureID="16259021346",skinClass="Melees",sa={color="rbxassetid://16259021346",normal="rbxassetid://16259021346",roughness="rbxassetid://16259021346",metalness="rbxassetid://16259021346"}},
-	},
-	["Bat"]={
-		{name="bat_bats",display="Bats",rarity="common",textureID="110102460531915",skinClass="Melees",sa={color="rbxassetid://110102460531915",normal="rbxassetid://110102460531915",roughness="rbxassetid://110102460531915",metalness="rbxassetid://110102460531915"}},
-		{name="bat_neapolitan",display="Neapolitan",rarity="common",textureID="16688469496",skinClass="Melees",sa={color="rbxassetid://16688469496",normal="rbxassetid://16688469496",roughness="rbxassetid://15028975758",metalness="rbxassetid://16688469496"}},
-		{name="bat_testtube",display="Test Tube",rarity="common",textureID="96434260024281",skinClass="Melees",sa={color="rbxassetid://96434260024281",normal="",roughness="",metalness=""}},
-		{name="bat_laminate",display="Laminate",rarity="uncommon",textureID="14983660185",skinClass="Melees",sa={color="rbxassetid://14983660185",normal="rbxassetid://14983660185",roughness="rbxassetid://14983660185",metalness="rbxassetid://14983660185"}},
-		{name="bat_cosmic",display="Cosmic",rarity="rare",textureID="15445293206",skinClass="Melees",sa={color="rbxassetid://15445293206",normal="rbxassetid://15445293206",roughness="rbxassetid://15445293206",metalness="rbxassetid://15445293206"}},
-		{name="bat_blackjack",display="Blackjack",rarity="legendary",textureID="16687987095",skinClass="Melees",sa={color="rbxassetid://16687987095",normal="rbxassetid://16687987095",roughness="rbxassetid://16687987095",metalness="rbxassetid://16687987095"}},
-		{name="bat_cricket_blackpearl",display="Cricket: Blackpearl",rarity="exotic",textureID="15449155266",skinClass="Melees",sa={color="rbxassetid://15449155266",normal="rbxassetid://15449155266",roughness="rbxassetid://15449155266",metalness="rbxassetid://15449155266"}},
-		{name="bat_cricket_bluegem",display="Cricket: Bluegem",rarity="exotic",textureID="15449171966",skinClass="Melees",sa={color="rbxassetid://15449171966",normal="rbxassetid://15449171966",roughness="rbxassetid://15449171966",metalness="rbxassetid://15449171966"}},
-		{name="bat_cricket_damascus",display="Cricket: Damascus",rarity="exotic",textureID="15449190167",skinClass="Melees",sa={color="rbxassetid://15449190167",normal="rbxassetid://15449190167",roughness="rbxassetid://15449190167",metalness="rbxassetid://15449190167"}},
-		{name="bat_cricket_emerald",display="Cricket: Emerald",rarity="exotic",textureID="15449096192",skinClass="Melees",sa={color="rbxassetid://15449096192",normal="rbxassetid://15449096192",roughness="rbxassetid://15449096192",metalness="rbxassetid://15449096192"}},
-		{name="bat_cricket_forest",display="Cricket: Forest",rarity="exotic",textureID="15449106139",skinClass="Melees",sa={color="rbxassetid://15449106139",normal="rbxassetid://15449106139",roughness="rbxassetid://15449106139",metalness="rbxassetid://15449106139"}},
-		{name="bat_cricket_olivedrift",display="Cricket: Olivedrift",rarity="exotic",textureID="15449137460",skinClass="Melees",sa={color="rbxassetid://15449137460",normal="rbxassetid://15449137460",roughness="rbxassetid://15449137460",metalness="rbxassetid://15449137460"}},
-		{name="bat_cricket_rustic",display="Cricket: Rustic",rarity="exotic",textureID="15449148208",skinClass="Melees",sa={color="rbxassetid://15449148208",normal="rbxassetid://15449148208",roughness="rbxassetid://15449148208",metalness="rbxassetid://15449148208"}},
-		{name="bat_cricket_vanilla",display="Cricket: Vanilla",rarity="exotic",textureID="15449203020",skinClass="Melees",sa={color="rbxassetid://15449203020",normal="rbxassetid://15449203020",roughness="rbxassetid://15449203020",metalness="rbxassetid://15449203020"}},
-		{name="bat_cashcane",display="Cash Cane",rarity="limited",textureID="15998559023",skinClass="Guns",sa={color="rbxassetid://16300595972",normal="rbxassetid://16299761577",roughness="rbxassetid://16300595459",metalness="rbxassetid://16299760247"}},
-	},
-	["Bayonet"]={
-		{name="bayonet_stonecut",display="Stonecit",rarity="subcommon",textureID="95862205225241",skinClass="Melees",sa={color="rbxassetid://95862205225241",normal="",roughness="",metalness=""}},
-		{name="bayonet_paintsplatter",display="Paint Splatter",rarity="common",textureID="15710701683",skinClass="Melees",sa={color="rbxassetid://15710701683",normal="rbxassetid://15710701683",roughness="rbxassetid://15710701683",metalness="rbxassetid://15710701683"}},
-		{name="bayonet_redtopo",display="Red Topo",rarity="common",textureID="14982984551",skinClass="Melees",sa={color="rbxassetid://14982984551",normal="rbxassetid://14982987123",roughness="rbxassetid://14982988058",metalness="rbxassetid://14982986074"}},
-		{name="bayonet_fangs",display="Fangs",rarity="uncommon",textureID="14983866000",skinClass="Melees",sa={color="rbxassetid://14983866000",normal="rbxassetid://14982987123",roughness="rbxassetid://14982988058",metalness="rbxassetid://14982986074"}},
-		{name="bayonet_hydrographed",display="Hydrographed",rarity="uncommon",textureID="16688339293",skinClass="Melees",sa={color="rbxassetid://16688338006",normal="rbxassetid://16688340298",roughness="rbxassetid://16688341008",metalness="rbxassetid://16688338406"}},
-		{name="bayonet_violet",display="Violet",rarity="uncommon",textureID="15448020909",skinClass="Melees",sa={color="rbxassetid://15448020909",normal="rbxassetid://15448020909",roughness="rbxassetid://15448020909",metalness="rbxassetid://15448020909"}},
-		{name="bayonet_icicle",display="Bayonet Icicle",rarity="limited",textureID="17778081372",skinClass="Melees",sa=nil},
-	},
-	["Beretta"]={
-		{name="beretta_faded",display="Faded Orchid",rarity="subcommon",textureID="118073188574202",skinClass="Guns",sa={color="rbxassetid://118073188574202",normal="",roughness="",metalness=""}},
-		{name="beretta_moss",display="Moss",rarity="common",textureID="13443011965",skinClass="Guns",sa={color="rbxassetid://13443011965",normal="rbxassetid://13388061241",roughness="rbxassetid://13388062020",metalness="rbxassetid://13388060473"}},
-		{name="beretta_silvered",display="Silvered",rarity="common",textureID="15998401350",skinClass="Guns",sa={color="rbxassetid://15998401350",normal="rbxassetid://15998401350",roughness="rbxassetid://15998401350",metalness="rbxassetid://15998401350"}},
-		{name="beretta_urbanred",display="Urban Red",rarity="common",textureID="13841598427",skinClass="Guns",sa={color="rbxassetid://13841595045",normal="rbxassetid://13841596345",roughness="rbxassetid://13841597360",metalness="rbxassetid://13841595733"}},
-		{name="beretta_vampire",display="Vampire Hunter",rarity="common",textureID="110118886587312",skinClass="Guns",sa={color="rbxassetid://110118886587312",normal="rbxassetid://110118886587312",roughness="rbxassetid://110118886587312",metalness="rbxassetid://110118886587312"}},
-		{name="beretta_wooden",display="Wooden Blaster",rarity="common",textureID="15695415641",skinClass="Guns",sa={color="rbxassetid://15695411633",normal="rbxassetid://15695410939",roughness="rbxassetid://15695410486",metalness="rbxassetid://15695411201"}},
-		{name="beretta_clef",display="Clef",rarity="uncommon",textureID="13387793497",skinClass="Guns",sa={color="rbxassetid://13387587315",normal="rbxassetid://13387589539",roughness="rbxassetid://13387590166",metalness="rbxassetid://13387588930"}},
-		{name="beretta_tiger",display="Tiger",rarity="uncommon",textureID="13704090301",skinClass="Guns",sa={color="rbxassetid://13704088639",normal="rbxassetid://13387589539",roughness="rbxassetid://13387590166",metalness="rbxassetid://13387588930"}},
-		{name="beretta_walker",display="Walker",rarity="uncommon",textureID="15177179442",skinClass="Guns",sa={color="rbxassetid://15177179442",normal="rbxassetid://15177179442",roughness="rbxassetid://15177179442",metalness="rbxassetid://15177179442"}},
-		{name="beretta_gold",display="Golden Beretta",rarity="limited",textureID="15039167103",skinClass="Guns",sa={color="rbxassetid://15071881699",normal="rbxassetid://15071881251",roughness="rbxassetid://15071880826",metalness="rbxassetid://15071881490",customColor={145,127,175}}},
-		{name="beretta_gold",display="Golden Beretta",rarity="limited",textureID="15039167103",skinClass="Guns",sa={color="rbxassetid://15071881699",normal="rbxassetid://15071881251",roughness="rbxassetid://15071880826",metalness="rbxassetid://15071881490",customColor={145,127,175}}},
-	},
-	["Chainsaw"]={
-		{name="chainsaw_flesh",display="Flesh Grinder",rarity="common",textureID="84720894767609",skinClass="Melees",sa={color="rbxassetid://84720894767609",normal="",roughness="",metalness=""}},
-		{name="chainsaw_tealcoat",display="Teal Coat",rarity="common",textureID="14983382088",skinClass="Melees",sa={color="rbxassetid://14983382088",normal="rbxassetid://14983382088",roughness="rbxassetid://14983382088",metalness="rbxassetid://14983382088"}},
-		{name="chainsaw_skullforged",display="Skull Forged",rarity="uncommon",textureID="15445199244",skinClass="Melees",sa={color="rbxassetid://15445199244",normal="rbxassetid://15445199244",roughness="rbxassetid://15445199244",metalness="rbxassetid://15445199244"}},
-		{name="chainsaw_chromatic",display="Chromatic",rarity="rare",textureID="16688110086",skinClass="Melees",sa={color="rbxassetid://16688109289",normal="rbxassetid://16688110436",roughness="rbxassetid://16688110086",metalness="rbxassetid://16688109691"}},
-		{name="chainsaw_frostysrevenge",display="Frosty's Revenge",rarity="rare",textureID="108135882535629",skinClass="Melees",sa={color="rbxassetid://108135882535629",normal="",roughness="",metalness=""}},
-		{name="chainsaw_runic",display="Runic",rarity="legendary",textureID="124391413731378",skinClass="Melees",sa={color="rbxassetid://124391413731378",normal="rbxassetid://80321921079422",roughness="rbxassetid://129961044112883",metalness="rbxassetid://124391413731378"}},
-		{name="chainsaw_rip",display="RIPPER",rarity="limited",textureID="15177796575",skinClass="Melees",sa={color="rbxassetid://15177794155",normal="rbxassetid://15177357891",roughness="rbxassetid://15177358508",metalness="rbxassetid://15177357345"}},
+	local SKINS = {
+		["AKM"]={
+			{name="akm_gildedfury",display="Gilded Fury",rarity="limited",textureID="15282807876",skinClass="Guns",sa={color="rbxassetid://15282807876",normal="rbxassetid://15282804930",roughness="rbxassetid://15282805071",metalness="rbxassetid://15282804808",customColor={145,127,175}}},
+			{name="akm_gildedfury",display="Gilded Fury AKM",rarity="limited",textureID="15282807876",skinClass="Guns",sa={color="rbxassetid://15282807876",normal="rbxassetid://15282804930",roughness="rbxassetid://15282805071",metalness="rbxassetid://15282804808",customColor={145,127,175}}},
 		},
-	["Crowbar"]={
-		{name="crowbar_cobalt",display="Cobalt",rarity="common",textureID="14982777465",skinClass="Melees",sa={color="rbxassetid://14982777465",normal="rbxassetid://8999009362",roughness="rbxassetid://8999009938",metalness="rbxassetid://8999008742"}},
-		{name="crowbar_cobalt",display="Cobalt Pry",rarity="common",textureID="14982777465",skinClass="Melees",sa={color="rbxassetid://14982777465",normal="rbxassetid://8999009362",roughness="rbxassetid://8999009938",metalness="rbxassetid://8999008742"}},
-		{name="crowbar_hazardous",display="Hazardous",rarity="uncommon",textureID="16688168392",skinClass="Melees",sa={color="rbxassetid://16688167039",normal="rbxassetid://16688167807",roughness="rbxassetid://16688168882",metalness="rbxassetid://16688166309"}},
-	},
-	["Deagle"]={
-		{name="deagle_acrylic",display="Acrylic",rarity="common",textureID="13714051745",skinClass="Guns",sa={color="rbxassetid://13714048705",normal="rbxassetid://13567912487",roughness="rbxassetid://13567913639",metalness="rbxassetid://13567909944"}},
-		{name="deagle_gingerbread",display="Gingerbread",rarity="uncommon",textureID="15695335671",skinClass="Guns",sa={color="rbxassetid://15695335671",normal="rbxassetid://15695335671",roughness="rbxassetid://15695335671",metalness="rbxassetid://15695335671"}},
-		{name="deagle_aurora",display="Aurora",rarity="rare",textureID="113122788396408",skinClass="Guns",sa={color="rbxassetid://113122788396408",normal="",roughness="",metalness=""}},
-		{name="deagle_eagleeye",display="Eagle Eye",rarity="rare",textureID="13937649183",skinClass="Guns",sa={color="rbxassetid://13937646988",normal="rbxassetid://13935410021",roughness="rbxassetid://13935410676",metalness="rbxassetid://13937635046"}},
-		{name="deagle_ember",display="Ember",rarity="rare",textureID="16041800350",skinClass="Guns",sa={color="rbxassetid://16041800350",normal="rbxassetid://16041800350",roughness="rbxassetid://16041800350",metalness="rbxassetid://16041800350"}},
-		{name="deagle_plasma",display="Plasma",rarity="rare",textureID="13567917232",skinClass="Guns",sa={color="rbxassetid://13567908266",normal="rbxassetid://13567912487",roughness="rbxassetid://13567913639",metalness="rbxassetid://13567909944"}},
-		{name="deagle_presidential",display="Presidential",rarity="rare",textureID="18198670122",skinClass="Guns",sa={color="rbxassetid://18198670122",normal="rbxassetid://18198670122",roughness="rbxassetid://18198670122",metalness="rbxassetid://18198670122"}},
-		{name="deagle_federation",display="Federation",rarity="legendary",textureID="13841715646",skinClass="Guns",sa={color="rbxassetid://13841710519",normal="rbxassetid://13841679919",roughness="rbxassetid://13841712407",metalness="rbxassetid://13841679235"}},
-		{name="deagle_nacho",display="Nacho",rarity="legendary",textureID="16942393059",skinClass="Guns",sa={color="rbxassetid://16942392011",normal="rbxassetid://16942393650",roughness="rbxassetid://16942394043",metalness="rbxassetid://16942392549"}},
-		{name="deagle_reaper",display="Reaper",rarity="legendary",textureID="72301183330195",skinClass="Guns",sa={color="rbxassetid://72301183330195",normal="rbxassetid://8969351301",roughness="rbxassetid://8969352384",metalness="rbxassetid://8969349955"}},
-		{name="deagle_gold",display="Golden Deagle",rarity="limited",textureID="9422471620",skinClass="Guns",sa={color="rbxassetid://9422465914",normal="rbxassetid://9368506864",roughness="rbxassetid://9422469052",metalness="rbxassetid://9422467019",customColor={145,127,175}}},
-		{name="deagle_modern",display="Modern",rarity="limited",textureID="11934375653",skinClass="Guns",sa={color="rbxassetid://11934375653",normal="rbxassetid://11934385269",roughness="rbxassetid://11934387175",metalness="rbxassetid://11934381207"}},
-		{name="deagle_omori",display="OMORI",rarity="limited",textureID="136460482192003",skinClass="Guns",sa={color="rbxassetid://136460482192003",normal="rbxassetid://136460482192003",roughness="rbxassetid://136460482192003",metalness="rbxassetid://136460482192003",customColor={145,127,175}}},
-	},
-	["FN-FAL"]={
-		{name="fal_merlot",display="Merlot",rarity="common",textureID="13566086660",skinClass="Guns",sa={color="rbxassetid://13566072355",normal="rbxassetid://13566075780",roughness="rbxassetid://13566082947",metalness="rbxassetid://13566073596"}},
-		{name="fal_wintermaroon",display="Winter Maroon",rarity="common",textureID="15710689660",skinClass="Guns",sa={color="rbxassetid://15710689660",normal="rbxassetid://15710689660",roughness="rbxassetid://15710689660",metalness="rbxassetid://15710689660"}},
-		{name="fal_purpleheart",display="Purpleheart",rarity="uncommon",textureID="16040566709",skinClass="Guns",sa={color="rbxassetid://16040566709",normal="rbxassetid://16040566709",roughness="rbxassetid://16040566709",metalness="rbxassetid://16040566709"}},
-		{name="fal_majesty",display="Majesty",rarity="rare",textureID="13343296728",skinClass="Guns",sa={color="rbxassetid://12268008265",normal="rbxassetid://12267979962",roughness="rbxassetid://12267980974",metalness="rbxassetid://12267979022"}},
-	},
-	["FNP-45"]={
-		{name="fnp_tan",display="Tan",rarity="common",textureID="15998535930",skinClass="Guns",sa={color="rbxassetid://15998535930",normal="rbxassetid://15998535930",roughness="rbxassetid://15998535930",metalness="rbxassetid://15998535930"}},
-		{name="fnp_bloodshot",display="Bloodshot",rarity="uncommon",textureID="13566144332",skinClass="Guns",sa={color="rbxassetid://13566118019",normal="rbxassetid://13566120150",roughness="rbxassetid://13566128289",metalness="rbxassetid://13566119175"}},
-		{name="fnp_pulse",display="Pulse",rarity="uncommon",textureID="16355357985",skinClass="Guns",sa={color="rbxassetid://9170832779",normal="rbxassetid://9170834197",roughness="rbxassetid://9170835896",metalness="rbxassetid://9170833562"}},
-	},
-	["Fire-Axe"]={
-		{name="fireaxe_07gift",display="07 Gift",rarity="common",textureID="15695434311",skinClass="Melees",sa={color="rbxassetid://15695429682",normal="rbxassetid://15695429360",roughness="rbxassetid://15695428821",metalness="rbxassetid://15695429036"}},
-		{name="fireaxe_oak",display="Oak",rarity="common",textureID="14983489673",skinClass="Melees",sa={color="rbxassetid://14983489673",normal="rbxassetid://14983489673",roughness="rbxassetid://14983489673",metalness="rbxassetid://14983489673"}},
-		{name="fireaxe_axon",display="Axon",rarity="uncommon",textureID="16688204992",skinClass="Melees",sa={color="rbxassetid://16688204062",normal="rbxassetid://16688205447",roughness="rbxassetid://16688206001",metalness="rbxassetid://16688204499"}},
-		{name="fireaxe_candied",display="Candied Axe",rarity="uncommon",textureID="130251013763185",skinClass="Melees",sa={color="rbxassetid://130251013763185",normal="rbxassetid://130251013763185",roughness="rbxassetid://130251013763185",metalness="rbxassetid://130251013763185"}},
-		{name="fireaxe_jaws",display="Jaws",rarity="uncommon",textureID="15450295670",skinClass="Melees",sa={color="rbxassetid://15450295670",normal="rbxassetid://15450295670",roughness="rbxassetid://15450295670",metalness="rbxassetid://15450295670"}},
-		{name="fireaxe_bio",display="Bio-Tool",rarity="rare",textureID="122222905147597",skinClass="Melees",sa={color="rbxassetid://122222905147597",normal="",roughness="",metalness=""}},
-		{name="fireaxe_diesel",display="Diesel",rarity="rare",textureID="15014648272",skinClass="Melees",sa={color="rbxassetid://15014648272",normal="rbxassetid://15014647691",roughness="rbxassetid://15014647556",metalness="rbxassetid://15014640798"}},
-		{name="fireaxe_xo",display="XO",rarity="rare",textureID="16357722686",skinClass="Melees",sa={color="rbxassetid://16357722686",normal="rbxassetid://16357722686",roughness="rbxassetid://16357722686",metalness="rbxassetid://16357722686"}},
-		{name="fireaxe_tactical_blackpearl",display="Tactical: Blackpearl",rarity="exotic",textureID="15448222326",skinClass="Melees",sa={color="rbxassetid://15448222326",normal="rbxassetid://15448222326",roughness="rbxassetid://15448222326",metalness="rbxassetid://15448222326"}},
-		{name="fireaxe_tactical_bluegem",display="Tactical: Bluegem",rarity="exotic",textureID="15039861739",skinClass="Melees",sa={color="rbxassetid://15039861739",normal="rbxassetid://15039861739",roughness="rbxassetid://15039861739",metalness="rbxassetid://15039861739"}},
-		{name="fireaxe_tactical_damascus",display="Tactical: Damascus",rarity="exotic",textureID="15039856279",skinClass="Melees",sa={color="rbxassetid://15039856279",normal="rbxassetid://15039856279",roughness="rbxassetid://15039856279",metalness="rbxassetid://15039856279"}},
-		{name="fireaxe_tactical_emerald",display="Tactical: Emerald",rarity="exotic",textureID="15448202220",skinClass="Melees",sa={color="rbxassetid://15448202220",normal="rbxassetid://15448202220",roughness="rbxassetid://15448202220",metalness="rbxassetid://15448202220"}},
-		{name="fireaxe_tactical_forest",display="Tactical: Forest",rarity="exotic",textureID="15039850470",skinClass="Melees",sa={color="rbxassetid://15039850470",normal="rbxassetid://15039850470",roughness="rbxassetid://15039850470",metalness="rbxassetid://15039850470"}},
-		{name="fireaxe_tactical_kintsugi",display="Tactical: Kintsugi",rarity="exotic",textureID="15039866167",skinClass="Melees",sa={color="rbxassetid://15039866167",normal="rbxassetid://15039866167",roughness="rbxassetid://15039866167",metalness="rbxassetid://15039866167"}},
-		{name="fireaxe_tactical_olivedrift",display="Tactical: Olivedrift",rarity="exotic",textureID="15070266784",skinClass="Melees",sa={color="rbxassetid://15070266784",normal="rbxassetid://15070266784",roughness="rbxassetid://15070266784",metalness="rbxassetid://15070266784"}},
-		{name="fireaxe_tactical_rustic",display="Tactical: Rustic",rarity="exotic",textureID="15039869342",skinClass="Melees",sa={color="rbxassetid://15039869342",normal="rbxassetid://15039869342",roughness="rbxassetid://15039869342",metalness="rbxassetid://15039869342"}},
-		{name="fireaxe_tactical_vanilla",display="Tactical: Vanilla",rarity="exotic",textureID="14984257142",skinClass="Melees",sa={color="rbxassetid://14984257142",normal="rbxassetid://14984257142",roughness="rbxassetid://14984257142",metalness="rbxassetid://14984257142"}},
-	},
-	["G-17"]={
-		{name="g17_benjamin",display="Benjamin",rarity="common",textureID="18198687338",skinClass="Guns",sa={color="rbxassetid://18198687338",normal="rbxassetid://18198687338",roughness="rbxassetid://18198687338",metalness="rbxassetid://18198687338"}},
-		{name="g17_gleagle",display="Gleagle",rarity="common",textureID="16911006388",skinClass="Guns",sa={color="rbxassetid://16911005097",normal="rbxassetid://16911007007",roughness="rbxassetid://16911007567",metalness="rbxassetid://16911005667"}},
-		{name="g17_night",display="Night",rarity="common",textureID="10899181873",skinClass="Guns",sa={color="rbxassetid://10899178487",normal="rbxassetid://10899190543",roughness="rbxassetid://10899191886",metalness="rbxassetid://10899187519",customColor={104,117,121},customParts={"FrontSightColorPart","RearSightColorPart"}}},
-		{name="g17_sage",display="Sage",rarity="common",textureID="10898774042",skinClass="Guns",sa={color="rbxassetid://10898771076",normal="rbxassetid://10898799572",roughness="rbxassetid://10898801144",metalness="rbxassetid://10898797751",customColor={116,121,98},customParts={"FrontSightColorPart","RearSightColorPart"}}},
-		{name="g17_tan",display="Tan",rarity="common",textureID="13841573907",skinClass="Guns",sa={color="rbxassetid://13841571102",normal="rbxassetid://13841572406",roughness="rbxassetid://13841572919",metalness="rbxassetid://13841571957",customColor={121,108,98},customParts={"FrontSightColorPart","RearSightColorPart"}}},
-		{name="g17_photon",display="Photon",rarity="uncommon",textureID="94317587382863",skinClass="Guns",sa={color="rbxassetid://94317587382863",normal="",roughness="",metalness=""}},
-		{name="g17_warhawk",display="Spitfire",rarity="uncommon",textureID="10898479150",skinClass="Guns",sa={color="rbxassetid://10898489161",normal="rbxassetid://10898493545",roughness="rbxassetid://10898494181",metalness="rbxassetid://10898492739",customColor={197,189,106},customParts={"FrontSightColorPart","RearSightColorPart"}}},
-		{name="g17_crunch",display="CRUNCH",rarity="rare",textureID="136064273359037",skinClass="Guns",sa={color="rbxassetid://136064273359037",normal="rbxassetid://136064273359037",roughness="rbxassetid://136064273359037",metalness="rbxassetid://136064273359037"}},
-		{name="g17_oxide",display="Oxide",rarity="rare",textureID="13556396197",skinClass="Guns",sa={color="rbxassetid://13556385916",normal="rbxassetid://13556387454",roughness="rbxassetid://13556388249",metalness="rbxassetid://13556386783",customColor={145,190,197},customParts={"FrontSightColorPart","RearSightColorPart"}}},
-		{name="g17_yosei",display="Yōsei",rarity="rare",textureID="15707661222",skinClass="Guns",sa={color="rbxassetid://15707661222",normal="rbxassetid://15707661222",roughness="rbxassetid://15707661222",metalness="rbxassetid://15707661222"}},
-		{name="g17_amethyst",display="Amethyst",rarity="legendary",textureID="9344560860",skinClass="Guns",sa={color="rbxassetid://9344554991",normal="rbxassetid://9344557259",roughness="rbxassetid://9344558040",metalness="rbxassetid://9344556621",customColor={121,113,163},customParts={"FrontSightColorPart","RearSightColorPart"}}},
-		{name="g17_hotpink",display="Hot Pink",rarity="legendary",textureID="15998559023",skinClass="Guns",sa={color="rbxassetid://15998559023",normal="rbxassetid://15998559023",roughness="rbxassetid://15998559023",metalness="rbxassetid://15998559023"}},
-		{name="g17_eliminated",display="ELIMINATION",rarity="limited",textureID="94164067871562",skinClass="Guns",sa={color="rbxassetid://94164067871562",normal="rbxassetid://75074216652378",roughness="rbxassetid://112379003610843",metalness="rbxassetid://133337669834230",customColor={17,17,17}}},
-		{name="g17_sigma",display="Sigma",rarity="custom",textureID="17861230617",skinClass="Guns",sa={color="rbxassetid://17861230617",normal="rbxassetid://17861230617",roughness="rbxassetid://17861230617",metalness="rbxassetid://17861230617",customColor={229,134,255},customParts={"FrontSightColorPart","RearSightColorPart"}}},
-	},
-	["Golfclub"]={
-		{name="golfclub_mocha",display="Mocha",rarity="common",textureID="15445223443",skinClass="Melees",sa={color="rbxassetid://15445223443",normal="rbxassetid://15445223443",roughness="rbxassetid://15445223443",metalness="rbxassetid://15445223443"}},
-		{name="golfclub_orangeshift",display="Orange Shift",rarity="uncommon",textureID="14983545106",skinClass="Melees",sa={color="rbxassetid://14983545106",normal="rbxassetid://14983550867",roughness="rbxassetid://14983551891",metalness="rbxassetid://14983549891"}},
-	},
-	["Ithaca-37"]={
-		{name="ithaca_lined",display="Lined Legacy",rarity="subcommon",textureID="13388406520",skinClass="Guns",sa={color="rbxassetid://13388406520",normal="",roughness="",metalness=""}},
-		{name="ithaca_homedefense",display="Home Defense",rarity="common",textureID="13935300358",skinClass="Guns",sa={color="rbxassetid://13935302367",normal="rbxassetid://13935306192",roughness="rbxassetid://13935303200",metalness="rbxassetid://13935310687"}},
-		{name="ithaca_ithcuh",display="Ithcuh",rarity="common",textureID="16910987164",skinClass="Guns",sa={color="rbxassetid://16910986091",normal="rbxassetid://16910987518",roughness="rbxassetid://16910987829",metalness="rbxassetid://16910986411"}},
-		{name="ithaca_peppershot",display="Peppershot",rarity="uncommon",textureID="109757276465431",skinClass="Guns",sa={color="rbxassetid://109757276465431",normal="",roughness="",metalness=""}},
-		{name="ithaca_reserve",display="Reserve",rarity="uncommon",textureID="13841786305",skinClass="Guns",sa={color="rbxassetid://13841781874",normal="rbxassetid://13565563166",roughness="rbxassetid://13565564605",metalness="rbxassetid://13565561573"}},
-		{name="ithaca_sightings",display="Sightings",rarity="uncommon",textureID="15183702458",skinClass="Guns",sa=nil},
-		{name="ithaca_blaze",display="Blaze",rarity="rare",textureID="13715287969",skinClass="Guns",sa={color="rbxassetid://13703922904",normal="rbxassetid://13703924503",roughness="rbxassetid://13703925013",metalness="rbxassetid://13703923500"}},
-		{name="ithaca_darkmatter",display="Darkmatter",rarity="rare",textureID="15998588320",skinClass="Guns",sa={color="rbxassetid://15998588320",normal="rbxassetid://15998588320",roughness="rbxassetid://15998588320",metalness="rbxassetid://15998588320"}},
-		{name="ithaca_hellfire",display="HELLFIRE",rarity="limited",textureID="88337624827127",skinClass="Guns",sa={color="rbxassetid://120094510362818",normal="rbxassetid://89491017367979",roughness="rbxassetid://131860023245181",metalness="rbxassetid://113748442311389",customColor={0,0,0}}},
-	},
-	["Katana"]={
-		{name="katana_modest",display="Modest",rarity="common",textureID="15445242510",skinClass="Melees",sa={color="rbxassetid://15445242510",normal="rbxassetid://15445242510",roughness="rbxassetid://15445242510",metalness="rbxassetid://15445242510"}},
-		{name="katana_acacia",display="Acacia",rarity="uncommon",textureID="16688145580",skinClass="Melees",sa={color="rbxassetid://16688144837",normal="rbxassetid://16688145997",roughness="rbxassetid://16688146261",metalness="rbxassetid://16688145249"}},
-		{name="katana_arctx",display="ARCTX",rarity="rare",textureID="15695443919",skinClass="Melees",sa={color="rbxassetid://15695443919",normal="rbxassetid://15695443919",roughness="rbxassetid://15695443919",metalness="rbxassetid://15695443919"}},
-		{name="katana_alchemist",display="Alchemist",rarity="rare",textureID="109290882173174",skinClass="Melees",sa={color="rbxassetid://109290882173174",normal="rbxassetid://109290882173174",roughness="rbxassetid://109290882173174",metalness="rbxassetid://109290882173174"}},
-		{name="katana_saphira",display="Saphira",rarity="rare",textureID="14983772470",skinClass="Melees",sa={color="rbxassetid://14983772470",normal="rbxassetid://14983772470",roughness="rbxassetid://14983772470",metalness="rbxassetid://14983772470"}},
-		{name="katana_hallowsblade",display="Hallows Blade",rarity="legendary",textureID="15177264050",skinClass="Melees",sa={color="rbxassetid://15177264050",normal="rbxassetid://15177264050",roughness="rbxassetid://15177264050",metalness="rbxassetid://15177264050"}},
-		{name="katana_yuletide",display="Yuletide",rarity="legendary",textureID="78387945331940",skinClass="Melees",sa={color="rbxassetid://78387945331940",normal="",roughness="",metalness=""}},
-		{name="katana_dragon",display="Dragon",rarity="limited",textureID="17519365000",skinClass="Melees",sa=nil},
-		{name="katana_gold",display="Golden Katana",rarity="limited",textureID="15012855048",skinClass="Melees",sa={color="rbxassetid://15012855048",normal="rbxassetid://15012854439",roughness="rbxassetid://15012854262",metalness="rbxassetid://15012854848"}},
-		{name="katana_gold",display="Golden Katana",rarity="limited",textureID="15012855048",skinClass="Melees",sa={color="rbxassetid://15012855048",normal="rbxassetid://15012854439",roughness="rbxassetid://15012854262",metalness="rbxassetid://15012854848"}},
-		{name="katana_voidedge",display="Voidedge",rarity="limited",textureID="15653919187",skinClass="Melees",sa={color="rbxassetid://15012855048",normal="rbxassetid://15012854439",roughness="rbxassetid://15012854262",metalness="rbxassetid://15012854848"}},
-		{name="katana_voidedge",display="Voidedge",rarity="limited",textureID="15653919187",skinClass="Melees",sa={color="rbxassetid://15012855048",normal="rbxassetid://15012854439",roughness="rbxassetid://15012854262",metalness="rbxassetid://15012854848"}},
-	},
-	["M1911"]={
-		{name="1911_ironsight",display="Ironsight",rarity="common",textureID="13388235569",skinClass="Guns",sa={color="rbxassetid://13388236414",normal="rbxassetid://13388219329",roughness="rbxassetid://13388219893",metalness="rbxassetid://13388218612"}},
-		{name="1911_sandwaves",display="Sandwaves",rarity="common",textureID="15998637813",skinClass="Guns",sa={color="rbxassetid://15998637813",normal="rbxassetid://15998637813",roughness="rbxassetid://15998637813",metalness="rbxassetid://15998637813"}},
-		{name="1911_stainless",display="Stainless",rarity="uncommon",textureID="13842570127",skinClass="Guns",sa={color="rbxassetid://13842569053",normal="rbxassetid://13841646259",roughness="rbxassetid://13841646833",metalness="rbxassetid://13841645564"}},
-		{name="1911_lunar",display="Lunar",rarity="rare",textureID="128273297919691",skinClass="Guns",sa={color="rbxassetid://128273297919691",normal="",roughness="",metalness=""}},
-		{name="1911_rebel",display="Rebel",rarity="rare",textureID="13410200181",skinClass="Guns",sa={color="rbxassetid://13410196884",normal="rbxassetid://13410197562",roughness="rbxassetid://13410199143",metalness="rbxassetid://13410198420"}},
-		{name="1911_darkheart",display="Darkheart",rarity="legendary",textureID="13556210238",skinClass="Guns",sa={color="rbxassetid://13564716720",normal="rbxassetid://13564718375",roughness="rbxassetid://13564719235",metalness="rbxassetid://13564717513"}},
-		{name="1911_unity",display="Unity",rarity="legendary",textureID="18149758418",skinClass="Guns",sa={color="rbxassetid://18149758418",normal="rbxassetid://18149758418",roughness="rbxassetid://18149758418",metalness="rbxassetid://18149758418"}},
-		{name="1911_oldglory",display="Old Glory",rarity="limited",textureID="13948809897",skinClass="Guns",sa={color="rbxassetid://13948805827",normal="rbxassetid://13948291596",roughness="rbxassetid://13948321939",metalness="rbxassetid://13948290980",customColor={145,127,175}}},
-		{name="1911_oldglory",display="Old Glory",rarity="limited",textureID="13948809897",skinClass="Guns",sa={color="rbxassetid://13948805827",normal="rbxassetid://13948291596",roughness="rbxassetid://13948321939",metalness="rbxassetid://13948290980",customColor={145,127,175}}},
-	},
-	["M320-1"]={
-		{name="m320_paintball",display="Paintball",rarity="uncommon",textureID="13842616391",skinClass="Guns",sa={color="rbxassetid://13842613980",normal="rbxassetid://13841618026",roughness="rbxassetid://13841618889",metalness="rbxassetid://13841616724"}},
-	},
-	["M4A1-1"]={
-		{name="m4a1_monochrome",display="Monochrome",rarity="common",textureID="13388680352",skinClass="Guns",sa={color="rbxassetid://13388682540",normal="rbxassetid://13388684117",roughness="rbxassetid://13388684783",metalness="rbxassetid://13388683605"}},
-		{name="m4a1_colacamo",display="Cola-Camo",rarity="uncommon",textureID="16910928732",skinClass="Guns",sa={color="rbxassetid://16910927803",normal="rbxassetid://16910929076",roughness="rbxassetid://16910929618",metalness="rbxassetid://16910928172"}},
-		{name="m4a1_tiles",display="Tiles",rarity="uncommon",textureID="13387863271",skinClass="Guns",sa={color="rbxassetid://13387870685",normal="rbxassetid://13387874528",roughness="rbxassetid://13387875337",metalness="rbxassetid://13387873917"}},
-		{name="m4a1_yellowstone",display="Yellowstone",rarity="uncommon",textureID="15998612264",skinClass="Guns",sa={color="rbxassetid://15998612264",normal="rbxassetid://15998612264",roughness="rbxassetid://15998612264",metalness="rbxassetid://15998612264"}},
-		{name="m4a1_circuit",display="Circuit",rarity="rare",textureID="13841653101",skinClass="Guns",sa={color="rbxassetid://13841654362",normal="rbxassetid://13841656305",roughness="rbxassetid://13841657147",metalness="rbxassetid://13841655173"}},
-		{name="m4a1_aureus",display="Aureus",rarity="legendary",textureID="13714597872",skinClass="Guns",sa={color="rbxassetid://13714578814",normal="rbxassetid://13714331534",roughness="rbxassetid://13714329843",metalness="rbxassetid://13714330861"}},
-		{name="m4a1_frostbite",display="Frostbite",rarity="legendary",textureID="15695458963",skinClass="Guns",sa={color="rbxassetid://15695458963",normal="rbxassetid://15695458963",roughness="rbxassetid://15695458963",metalness="rbxassetid://15695458963"}},
-		{name="m4a1_meltdown",display="Meltdown",rarity="legendary",textureID="105367863967017",skinClass="Guns",sa={color="rbxassetid://105367863967017",normal="",roughness="",metalness=""}},
-		{name="m4a1_patriot",display="Patriot",rarity="legendary",textureID="13945992974",skinClass="Guns",sa={color="rbxassetid://13945985275",normal="rbxassetid://13945989865",roughness="rbxassetid://13945990897",metalness="rbxassetid://13945986111"}},
-		{name="m4a1_heritage",display="Heritage",rarity="limited",textureID="18312055711",skinClass="Guns",sa={color="rbxassetid://18312055711",normal="rbxassetid://18312051579",roughness="rbxassetid://18312059297",metalness="rbxassetid://18312051579"}},
-		{name="m4a1_modern",display="Modern",rarity="limited",textureID="8371778205",skinClass="Guns",sa={color="rbxassetid://8371778205",normal="rbxassetid://8371775875",roughness="",metalness=""}},
-		{name="m4a1_opm",display="OPM",rarity="limited",textureID="16932839206",skinClass="Guns",sa={color="rbxassetid://16932838705",normal="rbxassetid://16932839768",roughness="rbxassetid://16932840076",metalness="rbxassetid://16932838927",customColor={8,2,27}}},
-		{name="m4a1_subzero",display="Subzero",rarity="limited",textureID="109664302456309",skinClass="Guns",sa={color="rbxassetid://74488290583882",normal="rbxassetid://135293141470993",roughness="rbxassetid://132524427491436",metalness="rbxassetid://118937932788409",customColor={165,235,255}}},
-	},
-	["M60"]={
-		{name="m60_woodsplitter",display="Woodsplitter",rarity="subcommon",textureID="108644929135165",skinClass="Guns",sa={color="rbxassetid://108644929135165",normal="",roughness="",metalness=""}},
-	},
-	["MAC-10"]={
-		{name="mac10_freedom",display="Freedom",rarity="common",textureID="13935277958",skinClass="Guns",sa={color="rbxassetid://13935272075",normal="rbxassetid://13935274344",roughness="rbxassetid://13935275139",metalness="rbxassetid://13935273127"}},
-		{name="mac10_lostnfound",display="Lost & Found",rarity="common",textureID="13841550040",skinClass="Guns",sa={color="rbxassetid://13841544929",normal="rbxassetid://13841547584",roughness="rbxassetid://13841548498",metalness="rbxassetid://13841546059"}},
-		{name="mac10_lovelycamo",display="Lovely Camo",rarity="common",textureID="16357659168",skinClass="Guns",sa={color="rbxassetid://16357659168",normal="rbxassetid://16357659168",roughness="rbxassetid://16357659168",metalness="rbxassetid://16357659168"}},
-		{name="mac10_urbandispatch",display="Urban Dispatch",rarity="common",textureID="15998655169",skinClass="Guns",sa={color="rbxassetid://15998655169",normal="rbxassetid://15998655169",roughness="rbxassetid://15998655169",metalness="rbxassetid://15998655169"}},
-		{name="mac10_cheese",display="& Cheese",rarity="uncommon",textureID="13556186332",skinClass="Guns",sa={color="rbxassetid://13556188816",normal="rbxassetid://13556191703",roughness="rbxassetid://13556192448",metalness="rbxassetid://13556190532"}},
-		{name="mac10_digital",display="Digital",rarity="uncommon",textureID="13388146611",skinClass="Guns",sa={color="rbxassetid://13388148081",normal="rbxassetid://13387827028",roughness="rbxassetid://13387824789",metalness="rbxassetid://13387826008"}},
-		{name="mac10_eaglespride",display="Eagle's Pride",rarity="uncommon",textureID="18213167058",skinClass="Guns",sa={color="rbxassetid://18213167058",normal="rbxassetid://18213167058",roughness="rbxassetid://18213167058",metalness="rbxassetid://18213167058"}},
-		{name="mac10_harvest",display="Harvest",rarity="uncommon",textureID="123346816049088",skinClass="Guns",sa={color="rbxassetid://123346816049088",normal="rbxassetid://8969383524",roughness="rbxassetid://8969384715",metalness="rbxassetid://8969382198"}},
-		{name="mac10_hazmac",display="Hazmac",rarity="uncommon",textureID="70974550171047",skinClass="Guns",sa={color="rbxassetid://70974550171047",normal="",roughness="",metalness=""}},
-		{name="mac10_cryofox",display="CryoFox",rarity="rare",textureID="133449450385008",skinClass="Guns",sa={color="rbxassetid://133449450385008",normal="",roughness="",metalness=""}},
-		{name="mac10_tropical",display="Tropical",rarity="rare",textureID="13712974251",skinClass="Guns",sa={color="rbxassetid://13712964810",normal="rbxassetid://13556191703",roughness="rbxassetid://13712967534",metalness="rbxassetid://13712966361"}},
-	},
-	["MP7"]={
-		{name="mp7_digital",display="Digital",rarity="common",textureID="13703243112",skinClass="Guns",sa={color="rbxassetid://13703243112",normal="rbxassetid://13703243112",roughness="rbxassetid://13703243112",metalness="rbxassetid://13703243112"}},
-		{name="mp7_navy",display="Navy",rarity="common",textureID="13714361744",skinClass="Guns",sa={color="rbxassetid://13714362770",normal="rbxassetid://13404160425",roughness="rbxassetid://13404161300",metalness="rbxassetid://13404142924"}},
-		{name="mp7_olive",display="Olive",rarity="common",textureID="13404171867",skinClass="Guns",sa={color="rbxassetid://13404159306",normal="rbxassetid://13404160425",roughness="rbxassetid://13404161300",metalness="rbxassetid://13404142924"}},
-		{name="mp7_zombified",display="Zombified",rarity="rare",textureID="15334894800",skinClass="Guns",sa=nil},
-		{name="mp7_hellrazor",display="Hellrazor",rarity="legendary",textureID="13842806014",skinClass="Guns",sa={color="rbxassetid://13842812065",normal="rbxassetid://13841893577",roughness="rbxassetid://13841894868",metalness="rbxassetid://13841892618"}},
-	},
-	["Machete"]={
-		{name="machete_slasher",display="Slasher",rarity="common",textureID="136864966436069",skinClass="Melees",sa={color="rbxassetid://136864966436069",normal="rbxassetid://136864966436069",roughness="rbxassetid://136864966436069",metalness="rbxassetid://136864966436069"}},
-		{name="machete_wallwriter",display="Wallwriter",rarity="common",textureID="16688358515",skinClass="Melees",sa={color="rbxassetid://16688357511",normal="rbxassetid://16688359032",roughness="rbxassetid://16688359499",metalness="rbxassetid://16688357868"}},
-		{name="machete_giftededge",display="Gifted Edge",rarity="uncommon",textureID="135651933018967",skinClass="Melees",sa={color="rbxassetid://135651933018967",normal="",roughness="",metalness=""}},
-		{name="machete_rainbow",display="Rainbow",rarity="uncommon",textureID="16952073758",skinClass="Melees",sa={color="rbxassetid://16952073307",normal="rbxassetid://16910957239",roughness="rbxassetid://16910956716",metalness="rbxassetid://16910957712"}},
-		{name="machete_tix",display="Tix",rarity="rare",textureID="15445249285",skinClass="Melees",sa={color="rbxassetid://15445249285",normal="rbxassetid://15445249285",roughness="rbxassetid://15445249285",metalness="rbxassetid://15445249285"}},
-		{name="machete_scepter",display="Scepter",rarity="legendary",textureID="14984201334",skinClass="Melees",sa={color="rbxassetid://14984201334",normal="rbxassetid://14984201334",roughness="rbxassetid://14984201334",metalness="rbxassetid://14984201334"}},
-		{name="machete_zk_blackpearl",display="Black Pearl",rarity="exotic",textureID="15448244904",skinClass="Melees",sa={color="rbxassetid://15448244904",normal="rbxassetid://15448244904",roughness="rbxassetid://15448244904",metalness="rbxassetid://15448244904"}},
-		{name="machete_zk_blackpearl",display="Black Pearl [ZK]",rarity="exotic",textureID="15448244904",skinClass="Melees",sa={color="rbxassetid://15448244904",normal="rbxassetid://15448244904",roughness="rbxassetid://15448244904",metalness="rbxassetid://15448244904"}},
-		{name="machete_zk_bluegem",display="Bluegem [ZK]",rarity="exotic",textureID="15039202907",skinClass="Melees",sa={color="rbxassetid://15039203215",normal="rbxassetid://15039202668",roughness="rbxassetid://15039203446",metalness="rbxassetid://15039203053"}},
-		{name="machete_zk_damascus",display="Damascus [ZK]",rarity="exotic",textureID="15039195623",skinClass="Melees",sa={color="rbxassetid://15039195623",normal="rbxassetid://15039195623",roughness="rbxassetid://15039195623",metalness="rbxassetid://15039195623"}},
-		{name="machete_zk_emerald",display="Emerald [ZK]",rarity="exotic",textureID="16303081728",skinClass="Melees",sa={color="rbxassetid://16303081728",normal="rbxassetid://16303081728",roughness="rbxassetid://16303081728",metalness="rbxassetid://16303081728"}},
-		{name="machete_zk_forest",display="Forest [ZK]",rarity="exotic",textureID="15039175283",skinClass="Melees",sa={color="rbxassetid://15039175283",normal="rbxassetid://15039175283",roughness="rbxassetid://15039175283",metalness="rbxassetid://15039175283"}},
-		{name="machete_zk_undead",display="Machete: ZK",rarity="exotic",textureID="15039210788",skinClass="Melees",sa={color="rbxassetid://15039210788",normal="rbxassetid://15039210788",roughness="rbxassetid://15039210788",metalness="rbxassetid://15039210788"}},
-		{name="machete_zk_rustic",display="Rustic [ZK]",rarity="exotic",textureID="15039186771",skinClass="Melees",sa={color="rbxassetid://15039186771",normal="rbxassetid://15039186771",roughness="rbxassetid://15039186771",metalness="rbxassetid://15039186771"}},
-		{name="machete_zk_vanilla",display="Vanilla [ZK]",rarity="exotic",textureID="15029004407",skinClass="Melees",sa={color="rbxassetid://15029004407",normal="rbxassetid://15029004407",roughness="rbxassetid://15029004407",metalness="rbxassetid://15029004407"}},
-		{name="machete_zk_olivedrift",display="ZK: Olivedrift",rarity="exotic",textureID="15070276224",skinClass="Melees",sa={color="rbxassetid://15070276224",normal="rbxassetid://15070275513",roughness="rbxassetid://15070275156",metalness="rbxassetid://15070275774"}},
-	},
-	["Magnum"]={
-		{name="magnum_bills",display="Bills",rarity="common",textureID="13935347512",skinClass="Guns",sa={color="rbxassetid://13935343468",normal="rbxassetid://13841632677",roughness="rbxassetid://13851639717",metalness="rbxassetid://13841628817"}},
-		{name="magnum_bronze",display="Bronze",rarity="common",textureID="13402004314",skinClass="Guns",sa={color="rbxassetid://13388529824",normal="rbxassetid://13388534835",roughness="rbxassetid://13388535886",metalness="rbxassetid://13388533297"}},
-		{name="magnum_rustborne",display="Rustborne",rarity="common",textureID="13395647452",skinClass="Guns",sa={color="rbxassetid://13395647452",normal="",roughness="",metalness=""}},
-		{name="magnum_abstract",display="Abstract",rarity="uncommon",textureID="13851642216",skinClass="Guns",sa={color="rbxassetid://13851638932",normal="rbxassetid://13841632677",roughness="rbxassetid://13851639717",metalness="rbxassetid://13841628817"}},
-		{name="magnum_arcticapex",display="Artic Apex",rarity="uncommon",textureID="15710939034",skinClass="Guns",sa={color="rbxassetid://15710939034",normal="rbxassetid://15710939034",roughness="rbxassetid://15710939034",metalness="rbxassetid://15710939034"}},
-		{name="magnum_ironhammer",display="Iron Hammer",rarity="uncommon",textureID="18319380961",skinClass="Guns",sa={color="rbxassetid://18319380961",normal="rbxassetid://18319380961",roughness="rbxassetid://18319380961",metalness="rbxassetid://18319380961"}},
-		{name="magnum_amour",display="Amour",rarity="rare",textureID="16355308299",skinClass="Guns",sa={color="rbxassetid://16355308299",normal="rbxassetid://16355308299",roughness="rbxassetid://16355308299",metalness="rbxassetid://16355308299"}},
-		{name="magnum_inferno",display="Inferno",rarity="limited",textureID="13565659313",skinClass="Guns",sa={color="rbxassetid://13565647644",normal="rbxassetid://13565652460",roughness="rbxassetid://13565654437",metalness="rbxassetid://13565650923",customColor={145,127,175}}},
-		{name="magnum_inferno",display="Inferno",rarity="limited",textureID="13565659313",skinClass="Guns",sa={color="rbxassetid://13565647644",normal="rbxassetid://13565652460",roughness="rbxassetid://13565654437",metalness="rbxassetid://13565650923",customColor={145,127,175}}},
-		{name="firemagnum",display="dont use this.",rarity="limited",textureID="0",skinClass="Guns",sa=nil},
-	},
-	["Mare"]={
-		{name="mare_frostecho",display="Frost Echo",rarity="common",textureID="15695474241",skinClass="Guns",sa={color="rbxassetid://15695474241",normal="rbxassetid://15695474241",roughness="rbxassetid://15695474241",metalness="rbxassetid://15695474241"}},
-		{name="mare_burial",display="Burial",rarity="uncommon",textureID="124598507519706",skinClass="Guns",sa={color="rbxassetid://124598507519706",normal="rbxassetid://124598507519706",roughness="rbxassetid://124598507519706",metalness="rbxassetid://124598507519706"}},
-		{name="mare_foamshot",display="Foamshot",rarity="uncommon",textureID="126702271620280",skinClass="Guns",sa={color="rbxassetid://126702271620280",normal="",roughness="",metalness=""}},
-		{name="mare_maritime",display="Maritime",rarity="uncommon",textureID="15998688712",skinClass="Guns",sa={color="rbxassetid://15998688712",normal="rbxassetid://15998688712",roughness="rbxassetid://15998688712",metalness="rbxassetid://15998688712"}},
-		{name="mare_stallion",display="Stallion",rarity="uncommon",textureID="13564997857",skinClass="Guns",sa={color="rbxassetid://13556460890",normal="rbxassetid://13556462708",roughness="rbxassetid://13556463568",metalness="rbxassetid://13556461661"}},
-		{name="mare_trickshot",display="Trickshot",rarity="limited",textureID="16907786775",skinClass="Guns",sa={color="rbxassetid://16907785827",normal="rbxassetid://16907787618",roughness="rbxassetid://16907788208",metalness="rbxassetid://16907786165"}},
-		{name="mare_trickshot",display="Trickshot",rarity="limited",textureID="16907786775",skinClass="Guns",sa={color="rbxassetid://16907785827",normal="rbxassetid://16907787618",roughness="rbxassetid://16907788208",metalness="rbxassetid://16907786165"}},
-		{name="mare_trickshot",display="Trickshot",rarity="limited",textureID="16907785827",skinClass="Guns",sa={color="rbxassetid://16907785827",normal="rbxassetid://16907787618",roughness="rbxassetid://16907788208",metalness="rbxassetid://16907786165"}},
-	},
-	["Metal-Bat"]={
-		{name="metalbat_battlescarred",display="Battlescarred",rarity="common",textureID="16688459862",skinClass="Melees",sa=nil},
-		{name="metalbat_spiffle",display="Spiffle",rarity="common",textureID="15445297130",skinClass="Melees",sa={color="rbxassetid://15445297130",normal="rbxassetid://15445297130",roughness="rbxassetid://15445297130",metalness="rbxassetid://15445297130"}},
-		{name="metalbat_urbanleather",display="Urban Leather",rarity="common",textureID="14982908326",skinClass="Melees",sa={color="rbxassetid://14982908326",normal="rbxassetid://14982908326",roughness="rbxassetid://14982908326",metalness="rbxassetid://14982908326"}},
-		{name="metalbat_candycorn",display="Candycorn",rarity="uncommon",textureID="15184166771",skinClass="Melees",sa={color="rbxassetid://15184166771",normal="rbxassetid://15184166771",roughness="rbxassetid://15184166771",metalness="rbxassetid://15184166771"}},
-		{name="metalbat_jinglebat",display="Jingle Bat",rarity="uncommon",textureID="84803493814625",skinClass="Melees",sa={color="rbxassetid://84803493814625",normal="",roughness="",metalness=""}},
-		{name="metalbat_tesla",display="Tesla-Coil",rarity="uncommon",textureID="137524582120989",skinClass="Melees",sa={color="rbxassetid://137524582120989",normal="",roughness="",metalness=""}},
-		{name="metalbat_vibecheck",display="Vibecheck`d",rarity="uncommon",textureID="15445259400",skinClass="Melees",sa={color="rbxassetid://15445259400",normal="rbxassetid://15445259400",roughness="rbxassetid://15445259400",metalness="rbxassetid://15445259400"}},
-		{name="metalbat_northpole",display="North Pole",rarity="legendary",textureID="15695386895",skinClass="Melees",sa={color="rbxassetid://15695386895",normal="rbxassetid://15695386895",roughness="rbxassetid://15695386895",metalness="rbxassetid://15695386895"}},
-		{name="metalbat_serpentine",display="Serpentine",rarity="legendary",textureID="15028975758",skinClass="Melees",sa={color="rbxassetid://15028975758",normal="rbxassetid://15028975758",roughness="rbxassetid://15028975758",metalness="rbxassetid://15028975758"}},
-	},
-	["RPG-7"]={
-		{name="rpg7_twotone",display="Two-Tone",rarity="uncommon",textureID="13388376607",skinClass="Guns",sa={color="rbxassetid://13388377781",normal="rbxassetid://13388379378",roughness="rbxassetid://13388380305",metalness="rbxassetid://13388378532"}},
-		{name="rpg7_boom",display="BOOM!",rarity="rare",textureID="10959329950",skinClass="Guns",sa={color="rbxassetid://10959333634",normal="rbxassetid://10959335179",roughness="rbxassetid://10959335703",metalness="rbxassetid://10959334502"}},
-		{name="rpg7_gold",display="Golden RPG",rarity="limited",textureID="13715204837",skinClass="Guns",sa={color="rbxassetid://13715204837",normal="rbxassetid://13715207167",roughness="rbxassetid://13715207920",metalness="rbxassetid://13715205903",customColor={255,170,0}}},
-		{name="rpg7_gold",display="Golden RPG",rarity="limited",textureID="13715204837",skinClass="Guns",sa={color="rbxassetid://13715204837",normal="rbxassetid://13715207167",roughness="rbxassetid://13715207920",metalness="rbxassetid://13715205903",customColor={255,170,0}}},
-	},
-	["Rambo"]={
-		{name="rambo_cocoa",display="Cocoa",rarity="common",textureID="15449254329",skinClass="Melees",sa={color="rbxassetid://15449254329",normal="rbxassetid://15449254329",roughness="rbxassetid://15449254329",metalness="rbxassetid://15449254329"}},
-		{name="rambo_rimecarver",display="Rimecarver",rarity="common",textureID="88056079326083",skinClass="Melees",sa={color="rbxassetid://88056079326083",normal="",roughness="",metalness=""}},
-		{name="rambo_slasha",display="Slasha",rarity="rare",textureID="14983934299",skinClass="Melees",sa={color="rbxassetid://14983934299",normal="rbxassetid://14983934299",roughness="rbxassetid://14983934299",metalness="rbxassetid://14983934299"}},
-		{name="rambo_scorched",display="Scorched",rarity="legendary",textureID="16688015251",skinClass="Melees",sa={color="rbxassetid://16688013963",normal="rbxassetid://16688015743",roughness="rbxassetid://16688016303",metalness="rbxassetid://16688014597"}},
-		{name="rambo_blackpearl",display="Black Pearl",rarity="exotic",textureID="16268374444",skinClass="Melees",sa=nil},
-		{name="rambo_bluegem",display="Blue gem",rarity="exotic",textureID="16268374887",skinClass="Melees",sa=nil},
-		{name="rambo_damascus",display="Damascus",rarity="exotic",textureID="16268375476",skinClass="Melees",sa=nil},
-		{name="rambo_emerald",display="Emerald",rarity="exotic",textureID="16268308309",skinClass="Melees",sa=nil},
-		{name="rambo_forest",display="Forest",rarity="exotic",textureID="16268376292",skinClass="Melees",sa=nil},
-		{name="rambo_olivedrift",display="Olive Drift",rarity="exotic",textureID="16268376667",skinClass="Melees",sa=nil},
-		{name="rambo_rustic",display="Rustic",rarity="exotic",textureID="16268377036",skinClass="Melees",sa=nil},
-		{name="rambo_vanilla",display="Vanilla",rarity="exotic",textureID="16268315355",skinClass="Melees",sa=nil},
-	},
-	["SCAR-H-1"]={
-		{name="scarh_torchbearer",display="Torch Bearer",rarity="common",textureID="18167599401",skinClass="Guns",sa={color="rbxassetid://18167599401",normal="rbxassetid://18167599401",roughness="rbxassetid://18167599401",metalness="rbxassetid://18167599401"}},
-		{name="scarh_gridlines",display="Gridlines",rarity="uncommon",textureID="16010528228",skinClass="Guns",sa={color="rbxassetid://16010528228",normal="rbxassetid://16010528228",roughness="rbxassetid://16010528228",metalness="rbxassetid://16010528228"}},
-		{name="scarh_milspec",display="MIL-SPEC",rarity="uncommon",textureID="13703883944",skinClass="Guns",sa={color="rbxassetid://13703885359",normal="rbxassetid://12548441857",roughness="rbxassetid://13703886985",metalness="rbxassetid://13703886217"}},
-	},
-	["SKS"]={
-		{name="sks_copper",display="Copper",rarity="common",textureID="13388317796",skinClass="Guns",sa={color="rbxassetid://13394135741",normal="rbxassetid://13388320318",roughness="rbxassetid://13388321173",metalness="rbxassetid://13388319734"}},
-		{name="sks_modern",display="Modern",rarity="common",textureID="13388174747",skinClass="Guns",sa={color="rbxassetid://13388175991",normal="rbxassetid://9341965058",roughness="rbxassetid://9341941167",metalness="rbxassetid://9341938929"}},
-		{name="sks_nevermore",display="Nevermore",rarity="common",textureID="99728168884950",skinClass="Guns",sa={color="rbxassetid://99728168884950",normal="rbxassetid://99728168884950",roughness="rbxassetid://99728168884950",metalness="rbxassetid://99728168884950"}},
-		{name="sks_paragon",display="Paragon",rarity="common",textureID="15998710650",skinClass="Guns",sa={color="rbxassetid://15998710650",normal="rbxassetid://15998710650",roughness="rbxassetid://15998710650",metalness="rbxassetid://15998710650"}},
-		{name="sks_snowcoat",display="Snow Coat",rarity="common",textureID="9276325654",skinClass="Guns",sa={color="rbxassetid://9276325654",normal="",roughness="",metalness=""}},
-		{name="sks_umbrella",display="Umbrella",rarity="uncommon",textureID="13841609325",skinClass="Guns",sa={color="rbxassetid://13841605579",normal="rbxassetid://13841607333",roughness="rbxassetid://13388321173",metalness="rbxassetid://13841606562"}},
-		{name="sks_jacko",display="Jack'O",rarity="rare",textureID="15177206758",skinClass="Guns",sa={color="rbxassetid://15177206758",normal="rbxassetid://15177206758",roughness="rbxassetid://15177206758",metalness="rbxassetid://15177206758"}},
-		{name="sks_jester",display="Jester",rarity="legendary",textureID="13343195152",skinClass="Guns",sa={color="rbxassetid://13343167267",normal="rbxassetid://13343168956",roughness="rbxassetid://13343169804",metalness="rbxassetid://13343167958"}},
-		{name="sks_gold",display="Golden SKS",rarity="limited",textureID="16300596462",skinClass="Guns",sa={color="rbxassetid://16300596462",normal="rbxassetid://16299700340",roughness="rbxassetid://16299699813",metalness="rbxassetid://16299699464",customColor={145,127,175}}},
-		{name="sks_gold",display="Golden SKS",rarity="limited",textureID="16300596462",skinClass="Guns",sa={color="rbxassetid://16300596462",normal="rbxassetid://16299700340",roughness="rbxassetid://16299699813",metalness="rbxassetid://16299699464",customColor={145,127,175}}},
-	},
-	["SKS	"]={
-		{name="sks_gold",display="Golden SKS",rarity="limited",textureID="15998559023",skinClass="Guns",sa={color="rbxassetid://16300596462",normal="rbxassetid://16299700340",roughness="rbxassetid://16299699813",metalness="rbxassetid://16299699464",customColor={145,127,175}}},
-	},
-	["Sawn-Off"]={
-		{name="sawnoff_radium",display="Radium Scatter",rarity="subcommon",textureID="94748131117032",skinClass="Guns",sa={color="rbxassetid://94748131117032",normal="",roughness="",metalness=""}},
-		{name="sawnoff_caution",display="Caution",rarity="common",textureID="10959354994",skinClass="Guns",sa={color="rbxassetid://10959371093",normal="rbxassetid://10959372567",roughness="",metalness="rbxassetid://10959371833"}},
-		{name="sawnoff_ectoplasm",display="Ectoplasm",rarity="common",textureID="99467907178773",skinClass="Guns",sa={color="rbxassetid://99467907178773",normal="rbxassetid://99467907178773",roughness="rbxassetid://99467907178773",metalness="rbxassetid://99467907178773"}},
-		{name="sawnoff_logs",display="Logs",rarity="common",textureID="13556265064",skinClass="Guns",sa={color="rbxassetid://13556252494",normal="rbxassetid://13556254217",roughness="rbxassetid://13556254787",metalness="rbxassetid://13556253379"}},
-		{name="sawnoff_multicam",display="Multicam",rarity="common",textureID="15998421683",skinClass="Guns",sa={color="rbxassetid://15998421683",normal="rbxassetid://15998421683",roughness="rbxassetid://15998421683",metalness="rbxassetid://15998421683"}},
-		{name="sawnoff_tarnished",display="Tarnished Holly",rarity="common",textureID="137388284721605",skinClass="Guns",sa={color="rbxassetid://137388284721605",normal="",roughness="",metalness=""}},
-		{name="sawnoff_banana",display="Banana",rarity="uncommon",textureID="13387477962",skinClass="Guns",sa={color="rbxassetid://13387455222",normal="rbxassetid://13387461274",roughness="rbxassetid://13387462843",metalness="rbxassetid://13387458782"}},
-		{name="sawnoff_webs",display="Webs",rarity="uncommon",textureID="15177076142",skinClass="Guns",sa={color="rbxassetid://15177076142",normal="rbxassetid://15177076142",roughness="rbxassetid://15177076142",metalness="rbxassetid://15177076142"}},
-		{name="sawnoff_glacial",display="Glacial",rarity="rare",textureID="13343271197",skinClass="Guns",sa={color="rbxassetid://13030805318",normal="rbxassetid://13030811843",roughness="rbxassetid://13030812846",metalness="rbxassetid://13030809551"}},
-		{name="sawnoff_grandprix",display="Grand Prix",rarity="rare",textureID="13842331455",skinClass="Guns",sa={color="rbxassetid://13841748041",normal="rbxassetid://13841750446",roughness="rbxassetid://13556254787",metalness="rbxassetid://13841749691"}},
-		{name="sawnoff_eros",display="Eros",rarity="limited",textureID="124136583812651",skinClass="Guns",sa={color="rbxassetid://94543327437589",normal="rbxassetid://96893785031392",roughness="rbxassetid://96893785031392",metalness="rbxassetid://140685658953144",customColor={243,107,255}}},
-		{name="sawnoff_gold",display="Golden Sawn-Off",rarity="limited",textureID="13714495559",skinClass="Guns",sa={color="rbxassetid://13714456145",normal="rbxassetid://13702871512",roughness="rbxassetid://13702872174",metalness="rbxassetid://13702869725",customColor={255,170,0}}},
-		{name="sawnoff_gold",display="Golden Sawn-Off",rarity="limited",textureID="13714495559",skinClass="Guns",sa={color="rbxassetid://13714456145",normal="rbxassetid://13702871512",roughness="rbxassetid://13702872174",metalness="rbxassetid://13702869725",customColor={255,170,0}}},
-	},
-	["Scout"]={
-		{name="scout_redwood",display="Redwood",rarity="uncommon",textureID="13713221958",skinClass="Guns",sa={color="rbxassetid://13713216013",normal="rbxassetid://13713217944",roughness="rbxassetid://13713218967",metalness="rbxassetid://13713216835"}},
-	},
-	["Shovel"]={
-		{name="shovel_conspiracy",display="Conspiracy",rarity="common",textureID="16911045144",skinClass="Melees",sa={color="rbxassetid://16911044501",normal="rbxassetid://16911046381",roughness="rbxassetid://16911045496",metalness="rbxassetid://16911045794"}},
-		{name="shovel_digital",display="Digital Digger",rarity="common",textureID="89332284546616",skinClass="Melees",sa={color="rbxassetid://89332284546616",normal="",roughness="",metalness=""}},
-		{name="shovel_oliveworn",display="Oliveworn",rarity="common",textureID="16688313893",skinClass="Melees",sa=nil},
-		{name="shovel_sightings",display="Sightings",rarity="common",textureID="15176959990",skinClass="Melees",sa={color="rbxassetid://15176959990",normal="rbxassetid://14983801496",roughness="rbxassetid://14984658723",metalness="rbxassetid://14984659961"}},
-		{name="shovel_heartbreaker",display="Heartbreaker",rarity="uncommon",textureID="16355297408",skinClass="Melees",sa={color="rbxassetid://16355295686",normal="rbxassetid://16355296613",roughness="rbxassetid://16355296920",metalness="rbxassetid://16355296031"}},
-		{name="shovel_smiley2",display="Smiley 2",rarity="uncommon",textureID="14984656389",skinClass="Melees",sa={color="rbxassetid://14984656389",normal="rbxassetid://14983801496",roughness="rbxassetid://14984658723",metalness="rbxassetid://14984659961"}},
-		{name="shovel_xray",display="X-ray",rarity="uncommon",textureID="87336044400444",skinClass="Melees",sa={color="rbxassetid://87336044400444",normal="rbxassetid://87336044400444",roughness="rbxassetid://87336044400444",metalness="rbxassetid://87336044400444"}},
-		{name="shovel_sovereign",display="Sovereign",rarity="legendary",textureID="15445272453",skinClass="Melees",sa={color="rbxassetid://15445272453",normal="rbxassetid://15445272453",roughness="rbxassetid://15445272453",metalness="rbxassetid://15445272453"}},
-	},
-	["Sledgehammer"]={
-		{name="sledgehammer_holidaymaul",display="Holiday Maul",rarity="common",textureID="15695483502",skinClass="Melees",sa={color="rbxassetid://140141455097259",normal="",roughness="",metalness=""}},
-		{name="sledgehammer_weightedbronze",display="Weightedbronze",rarity="common",textureID="16689250659",skinClass="Melees",sa=nil},
-		{name="sledgehammer_boss",display="Boss",rarity="uncommon",textureID="15695404278",skinClass="Melees",sa={color="rbxassetid://15695404278",normal="rbxassetid://15695404278",roughness="rbxassetid://15695404278",metalness="rbxassetid://15695404278"}},
-		{name="sledgehammer_porcelain",display="Porcelain",rarity="legendary",textureID="15447463984",skinClass="Melees",sa={color="rbxassetid://15447463984",normal="rbxassetid://15447463984",roughness="rbxassetid://15447463984",metalness="rbxassetid://15447463984"}},
-	},
-	["Super-Shorty"]={
-		{name="sshorty_firecracker",display="Firecracker",rarity="common",textureID="18149800264",skinClass="Guns",sa={color="rbxassetid://18149800264",normal="rbxassetid://18149800264",roughness="rbxassetid://18149800264",metalness="rbxassetid://18149800264"}},
-		{name="sshorty_loveletter",display="Love Letter",rarity="common",textureID="16355340290",skinClass="Guns",sa={color="rbxassetid://16355338517",normal="rbxassetid://16355339662",roughness="rbxassetid://16355340721",metalness="rbxassetid://16355338911"}},
-		{name="sshorty_steel",display="Steel",rarity="common",textureID="13394160404",skinClass="Guns",sa={color="rbxassetid://13394161570",normal="rbxassetid://13388284123",roughness="rbxassetid://13388283285",metalness="rbxassetid://13388284878"}},
-		{name="sshorty_checkmate",display="Checkmate",rarity="uncommon",textureID="13713148936",skinClass="Guns",sa={color="rbxassetid://13713146952",normal="rbxassetid://13713130525",roughness="rbxassetid://13713131369",metalness="rbxassetid://13713129636"}},
-	},
-	["TEC-9"]={
-		{name="tec9_burgundypine",display="Burgundy Pine",rarity="common",textureID="134671657569127",skinClass="Guns",sa={color="rbxassetid://134671657569127",normal="",roughness="",metalness=""}},
-		{name="tec9_import",display="Import",rarity="common",textureID="13556236652",skinClass="Guns",sa={color="rbxassetid://13556231753",normal="rbxassetid://13556233332",roughness="rbxassetid://13556234000",metalness="rbxassetid://13556232611"}},
-		{name="tec9_lilac",display="Lilac",rarity="common",textureID="13841536261",skinClass="Guns",sa={color="rbxassetid://13841531857",normal="rbxassetid://13841534362",roughness="rbxassetid://13841535132",metalness="rbxassetid://13841533434"}},
-		{name="tec9_snakeskin",display="Snakeskin",rarity="common",textureID="13566205064",skinClass="Guns",sa={color="rbxassetid://13566186022",normal="rbxassetid://13566188527",roughness="rbxassetid://13566189605",metalness="rbxassetid://13566187509"}},
-		{name="tec9_cottoncloud",display="Cotton Cloud",rarity="uncommon",textureID="15998727136",skinClass="Guns",sa={color="rbxassetid://15998727136",normal="rbxassetid://15998727136",roughness="rbxassetid://15998727136",metalness="rbxassetid://15998727136"}},
-		{name="tec9_liberty",display="Liberty",rarity="uncommon",textureID="13935391655",skinClass="Guns",sa={color="rbxassetid://13935385791",normal="rbxassetid://13935388242",roughness="rbxassetid://13935389032",metalness="rbxassetid://13935387111"}},
-		{name="tec9_star9",display="Star-9",rarity="uncommon",textureID="13387517349",skinClass="Guns",sa={color="rbxassetid://13387502788",normal="rbxassetid://13387508121",roughness="rbxassetid://13387509249",metalness="rbxassetid://13387506611"}},
-		{name="tec9_diner",display="Diner",rarity="rare",textureID="13713002732",skinClass="Guns",sa={color="rbxassetid://13712979305",normal="rbxassetid://13703915693",roughness="rbxassetid://13712990125",metalness="rbxassetid://13712980107"}},
-	},
-	["Taiga"]={
-		{name="taiga_current",display="Current Crash",rarity="subcommon",textureID="90247337759446",skinClass="Melees",sa={color="rbxassetid://90247337759446",normal="",roughness="",metalness=""}},
-		{name="taiga_conductor",display="Conductor",rarity="common",textureID="14982945679",skinClass="Melees",sa={color="rbxassetid://14982945679",normal="rbxassetid://14982945679",roughness="rbxassetid://14982945679",metalness="rbxassetid://14982945679"}},
-		{name="taiga_scalemail",display="Scalemail",rarity="common",textureID="16688381364",skinClass="Melees",sa=nil},
-		{name="taiga_scuffed",display="Scuffed",rarity="common",textureID="15449276653",skinClass="Melees",sa={color="rbxassetid://15449276653",normal="rbxassetid://15449276653",roughness="rbxassetid://15449276653",metalness="rbxassetid://15449276653"}},
-		{name="taiga_thornslash",display="Thorn Slash",rarity="common",textureID="16355282883",skinClass="Melees",sa={color="rbxassetid://16355282883",normal="rbxassetid://16355282883",roughness="rbxassetid://16355282883",metalness="rbxassetid://16355282883"}},
-		{name="taiga_bubblegum",display="Bubblegum",rarity="uncommon",textureID="14983876632",skinClass="Melees",sa={color="rbxassetid://14983876632",normal="rbxassetid://14983878474",roughness="rbxassetid://14983879458",metalness="rbxassetid://14983877458"}},
-		{name="taiga_icicle",display="Icicle",rarity="uncommon",textureID="15711030856",skinClass="Melees",sa={color="rbxassetid://15711030856",normal="rbxassetid://15711030856",roughness="rbxassetid://15711030856",metalness="rbxassetid://15711030856"}},
-		{name="taiga_404",display="404",rarity="rare",textureID="15448951687",skinClass="Melees",sa={color="rbxassetid://15448951687",normal="rbxassetid://15448951687",roughness="rbxassetid://15448951687",metalness="rbxassetid://15448951687"}},
-	},
-	["Tommy"]={
-		{name="tommy_currant",display="Currant",rarity="common",textureID="13841589575",skinClass="Guns",sa={color="rbxassetid://13841583772",normal="rbxassetid://13841586063",roughness="rbxassetid://13841586825",metalness="rbxassetid://13841584989"}},
-		{name="tommy_headstone",display="Headstone",rarity="common",textureID="15177096261",skinClass="Guns",sa={color="rbxassetid://15177096261",normal="rbxassetid://15177096261",roughness="rbxassetid://15177096261",metalness="rbxassetid://15177096261"}},
-		{name="tommy_plum",display="Plum",rarity="common",textureID="13388353769",skinClass="Guns",sa={color="rbxassetid://13388349585",normal="rbxassetid://13388350802",roughness="rbxassetid://13388351567",metalness="rbxassetid://13388350104"}},
-		{name="tommy_huntinglodge",display="Hunting Lodge",rarity="uncommon",textureID="105449250306908",skinClass="Guns",sa={color="rbxassetid://105449250306908",normal="",roughness="",metalness=""}},
-		{name="tommy_unclesam",display="Uncle Sam",rarity="rare",textureID="13936668999",skinClass="Guns",sa={color="rbxassetid://13936670325",normal="rbxassetid://13936671749",roughness="rbxassetid://13936672741",metalness="rbxassetid://13936670921"}},
-		{name="tommy_leatherworks",display="Leatherworks",rarity="legendary",textureID="13565052794",skinClass="Guns",sa={color="rbxassetid://13556313114",normal="rbxassetid://13556315610",roughness="rbxassetid://13556316435",metalness="rbxassetid://13556314814"}},
-		{name="tommy_gold",display="Golden Tommy",rarity="limited",textureID="15039147598",skinClass="Guns",sa={color="rbxassetid://15039147920",normal="rbxassetid://15039147363",roughness="rbxassetid://15039147120",metalness="rbxassetid://15039147721",customColor={145,127,175}}},
-		{name="tommy_gold",display="Golden Tommy",rarity="limited",textureID="15039147598",skinClass="Guns",sa={color="rbxassetid://15039147920",normal="rbxassetid://15039147363",roughness="rbxassetid://15039147120",metalness="rbxassetid://15039147721",customColor={145,127,175}}},
-	},
-	["UMP-45"]={
-		{name="ump_burntumber",display="Burnt Umber",rarity="common",textureID="13842577137",skinClass="Guns",sa={color="rbxassetid://13842574571",normal="rbxassetid://13841561295",roughness="rbxassetid://13713092610",metalness="rbxassetid://13841560451"}},
-		{name="ump_honeycomb",display="Honeycomb",rarity="uncommon",textureID="13713093970",skinClass="Guns",sa={color="rbxassetid://13713087658",normal="rbxassetid://13713089856",roughness="rbxassetid://13713092610",metalness="rbxassetid://13713088970"}},
-		{name="ump_lesion",display="Lesion",rarity="rare",textureID="15177224638",skinClass="Guns",sa={color="rbxassetid://15177224638",normal="rbxassetid://15177224638",roughness="rbxassetid://15177224638",metalness="rbxassetid://15177224638"}},
-	},
-	["Uzi"]={
-		{name="uzi_coldshell",display="Cold Shell",rarity="common",textureID="73784413219495",skinClass="Guns",sa={color="rbxassetid://73784413219495",normal="",roughness="",metalness=""}},
-		{name="uzi_grape",display="Grape",rarity="common",textureID="13387916321",skinClass="Guns",sa={color="rbxassetid://13387917991",normal="rbxassetid://13343337433",roughness="rbxassetid://13343338573",metalness="rbxassetid://13343336766"}},
-		{name="uzi_pumpkinspice",display="Pumpkin Spice",rarity="common",textureID="15177118472",skinClass="Guns",sa={color="rbxassetid://15177118472",normal="rbxassetid://15177118472",roughness="rbxassetid://15177118472",metalness="rbxassetid://15177118472"}},
-		{name="uzi_rust",display="Rust",rarity="common",textureID="13715501813",skinClass="Guns",sa={color="rbxassetid://13715502850",normal="rbxassetid://13715505019",roughness="rbxassetid://13715505740",metalness="rbxassetid://13715504263"}},
-		{name="uzi_crimsonjaw",display="Crimson Jaw",rarity="rare",textureID="13343333197",skinClass="Guns",sa={color="rbxassetid://13343335417",normal="rbxassetid://13343337433",roughness="rbxassetid://13343338573",metalness="rbxassetid://13343336766"}},
-		{name="uzi_grape2",display="Grapes II",rarity="rare",textureID="16952083915",skinClass="Guns",sa={color="rbxassetid://16952083501",normal="rbxassetid://16952084326",roughness="rbxassetid://16952084530",metalness="rbxassetid://16952083672"}},
-		{name="uzi_smiley",display="Smiley",rarity="rare",textureID="13841671610",skinClass="Guns",sa={color="rbxassetid://13841666943",normal="rbxassetid://13841669834",roughness="rbxassetid://13715505740",metalness="rbxassetid://13841669024"}},
-		{name="uzi_guilded",display="Guilded",rarity="legendary",textureID="15998742287",skinClass="Guns",sa={color="rbxassetid://15998742287",normal="rbxassetid://15998742287",roughness="rbxassetid://15998742287",metalness="rbxassetid://15998742287"}},
-	},
-	["Wrench"]={
-		{name="wrench_schematic",display="Schematic",rarity="subcommon",textureID="85334381763123",skinClass="Melees",sa={color="rbxassetid://85334381763123",normal="",roughness="",metalness=""}},
-		{name="wrench_aerospace",display="Aerospace",rarity="common",textureID="15695483502",skinClass="Melees",sa={color="rbxassetid://15695483502",normal="rbxassetid://15695483502",roughness="rbxassetid://15695483502",metalness="rbxassetid://15695483502"}},
-		{name="wrench_contractor",display="Contractor",rarity="common",textureID="14982816807",skinClass="Melees",sa={color="rbxassetid://14982816807",normal="rbxassetid://14982826845",roughness="rbxassetid://14982824116",metalness="rbxassetid://14982829131"}},
-		{name="wrench_mrwrench",display="Mr-Wrench",rarity="common",textureID="16688443083",skinClass="Melees",sa={color="rbxassetid://16688441788",normal="rbxassetid://16688443867",roughness="rbxassetid://16688444803",metalness="rbxassetid://16688442409"}},
-		{name="wrench_tendencies",display="Tendencies",rarity="common",textureID="15177056272",skinClass="Melees",sa={color="rbxassetid://15177056272",normal="rbxassetid://14982826845",roughness="rbxassetid://14982824116",metalness="rbxassetid://14982829131"}},
-		{name="wrench_greenmask",display="Green Mask",rarity="uncommon",textureID="15451673831",skinClass="Melees",sa={color="rbxassetid://15451673831",normal="rbxassetid://15451673831",roughness="rbxassetid://15451673831",metalness="rbxassetid://15451673831"}},
-		{name="wrench_hammer_blackpearl",display="Hammer: Blackpearl",rarity="exotic",textureID="15448181005",skinClass="Melees",sa={color="rbxassetid://15448181005",normal="rbxassetid://15448181005",roughness="rbxassetid://15448181005",metalness="rbxassetid://15448181005"}},
-		{name="wrench_hammer_bluegem",display="Hammer: Bluegem",rarity="exotic",textureID="15039886621",skinClass="Melees",sa={color="rbxassetid://15039886621",normal="rbxassetid://15039886621",roughness="rbxassetid://15039886621",metalness="rbxassetid://15039886621"}},
-		{name="wrench_hammer_corrosion",display="Hammer: Corrosion",rarity="exotic",textureID="15039908965",skinClass="Melees",sa={color="rbxassetid://15039908965",normal="rbxassetid://15039908965",roughness="rbxassetid://15039908965",metalness="rbxassetid://15039908965"}},
-		{name="wrench_hammer_damascus",display="Hammer: Damascus",rarity="exotic",textureID="15039883793",skinClass="Melees",sa={color="rbxassetid://15039883793",normal="rbxassetid://15039883793",roughness="rbxassetid://15039883793",metalness="rbxassetid://15039883793"}},
-		{name="wrench_hammer_emerald",display="Hammer: Emerald",rarity="exotic",textureID="15448075670",skinClass="Melees",sa={color="rbxassetid://15448075670",normal="rbxassetid://15448075670",roughness="rbxassetid://15448075670",metalness="rbxassetid://15448075670"}},
-		{name="wrench_hammer_olivedrift",display="Hammer: Olivedrift",rarity="exotic",textureID="15070249049",skinClass="Melees",sa={color="rbxassetid://15070249049",normal="rbxassetid://15070249049",roughness="rbxassetid://15070249049",metalness="rbxassetid://15070249049"}},
-		{name="wrench_hammer_rustic",display="Hammer: Rustic",rarity="exotic",textureID="15039905170",skinClass="Melees",sa={color="rbxassetid://15039905170",normal="rbxassetid://15039905170",roughness="rbxassetid://15039905170",metalness="rbxassetid://15039905170"}},
-		{name="wrench_hammer_vanilla",display="Hammer: Vanilla",rarity="exotic",textureID="14984302065",skinClass="Melees",sa={color="rbxassetid://14984302065",normal="rbxassetid://14984302065",roughness="rbxassetid://14984302065",metalness="rbxassetid://14984302065"}},
-		{name="wrench_hammer_kintsugi",display="Kintsugi",rarity="exotic",textureID="15039897126",skinClass="Melees",sa={color="rbxassetid://15039897126",normal="rbxassetid://15039897126",roughness="rbxassetid://15039897126",metalness="rbxassetid://15039897126"}},
-	},
-}
-local WEAPONS = {"AKM","AKS-74U","AWM","BBaton","BFG-1","Balisong","Bat","Bayonet","Beretta","Chainsaw","Crowbar","Deagle","FN-FAL","FNP-45","Fire-Axe","G-17","Golfclub","Ithaca-37","Katana","M1911","M320-1","M4A1-1","M60","MAC-10","MP7","Machete","Magnum","Mare","Metal-Bat","RPG-7","Rambo","SCAR-H-1","SKS","SKS	","Sawn-Off","Scout","Shovel","Sledgehammer","Super-Shorty","TEC-9","Taiga","Tommy","UMP-45","Uzi","Wrench"}
+		["AKS-74U"]={
+			{name="aks_battleworncamo",display="Battleworn Camo",rarity="common",textureID="13842105937",skinClass="Guns",sa={color="rbxassetid://13842104374",normal="rbxassetid://13841838347",roughness="rbxassetid://13841839392",metalness="rbxassetid://13841837380"}},
+			{name="aks_decay",display="DECAY-74U",rarity="common",textureID="138901102926673",skinClass="Guns",sa={color="rbxassetid://138901102926673",normal="",roughness="",metalness=""}},
+			{name="aks_draco",display="Draco",rarity="common",textureID="13388089214",skinClass="Guns",sa={color="rbxassetid://13388090322",normal="rbxassetid://13388091442",roughness="rbxassetid://13388092218",metalness="rbxassetid://13388090867"}},
+			{name="aks_crimcola",display="Crim Cola!",rarity="uncommon",textureID="13387566361",skinClass="Guns",sa={color="rbxassetid://13387556541",normal="rbxassetid://13387558142",roughness="rbxassetid://13387559359",metalness="rbxassetid://13387557277"}},
+			{name="aks_formula",display="Formula",rarity="rare",textureID="16010501274",skinClass="Guns",sa={color="rbxassetid://16010501274",normal="rbxassetid://16010501274",roughness="rbxassetid://16010501274",metalness="rbxassetid://16010501274"}},
+			{name="aks_gravebound",display="Gravebound",rarity="rare",textureID="107225184415547",skinClass="Guns",sa={color="rbxassetid://107225184415547",normal="rbxassetid://107225184415547",roughness="rbxassetid://107225184415547",metalness="rbxassetid://107225184415547"}},
+			{name="aks_sharkbite",display="Sharkbite",rarity="rare",textureID="11684759812",skinClass="Guns",sa={color="rbxassetid://11684759812",normal="rbxassetid://11684763552",roughness="rbxassetid://11684764559",metalness="rbxassetid://11684761413"}},
+			{name="aks_cherish",display="Cherish",rarity="legendary",textureID="16355375052",skinClass="Guns",sa={color="rbxassetid://16355375052",normal="rbxassetid://16355375052",roughness="rbxassetid://16355375052",metalness="rbxassetid://16355375052"}},
+			{name="aks_frostbite",display="Frostbite",rarity="legendary",textureID="86574930426293",skinClass="Guns",sa={color="rbxassetid://82590391241285",normal="rbxassetid://92519255518461",roughness="rbxassetid://131453922856800",metalness="rbxassetid://107561609026444"}},
+			{name="aks_jadestone",display="Jadestone",rarity="legendary",textureID="13712930979",skinClass="Guns",sa={color="rbxassetid://13712920992",normal="rbxassetid://13712922823",roughness="rbxassetid://13712861089",metalness="rbxassetid://13712921779"}},
+			{name="aks_mire",display="Mire",rarity="legendary",textureID="15177307123",skinClass="Guns",sa={color="rbxassetid://15177307123",normal="rbxassetid://15177307123",roughness="rbxassetid://15177307123",metalness="rbxassetid://15177307123"}},
+			{name="aks_pluto",display="PLUTO",rarity="limited",textureID="119124175056081",skinClass="Guns",sa={color="rbxassetid://119124175056081",normal="rbxassetid://8969901925",roughness="rbxassetid://8969903071",metalness="rbxassetid://8969900202",customColor={141,0,127}}},
+		},
+		["AWM"]={
+			{name="awm_bob",display="Bob",rarity="limited",textureID="97069820896111",skinClass="Guns",sa={color="rbxassetid://97069820896111",normal="rbxassetid://16272297797",roughness="rbxassetid://16272298674",metalness="rbxassetid://16272296814"}},
+		},
+		["BBaton"]={
+			{name="baton_magicwand",display="Magic Wand",rarity="common",textureID="15447733301",skinClass="Melees",sa={color="rbxassetid://15447733301",normal="rbxassetid://15447733301",roughness="rbxassetid://15447733301",metalness="rbxassetid://15447733301"}},
+			{name="baton_silverbanded",display="Silverbanded",rarity="common",textureID="16688298201",skinClass="Melees",sa=nil},
+			{name="baton_marbleized",display="Marbleized",rarity="rare",textureID="16688079257",skinClass="Melees",sa=nil},
+		},
+		["BFG-1"]={
+			{name="bfg_federal",display="Federal",rarity="uncommon",textureID="13948530321",skinClass="Guns",sa={color="rbxassetid://13948416273",normal="rbxassetid://13948408785",roughness="rbxassetid://13948409253",metalness="rbxassetid://13948408225"}},
+			{name="bfg_savior",display=".50 Savior",rarity="rare",textureID="18316883517",skinClass="Guns",sa={color="rbxassetid://18316883517",normal="rbxassetid://18316883517",roughness="rbxassetid://18316883517",metalness="rbxassetid://18316883517"}},
+			{name="bfg_cupid",display="Cupid",rarity="limited",textureID="16355412948",skinClass="Guns",sa={color="rbxassetid://16355412948",normal="rbxassetid://16355412388",roughness="rbxassetid://16355412639",metalness="rbxassetid://16355411427"}},
+		},
+		["Balisong"]={
+			{name="balisong_tan",display="Tan",rarity="common",textureID="15445188373",skinClass="Melees",sa=nil},
+			{name="balisong_viper",display="Viper",rarity="uncommon",textureID="14983742104",skinClass="Melees",sa={color="rbxassetid://14983742104",normal="rbxassetid://14983728828",roughness="rbxassetid://14983729641",metalness="rbxassetid://14983727617"}},
+			{name="balisong_fade",display="Fade",rarity="rare",textureID="16688046816",skinClass="Melees",sa={color="rbxassetid://16688046451",normal="rbxassetid://16688048275",roughness="rbxassetid://16688047264",metalness="rbxassetid://16688048586"}},
+			{name="balisong_vampiric",display="Vampiric SKIBIDI OPIUM",rarity="rare",textureID="15177238158",skinClass="Melees",sa={color="rbxassetid://15177238158",normal="rbxassetid://14983728828",roughness="rbxassetid://14983729641",metalness="rbxassetid://14983727617"}},
+			{name="balisong_stiletto_blackpearl",display="Stiletto: Blackpearl",rarity="exotic",textureID="16259029052",skinClass="Melees",sa={color="rbxassetid://16259029052",normal="rbxassetid://16259029052",roughness="rbxassetid://16259029052",metalness="rbxassetid://16259029052"}},
+			{name="balisong_stiletto_bluegem",display="Stiletto: Bluegem",rarity="exotic",textureID="16259042388",skinClass="Melees",sa={color="rbxassetid://16259042388",normal="rbxassetid://16259042388",roughness="rbxassetid://16259042388",metalness="rbxassetid://16259042388"}},
+			{name="balisong_stiletto_damascus",display="Stiletto: Damascus",rarity="exotic",textureID="16259055593",skinClass="Melees",sa={color="rbxassetid://16259055593",normal="rbxassetid://16259055593",roughness="rbxassetid://16259055593",metalness="rbxassetid://16259055593"}},
+			{name="balisong_stiletto_emerald",display="Stiletto: Emerald",rarity="exotic",textureID="16302919829",skinClass="Melees",sa={color="rbxassetid://16302919829",normal="rbxassetid://16302919829",roughness="rbxassetid://16302919829",metalness="rbxassetid://16302919829"}},
+			{name="balisong_stiletto_forest",display="Stiletto: Forest",rarity="exotic",textureID="16259072166",skinClass="Melees",sa={color="rbxassetid://16259072166",normal="rbxassetid://16259072166",roughness="rbxassetid://16259072166",metalness="rbxassetid://16259072166"}},
+			{name="balisong_stiletto_olivedrift",display="Stiletto: Olivedrift",rarity="exotic",textureID="16259085913",skinClass="Melees",sa={color="rbxassetid://16259085913",normal="rbxassetid://16259085913",roughness="rbxassetid://16259085913",metalness="rbxassetid://16259085913"}},
+			{name="balisong_stiletto_rustic",display="Stiletto: Rustic",rarity="exotic",textureID="16259093221",skinClass="Melees",sa={color="rbxassetid://16259093221",normal="rbxassetid://16259093221",roughness="rbxassetid://16259093221",metalness="rbxassetid://16259093221"}},
+			{name="balisong_stiletto_vanilla",display="Stiletto: Vanilla",rarity="exotic",textureID="16259021346",skinClass="Melees",sa={color="rbxassetid://16259021346",normal="rbxassetid://16259021346",roughness="rbxassetid://16259021346",metalness="rbxassetid://16259021346"}},
+		},
+		["Bat"]={
+			{name="bat_bats",display="Bats",rarity="common",textureID="110102460531915",skinClass="Melees",sa={color="rbxassetid://110102460531915",normal="rbxassetid://110102460531915",roughness="rbxassetid://110102460531915",metalness="rbxassetid://110102460531915"}},
+			{name="bat_neapolitan",display="Neapolitan",rarity="common",textureID="16688469496",skinClass="Melees",sa={color="rbxassetid://16688469496",normal="rbxassetid://16688469496",roughness="rbxassetid://15028975758",metalness="rbxassetid://16688469496"}},
+			{name="bat_testtube",display="Test Tube",rarity="common",textureID="96434260024281",skinClass="Melees",sa={color="rbxassetid://96434260024281",normal="",roughness="",metalness=""}},
+			{name="bat_laminate",display="Laminate",rarity="uncommon",textureID="14983660185",skinClass="Melees",sa={color="rbxassetid://14983660185",normal="rbxassetid://14983660185",roughness="rbxassetid://14983660185",metalness="rbxassetid://14983660185"}},
+			{name="bat_cosmic",display="Cosmic",rarity="rare",textureID="15445293206",skinClass="Melees",sa={color="rbxassetid://15445293206",normal="rbxassetid://15445293206",roughness="rbxassetid://15445293206",metalness="rbxassetid://15445293206"}},
+			{name="bat_blackjack",display="Blackjack",rarity="legendary",textureID="16687987095",skinClass="Melees",sa={color="rbxassetid://16687987095",normal="rbxassetid://16687987095",roughness="rbxassetid://16687987095",metalness="rbxassetid://16687987095"}},
+			{name="bat_cricket_blackpearl",display="Cricket: Blackpearl",rarity="exotic",textureID="15449155266",skinClass="Melees",sa={color="rbxassetid://15449155266",normal="rbxassetid://15449155266",roughness="rbxassetid://15449155266",metalness="rbxassetid://15449155266"}},
+			{name="bat_cricket_bluegem",display="Cricket: Bluegem",rarity="exotic",textureID="15449171966",skinClass="Melees",sa={color="rbxassetid://15449171966",normal="rbxassetid://15449171966",roughness="rbxassetid://15449171966",metalness="rbxassetid://15449171966"}},
+			{name="bat_cricket_damascus",display="Cricket: Damascus",rarity="exotic",textureID="15449190167",skinClass="Melees",sa={color="rbxassetid://15449190167",normal="rbxassetid://15449190167",roughness="rbxassetid://15449190167",metalness="rbxassetid://15449190167"}},
+			{name="bat_cricket_emerald",display="Cricket: Emerald",rarity="exotic",textureID="15449096192",skinClass="Melees",sa={color="rbxassetid://15449096192",normal="rbxassetid://15449096192",roughness="rbxassetid://15449096192",metalness="rbxassetid://15449096192"}},
+			{name="bat_cricket_forest",display="Cricket: Forest",rarity="exotic",textureID="15449106139",skinClass="Melees",sa={color="rbxassetid://15449106139",normal="rbxassetid://15449106139",roughness="rbxassetid://15449106139",metalness="rbxassetid://15449106139"}},
+			{name="bat_cricket_olivedrift",display="Cricket: Olivedrift",rarity="exotic",textureID="15449137460",skinClass="Melees",sa={color="rbxassetid://15449137460",normal="rbxassetid://15449137460",roughness="rbxassetid://15449137460",metalness="rbxassetid://15449137460"}},
+			{name="bat_cricket_rustic",display="Cricket: Rustic",rarity="exotic",textureID="15449148208",skinClass="Melees",sa={color="rbxassetid://15449148208",normal="rbxassetid://15449148208",roughness="rbxassetid://15449148208",metalness="rbxassetid://15449148208"}},
+			{name="bat_cricket_vanilla",display="Cricket: Vanilla",rarity="exotic",textureID="15449203020",skinClass="Melees",sa={color="rbxassetid://15449203020",normal="rbxassetid://15449203020",roughness="rbxassetid://15449203020",metalness="rbxassetid://15449203020"}},
+			{name="bat_cashcane",display="Cash Cane",rarity="limited",textureID="15998559023",skinClass="Guns",sa={color="rbxassetid://16300595972",normal="rbxassetid://16299761577",roughness="rbxassetid://16300595459",metalness="rbxassetid://16299760247"}},
+		},
+		["Bayonet"]={
+			{name="bayonet_stonecut",display="Stonecit",rarity="subcommon",textureID="95862205225241",skinClass="Melees",sa={color="rbxassetid://95862205225241",normal="",roughness="",metalness=""}},
+			{name="bayonet_paintsplatter",display="Paint Splatter",rarity="common",textureID="15710701683",skinClass="Melees",sa={color="rbxassetid://15710701683",normal="rbxassetid://15710701683",roughness="rbxassetid://15710701683",metalness="rbxassetid://15710701683"}},
+			{name="bayonet_redtopo",display="Red Topo",rarity="common",textureID="14982984551",skinClass="Melees",sa={color="rbxassetid://14982984551",normal="rbxassetid://14982987123",roughness="rbxassetid://14982988058",metalness="rbxassetid://14982986074"}},
+			{name="bayonet_fangs",display="Fangs",rarity="uncommon",textureID="14983866000",skinClass="Melees",sa={color="rbxassetid://14983866000",normal="rbxassetid://14982987123",roughness="rbxassetid://14982988058",metalness="rbxassetid://14982986074"}},
+			{name="bayonet_hydrographed",display="Hydrographed",rarity="uncommon",textureID="16688339293",skinClass="Melees",sa={color="rbxassetid://16688338006",normal="rbxassetid://16688340298",roughness="rbxassetid://16688341008",metalness="rbxassetid://16688338406"}},
+			{name="bayonet_violet",display="Violet",rarity="uncommon",textureID="15448020909",skinClass="Melees",sa={color="rbxassetid://15448020909",normal="rbxassetid://15448020909",roughness="rbxassetid://15448020909",metalness="rbxassetid://15448020909"}},
+			{name="bayonet_icicle",display="Bayonet Icicle",rarity="limited",textureID="17778081372",skinClass="Melees",sa=nil},
+		},
+		["Beretta"]={
+			{name="beretta_faded",display="Faded Orchid",rarity="subcommon",textureID="118073188574202",skinClass="Guns",sa={color="rbxassetid://118073188574202",normal="",roughness="",metalness=""}},
+			{name="beretta_moss",display="Moss",rarity="common",textureID="13443011965",skinClass="Guns",sa={color="rbxassetid://13443011965",normal="rbxassetid://13388061241",roughness="rbxassetid://13388062020",metalness="rbxassetid://13388060473"}},
+			{name="beretta_silvered",display="Silvered",rarity="common",textureID="15998401350",skinClass="Guns",sa={color="rbxassetid://15998401350",normal="rbxassetid://15998401350",roughness="rbxassetid://15998401350",metalness="rbxassetid://15998401350"}},
+			{name="beretta_urbanred",display="Urban Red",rarity="common",textureID="13841598427",skinClass="Guns",sa={color="rbxassetid://13841595045",normal="rbxassetid://13841596345",roughness="rbxassetid://13841597360",metalness="rbxassetid://13841595733"}},
+			{name="beretta_vampire",display="Vampire Hunter",rarity="common",textureID="110118886587312",skinClass="Guns",sa={color="rbxassetid://110118886587312",normal="rbxassetid://110118886587312",roughness="rbxassetid://110118886587312",metalness="rbxassetid://110118886587312"}},
+			{name="beretta_wooden",display="Wooden Blaster",rarity="common",textureID="15695415641",skinClass="Guns",sa={color="rbxassetid://15695411633",normal="rbxassetid://15695410939",roughness="rbxassetid://15695410486",metalness="rbxassetid://15695411201"}},
+			{name="beretta_clef",display="Clef",rarity="uncommon",textureID="13387793497",skinClass="Guns",sa={color="rbxassetid://13387587315",normal="rbxassetid://13387589539",roughness="rbxassetid://13387590166",metalness="rbxassetid://13387588930"}},
+			{name="beretta_tiger",display="Tiger",rarity="uncommon",textureID="13704090301",skinClass="Guns",sa={color="rbxassetid://13704088639",normal="rbxassetid://13387589539",roughness="rbxassetid://13387590166",metalness="rbxassetid://13387588930"}},
+			{name="beretta_walker",display="Walker",rarity="uncommon",textureID="15177179442",skinClass="Guns",sa={color="rbxassetid://15177179442",normal="rbxassetid://15177179442",roughness="rbxassetid://15177179442",metalness="rbxassetid://15177179442"}},
+			{name="beretta_gold",display="Golden Beretta",rarity="limited",textureID="15039167103",skinClass="Guns",sa={color="rbxassetid://15071881699",normal="rbxassetid://15071881251",roughness="rbxassetid://15071880826",metalness="rbxassetid://15071881490",customColor={145,127,175}}},
+			{name="beretta_gold",display="Golden Beretta",rarity="limited",textureID="15039167103",skinClass="Guns",sa={color="rbxassetid://15071881699",normal="rbxassetid://15071881251",roughness="rbxassetid://15071880826",metalness="rbxassetid://15071881490",customColor={145,127,175}}},
+		},
+		["Chainsaw"]={
+			{name="chainsaw_flesh",display="Flesh Grinder",rarity="common",textureID="84720894767609",skinClass="Melees",sa={color="rbxassetid://84720894767609",normal="",roughness="",metalness=""}},
+			{name="chainsaw_tealcoat",display="Teal Coat",rarity="common",textureID="14983382088",skinClass="Melees",sa={color="rbxassetid://14983382088",normal="rbxassetid://14983382088",roughness="rbxassetid://14983382088",metalness="rbxassetid://14983382088"}},
+			{name="chainsaw_skullforged",display="Skull Forged",rarity="uncommon",textureID="15445199244",skinClass="Melees",sa={color="rbxassetid://15445199244",normal="rbxassetid://15445199244",roughness="rbxassetid://15445199244",metalness="rbxassetid://15445199244"}},
+			{name="chainsaw_chromatic",display="Chromatic",rarity="rare",textureID="16688110086",skinClass="Melees",sa={color="rbxassetid://16688109289",normal="rbxassetid://16688110436",roughness="rbxassetid://16688110086",metalness="rbxassetid://16688109691"}},
+			{name="chainsaw_frostysrevenge",display="Frosty's Revenge",rarity="rare",textureID="108135882535629",skinClass="Melees",sa={color="rbxassetid://108135882535629",normal="",roughness="",metalness=""}},
+			{name="chainsaw_runic",display="Runic",rarity="legendary",textureID="124391413731378",skinClass="Melees",sa={color="rbxassetid://124391413731378",normal="rbxassetid://80321921079422",roughness="rbxassetid://129961044112883",metalness="rbxassetid://124391413731378"}},
+			{name="chainsaw_rip",display="RIPPER",rarity="limited",textureID="15177796575",skinClass="Melees",sa={color="rbxassetid://15177794155",normal="rbxassetid://15177357891",roughness="rbxassetid://15177358508",metalness="rbxassetid://15177357345"}},
+		},
+		["Crowbar"]={
+			{name="crowbar_cobalt",display="Cobalt",rarity="common",textureID="14982777465",skinClass="Melees",sa={color="rbxassetid://14982777465",normal="rbxassetid://8999009362",roughness="rbxassetid://8999009938",metalness="rbxassetid://8999008742"}},
+			{name="crowbar_cobalt",display="Cobalt Pry",rarity="common",textureID="14982777465",skinClass="Melees",sa={color="rbxassetid://14982777465",normal="rbxassetid://8999009362",roughness="rbxassetid://8999009938",metalness="rbxassetid://8999008742"}},
+			{name="crowbar_hazardous",display="Hazardous",rarity="uncommon",textureID="16688168392",skinClass="Melees",sa={color="rbxassetid://16688167039",normal="rbxassetid://16688167807",roughness="rbxassetid://16688168882",metalness="rbxassetid://16688166309"}},
+		},
+		["Deagle"]={
+			{name="deagle_acrylic",display="Acrylic",rarity="common",textureID="13714051745",skinClass="Guns",sa={color="rbxassetid://13714048705",normal="rbxassetid://13567912487",roughness="rbxassetid://13567913639",metalness="rbxassetid://13567909944"}},
+			{name="deagle_gingerbread",display="Gingerbread",rarity="uncommon",textureID="15695335671",skinClass="Guns",sa={color="rbxassetid://15695335671",normal="rbxassetid://15695335671",roughness="rbxassetid://15695335671",metalness="rbxassetid://15695335671"}},
+			{name="deagle_aurora",display="Aurora",rarity="rare",textureID="113122788396408",skinClass="Guns",sa={color="rbxassetid://113122788396408",normal="",roughness="",metalness=""}},
+			{name="deagle_eagleeye",display="Eagle Eye",rarity="rare",textureID="13937649183",skinClass="Guns",sa={color="rbxassetid://13937646988",normal="rbxassetid://13935410021",roughness="rbxassetid://13935410676",metalness="rbxassetid://13937635046"}},
+			{name="deagle_ember",display="Ember",rarity="rare",textureID="16041800350",skinClass="Guns",sa={color="rbxassetid://16041800350",normal="rbxassetid://16041800350",roughness="rbxassetid://16041800350",metalness="rbxassetid://16041800350"}},
+			{name="deagle_plasma",display="Plasma",rarity="rare",textureID="13567917232",skinClass="Guns",sa={color="rbxassetid://13567908266",normal="rbxassetid://13567912487",roughness="rbxassetid://13567913639",metalness="rbxassetid://13567909944"}},
+			{name="deagle_presidential",display="Presidential",rarity="rare",textureID="18198670122",skinClass="Guns",sa={color="rbxassetid://18198670122",normal="rbxassetid://18198670122",roughness="rbxassetid://18198670122",metalness="rbxassetid://18198670122"}},
+			{name="deagle_federation",display="Federation",rarity="legendary",textureID="13841715646",skinClass="Guns",sa={color="rbxassetid://13841710519",normal="rbxassetid://13841679919",roughness="rbxassetid://13841712407",metalness="rbxassetid://13841679235"}},
+			{name="deagle_nacho",display="Nacho",rarity="legendary",textureID="16942393059",skinClass="Guns",sa={color="rbxassetid://16942392011",normal="rbxassetid://16942393650",roughness="rbxassetid://16942394043",metalness="rbxassetid://16942392549"}},
+			{name="deagle_reaper",display="Reaper",rarity="legendary",textureID="72301183330195",skinClass="Guns",sa={color="rbxassetid://72301183330195",normal="rbxassetid://8969351301",roughness="rbxassetid://8969352384",metalness="rbxassetid://8969349955"}},
+			{name="deagle_gold",display="Golden Deagle",rarity="limited",textureID="9422471620",skinClass="Guns",sa={color="rbxassetid://9422465914",normal="rbxassetid://9368506864",roughness="rbxassetid://9422469052",metalness="rbxassetid://9422467019",customColor={145,127,175}}},
+			{name="deagle_modern",display="Modern",rarity="limited",textureID="11934375653",skinClass="Guns",sa={color="rbxassetid://11934375653",normal="rbxassetid://11934385269",roughness="rbxassetid://11934387175",metalness="rbxassetid://11934381207"}},
+			{name="deagle_omori",display="OMORI",rarity="limited",textureID="136460482192003",skinClass="Guns",sa={color="rbxassetid://136460482192003",normal="rbxassetid://136460482192003",roughness="rbxassetid://136460482192003",metalness="rbxassetid://136460482192003",customColor={145,127,175}}},
+		},
+		["FN-FAL"]={
+			{name="fal_merlot",display="Merlot",rarity="common",textureID="13566086660",skinClass="Guns",sa={color="rbxassetid://13566072355",normal="rbxassetid://13566075780",roughness="rbxassetid://13566082947",metalness="rbxassetid://13566073596"}},
+			{name="fal_wintermaroon",display="Winter Maroon",rarity="common",textureID="15710689660",skinClass="Guns",sa={color="rbxassetid://15710689660",normal="rbxassetid://15710689660",roughness="rbxassetid://15710689660",metalness="rbxassetid://15710689660"}},
+			{name="fal_purpleheart",display="Purpleheart",rarity="uncommon",textureID="16040566709",skinClass="Guns",sa={color="rbxassetid://16040566709",normal="rbxassetid://16040566709",roughness="rbxassetid://16040566709",metalness="rbxassetid://16040566709"}},
+			{name="fal_majesty",display="Majesty",rarity="rare",textureID="13343296728",skinClass="Guns",sa={color="rbxassetid://12268008265",normal="rbxassetid://12267979962",roughness="rbxassetid://12267980974",metalness="rbxassetid://12267979022"}},
+		},
+		["FNP-45"]={
+			{name="fnp_tan",display="Tan",rarity="common",textureID="15998535930",skinClass="Guns",sa={color="rbxassetid://15998535930",normal="rbxassetid://15998535930",roughness="rbxassetid://15998535930",metalness="rbxassetid://15998535930"}},
+			{name="fnp_bloodshot",display="Bloodshot",rarity="uncommon",textureID="13566144332",skinClass="Guns",sa={color="rbxassetid://13566118019",normal="rbxassetid://13566120150",roughness="rbxassetid://13566128289",metalness="rbxassetid://13566119175"}},
+			{name="fnp_pulse",display="Pulse",rarity="uncommon",textureID="16355357985",skinClass="Guns",sa={color="rbxassetid://9170832779",normal="rbxassetid://9170834197",roughness="rbxassetid://9170835896",metalness="rbxassetid://9170833562"}},
+		},
+		["Fire-Axe"]={
+			{name="fireaxe_07gift",display="07 Gift",rarity="common",textureID="15695434311",skinClass="Melees",sa={color="rbxassetid://15695429682",normal="rbxassetid://15695429360",roughness="rbxassetid://15695428821",metalness="rbxassetid://15695429036"}},
+			{name="fireaxe_oak",display="Oak",rarity="common",textureID="14983489673",skinClass="Melees",sa={color="rbxassetid://14983489673",normal="rbxassetid://14983489673",roughness="rbxassetid://14983489673",metalness="rbxassetid://14983489673"}},
+			{name="fireaxe_axon",display="Axon",rarity="uncommon",textureID="16688204992",skinClass="Melees",sa={color="rbxassetid://16688204062",normal="rbxassetid://16688205447",roughness="rbxassetid://16688206001",metalness="rbxassetid://16688204499"}},
+			{name="fireaxe_candied",display="Candied Axe",rarity="uncommon",textureID="130251013763185",skinClass="Melees",sa={color="rbxassetid://130251013763185",normal="rbxassetid://130251013763185",roughness="rbxassetid://130251013763185",metalness="rbxassetid://130251013763185"}},
+			{name="fireaxe_jaws",display="Jaws",rarity="uncommon",textureID="15450295670",skinClass="Melees",sa={color="rbxassetid://15450295670",normal="rbxassetid://15450295670",roughness="rbxassetid://15450295670",metalness="rbxassetid://15450295670"}},
+			{name="fireaxe_bio",display="Bio-Tool",rarity="rare",textureID="122222905147597",skinClass="Melees",sa={color="rbxassetid://122222905147597",normal="",roughness="",metalness=""}},
+			{name="fireaxe_diesel",display="Diesel",rarity="rare",textureID="15014648272",skinClass="Melees",sa={color="rbxassetid://15014648272",normal="rbxassetid://15014647691",roughness="rbxassetid://15014647556",metalness="rbxassetid://15014640798"}},
+			{name="fireaxe_xo",display="XO",rarity="rare",textureID="16357722686",skinClass="Melees",sa={color="rbxassetid://16357722686",normal="rbxassetid://16357722686",roughness="rbxassetid://16357722686",metalness="rbxassetid://16357722686"}},
+			{name="fireaxe_tactical_blackpearl",display="Tactical: Blackpearl",rarity="exotic",textureID="15448222326",skinClass="Melees",sa={color="rbxassetid://15448222326",normal="rbxassetid://15448222326",roughness="rbxassetid://15448222326",metalness="rbxassetid://15448222326"}},
+			{name="fireaxe_tactical_bluegem",display="Tactical: Bluegem",rarity="exotic",textureID="15039861739",skinClass="Melees",sa={color="rbxassetid://15039861739",normal="rbxassetid://15039861739",roughness="rbxassetid://15039861739",metalness="rbxassetid://15039861739"}},
+			{name="fireaxe_tactical_damascus",display="Tactical: Damascus",rarity="exotic",textureID="15039856279",skinClass="Melees",sa={color="rbxassetid://15039856279",normal="rbxassetid://15039856279",roughness="rbxassetid://15039856279",metalness="rbxassetid://15039856279"}},
+			{name="fireaxe_tactical_emerald",display="Tactical: Emerald",rarity="exotic",textureID="15448202220",skinClass="Melees",sa={color="rbxassetid://15448202220",normal="rbxassetid://15448202220",roughness="rbxassetid://15448202220",metalness="rbxassetid://15448202220"}},
+			{name="fireaxe_tactical_forest",display="Tactical: Forest",rarity="exotic",textureID="15039850470",skinClass="Melees",sa={color="rbxassetid://15039850470",normal="rbxassetid://15039850470",roughness="rbxassetid://15039850470",metalness="rbxassetid://15039850470"}},
+			{name="fireaxe_tactical_kintsugi",display="Tactical: Kintsugi",rarity="exotic",textureID="15039866167",skinClass="Melees",sa={color="rbxassetid://15039866167",normal="rbxassetid://15039866167",roughness="rbxassetid://15039866167",metalness="rbxassetid://15039866167"}},
+			{name="fireaxe_tactical_olivedrift",display="Tactical: Olivedrift",rarity="exotic",textureID="15070266784",skinClass="Melees",sa={color="rbxassetid://15070266784",normal="rbxassetid://15070266784",roughness="rbxassetid://15070266784",metalness="rbxassetid://15070266784"}},
+			{name="fireaxe_tactical_rustic",display="Tactical: Rustic",rarity="exotic",textureID="15039869342",skinClass="Melees",sa={color="rbxassetid://15039869342",normal="rbxassetid://15039869342",roughness="rbxassetid://15039869342",metalness="rbxassetid://15039869342"}},
+			{name="fireaxe_tactical_vanilla",display="Tactical: Vanilla",rarity="exotic",textureID="14984257142",skinClass="Melees",sa={color="rbxassetid://14984257142",normal="rbxassetid://14984257142",roughness="rbxassetid://14984257142",metalness="rbxassetid://14984257142"}},
+		},
+		["G-17"]={
+			{name="g17_benjamin",display="Benjamin",rarity="common",textureID="18198687338",skinClass="Guns",sa={color="rbxassetid://18198687338",normal="rbxassetid://18198687338",roughness="rbxassetid://18198687338",metalness="rbxassetid://18198687338"}},
+			{name="g17_gleagle",display="Gleagle",rarity="common",textureID="16911006388",skinClass="Guns",sa={color="rbxassetid://16911005097",normal="rbxassetid://16911007007",roughness="rbxassetid://16911007567",metalness="rbxassetid://16911005667"}},
+			{name="g17_night",display="Night",rarity="common",textureID="10899181873",skinClass="Guns",sa={color="rbxassetid://10899178487",normal="rbxassetid://10899190543",roughness="rbxassetid://10899191886",metalness="rbxassetid://10899187519",customColor={104,117,121},customParts={"FrontSightColorPart","RearSightColorPart"}}},
+			{name="g17_sage",display="Sage",rarity="common",textureID="10898774042",skinClass="Guns",sa={color="rbxassetid://10898771076",normal="rbxassetid://10898799572",roughness="rbxassetid://10898801144",metalness="rbxassetid://10898797751",customColor={116,121,98},customParts={"FrontSightColorPart","RearSightColorPart"}}},
+			{name="g17_tan",display="Tan",rarity="common",textureID="13841573907",skinClass="Guns",sa={color="rbxassetid://13841571102",normal="rbxassetid://13841572406",roughness="rbxassetid://13841572919",metalness="rbxassetid://13841571957",customColor={121,108,98},customParts={"FrontSightColorPart","RearSightColorPart"}}},
+			{name="g17_photon",display="Photon",rarity="uncommon",textureID="94317587382863",skinClass="Guns",sa={color="rbxassetid://94317587382863",normal="",roughness="",metalness=""}},
+			{name="g17_warhawk",display="Spitfire",rarity="uncommon",textureID="10898479150",skinClass="Guns",sa={color="rbxassetid://10898489161",normal="rbxassetid://10898493545",roughness="rbxassetid://10898494181",metalness="rbxassetid://10898492739",customColor={197,189,106},customParts={"FrontSightColorPart","RearSightColorPart"}}},
+			{name="g17_crunch",display="CRUNCH",rarity="rare",textureID="136064273359037",skinClass="Guns",sa={color="rbxassetid://136064273359037",normal="rbxassetid://136064273359037",roughness="rbxassetid://136064273359037",metalness="rbxassetid://136064273359037"}},
+			{name="g17_oxide",display="Oxide",rarity="rare",textureID="13556396197",skinClass="Guns",sa={color="rbxassetid://13556385916",normal="rbxassetid://13556387454",roughness="rbxassetid://13556388249",metalness="rbxassetid://13556386783",customColor={145,190,197},customParts={"FrontSightColorPart","RearSightColorPart"}}},
+			{name="g17_yosei",display="Yōsei",rarity="rare",textureID="15707661222",skinClass="Guns",sa={color="rbxassetid://15707661222",normal="rbxassetid://15707661222",roughness="rbxassetid://15707661222",metalness="rbxassetid://15707661222"}},
+			{name="g17_amethyst",display="Amethyst",rarity="legendary",textureID="9344560860",skinClass="Guns",sa={color="rbxassetid://9344554991",normal="rbxassetid://9344557259",roughness="rbxassetid://9344558040",metalness="rbxassetid://9344556621",customColor={121,113,163},customParts={"FrontSightColorPart","RearSightColorPart"}}},
+			{name="g17_hotpink",display="Hot Pink",rarity="legendary",textureID="15998559023",skinClass="Guns",sa={color="rbxassetid://15998559023",normal="rbxassetid://15998559023",roughness="rbxassetid://15998559023",metalness="rbxassetid://15998559023"}},
+			{name="g17_eliminated",display="ELIMINATION",rarity="limited",textureID="94164067871562",skinClass="Guns",sa={color="rbxassetid://94164067871562",normal="rbxassetid://75074216652378",roughness="rbxassetid://112379003610843",metalness="rbxassetid://133337669834230",customColor={17,17,17}}},
+			{name="g17_sigma",display="Sigma",rarity="custom",textureID="17861230617",skinClass="Guns",sa={color="rbxassetid://17861230617",normal="rbxassetid://17861230617",roughness="rbxassetid://17861230617",metalness="rbxassetid://17861230617",customColor={229,134,255},customParts={"FrontSightColorPart","RearSightColorPart"}}},
+		},
+		["Golfclub"]={
+			{name="golfclub_mocha",display="Mocha",rarity="common",textureID="15445223443",skinClass="Melees",sa={color="rbxassetid://15445223443",normal="rbxassetid://15445223443",roughness="rbxassetid://15445223443",metalness="rbxassetid://15445223443"}},
+			{name="golfclub_orangeshift",display="Orange Shift",rarity="uncommon",textureID="14983545106",skinClass="Melees",sa={color="rbxassetid://14983545106",normal="rbxassetid://14983550867",roughness="rbxassetid://14983551891",metalness="rbxassetid://14983549891"}},
+		},
+		["Ithaca-37"]={
+			{name="ithaca_lined",display="Lined Legacy",rarity="subcommon",textureID="13388406520",skinClass="Guns",sa={color="rbxassetid://13388406520",normal="",roughness="",metalness=""}},
+			{name="ithaca_homedefense",display="Home Defense",rarity="common",textureID="13935300358",skinClass="Guns",sa={color="rbxassetid://13935302367",normal="rbxassetid://13935306192",roughness="rbxassetid://13935303200",metalness="rbxassetid://13935310687"}},
+			{name="ithaca_ithcuh",display="Ithcuh",rarity="common",textureID="16910987164",skinClass="Guns",sa={color="rbxassetid://16910986091",normal="rbxassetid://16910987518",roughness="rbxassetid://16910987829",metalness="rbxassetid://16910986411"}},
+			{name="ithaca_peppershot",display="Peppershot",rarity="uncommon",textureID="109757276465431",skinClass="Guns",sa={color="rbxassetid://109757276465431",normal="",roughness="",metalness=""}},
+			{name="ithaca_reserve",display="Reserve",rarity="uncommon",textureID="13841786305",skinClass="Guns",sa={color="rbxassetid://13841781874",normal="rbxassetid://13565563166",roughness="rbxassetid://13565564605",metalness="rbxassetid://13565561573"}},
+			{name="ithaca_sightings",display="Sightings",rarity="uncommon",textureID="15183702458",skinClass="Guns",sa=nil},
+			{name="ithaca_blaze",display="Blaze",rarity="rare",textureID="13715287969",skinClass="Guns",sa={color="rbxassetid://13703922904",normal="rbxassetid://13703924503",roughness="rbxassetid://13703925013",metalness="rbxassetid://13703923500"}},
+			{name="ithaca_darkmatter",display="Darkmatter",rarity="rare",textureID="15998588320",skinClass="Guns",sa={color="rbxassetid://15998588320",normal="rbxassetid://15998588320",roughness="rbxassetid://15998588320",metalness="rbxassetid://15998588320"}},
+			{name="ithaca_hellfire",display="HELLFIRE",rarity="limited",textureID="88337624827127",skinClass="Guns",sa={color="rbxassetid://120094510362818",normal="rbxassetid://89491017367979",roughness="rbxassetid://131860023245181",metalness="rbxassetid://113748442311389",customColor={0,0,0}}},
+		},
+		["Katana"]={
+			{name="katana_modest",display="Modest",rarity="common",textureID="15445242510",skinClass="Melees",sa={color="rbxassetid://15445242510",normal="rbxassetid://15445242510",roughness="rbxassetid://15445242510",metalness="rbxassetid://15445242510"}},
+			{name="katana_acacia",display="Acacia",rarity="uncommon",textureID="16688145580",skinClass="Melees",sa={color="rbxassetid://16688144837",normal="rbxassetid://16688145997",roughness="rbxassetid://16688146261",metalness="rbxassetid://16688145249"}},
+			{name="katana_arctx",display="ARCTX",rarity="rare",textureID="15695443919",skinClass="Melees",sa={color="rbxassetid://15695443919",normal="rbxassetid://15695443919",roughness="rbxassetid://15695443919",metalness="rbxassetid://15695443919"}},
+			{name="katana_alchemist",display="Alchemist",rarity="rare",textureID="109290882173174",skinClass="Melees",sa={color="rbxassetid://109290882173174",normal="rbxassetid://109290882173174",roughness="rbxassetid://109290882173174",metalness="rbxassetid://109290882173174"}},
+			{name="katana_saphira",display="Saphira",rarity="rare",textureID="14983772470",skinClass="Melees",sa={color="rbxassetid://14983772470",normal="rbxassetid://14983772470",roughness="rbxassetid://14983772470",metalness="rbxassetid://14983772470"}},
+			{name="katana_hallowsblade",display="Hallows Blade",rarity="legendary",textureID="15177264050",skinClass="Melees",sa={color="rbxassetid://15177264050",normal="rbxassetid://15177264050",roughness="rbxassetid://15177264050",metalness="rbxassetid://15177264050"}},
+			{name="katana_yuletide",display="Yuletide",rarity="legendary",textureID="78387945331940",skinClass="Melees",sa={color="rbxassetid://78387945331940",normal="",roughness="",metalness=""}},
+			{name="katana_dragon",display="Dragon",rarity="limited",textureID="17519365000",skinClass="Melees",sa=nil},
+			{name="katana_gold",display="Golden Katana",rarity="limited",textureID="15012855048",skinClass="Melees",sa={color="rbxassetid://15012855048",normal="rbxassetid://15012854439",roughness="rbxassetid://15012854262",metalness="rbxassetid://15012854848"}},
+			{name="katana_gold",display="Golden Katana",rarity="limited",textureID="15012855048",skinClass="Melees",sa={color="rbxassetid://15012855048",normal="rbxassetid://15012854439",roughness="rbxassetid://15012854262",metalness="rbxassetid://15012854848"}},
+			{name="katana_voidedge",display="Voidedge",rarity="limited",textureID="15653919187",skinClass="Melees",sa={color="rbxassetid://15012855048",normal="rbxassetid://15012854439",roughness="rbxassetid://15012854262",metalness="rbxassetid://15012854848"}},
+			{name="katana_voidedge",display="Voidedge",rarity="limited",textureID="15653919187",skinClass="Melees",sa={color="rbxassetid://15012855048",normal="rbxassetid://15012854439",roughness="rbxassetid://15012854262",metalness="rbxassetid://15012854848"}},
+		},
+		["M1911"]={
+			{name="1911_ironsight",display="Ironsight",rarity="common",textureID="13388235569",skinClass="Guns",sa={color="rbxassetid://13388236414",normal="rbxassetid://13388219329",roughness="rbxassetid://13388219893",metalness="rbxassetid://13388218612"}},
+			{name="1911_sandwaves",display="Sandwaves",rarity="common",textureID="15998637813",skinClass="Guns",sa={color="rbxassetid://15998637813",normal="rbxassetid://15998637813",roughness="rbxassetid://15998637813",metalness="rbxassetid://15998637813"}},
+			{name="1911_stainless",display="Stainless",rarity="uncommon",textureID="13842570127",skinClass="Guns",sa={color="rbxassetid://13842569053",normal="rbxassetid://13841646259",roughness="rbxassetid://13841646833",metalness="rbxassetid://13841645564"}},
+			{name="1911_lunar",display="Lunar",rarity="rare",textureID="128273297919691",skinClass="Guns",sa={color="rbxassetid://128273297919691",normal="",roughness="",metalness=""}},
+			{name="1911_rebel",display="Rebel",rarity="rare",textureID="13410200181",skinClass="Guns",sa={color="rbxassetid://13410196884",normal="rbxassetid://13410197562",roughness="rbxassetid://13410199143",metalness="rbxassetid://13410198420"}},
+			{name="1911_darkheart",display="Darkheart",rarity="legendary",textureID="13556210238",skinClass="Guns",sa={color="rbxassetid://13564716720",normal="rbxassetid://13564718375",roughness="rbxassetid://13564719235",metalness="rbxassetid://13564717513"}},
+			{name="1911_unity",display="Unity",rarity="legendary",textureID="18149758418",skinClass="Guns",sa={color="rbxassetid://18149758418",normal="rbxassetid://18149758418",roughness="rbxassetid://18149758418",metalness="rbxassetid://18149758418"}},
+			{name="1911_oldglory",display="Old Glory",rarity="limited",textureID="13948809897",skinClass="Guns",sa={color="rbxassetid://13948805827",normal="rbxassetid://13948291596",roughness="rbxassetid://13948321939",metalness="rbxassetid://13948290980",customColor={145,127,175}}},
+			{name="1911_oldglory",display="Old Glory",rarity="limited",textureID="13948809897",skinClass="Guns",sa={color="rbxassetid://13948805827",normal="rbxassetid://13948291596",roughness="rbxassetid://13948321939",metalness="rbxassetid://13948290980",customColor={145,127,175}}},
+		},
+		["M320-1"]={
+			{name="m320_paintball",display="Paintball",rarity="uncommon",textureID="13842616391",skinClass="Guns",sa={color="rbxassetid://13842613980",normal="rbxassetid://13841618026",roughness="rbxassetid://13841618889",metalness="rbxassetid://13841616724"}},
+		},
+		["M4A1-1"]={
+			{name="m4a1_monochrome",display="Monochrome",rarity="common",textureID="13388680352",skinClass="Guns",sa={color="rbxassetid://13388682540",normal="rbxassetid://13388684117",roughness="rbxassetid://13388684783",metalness="rbxassetid://13388683605"}},
+			{name="m4a1_colacamo",display="Cola-Camo",rarity="uncommon",textureID="16910928732",skinClass="Guns",sa={color="rbxassetid://16910927803",normal="rbxassetid://16910929076",roughness="rbxassetid://16910929618",metalness="rbxassetid://16910928172"}},
+			{name="m4a1_tiles",display="Tiles",rarity="uncommon",textureID="13387863271",skinClass="Guns",sa={color="rbxassetid://13387870685",normal="rbxassetid://13387874528",roughness="rbxassetid://13387875337",metalness="rbxassetid://13387873917"}},
+			{name="m4a1_yellowstone",display="Yellowstone",rarity="uncommon",textureID="15998612264",skinClass="Guns",sa={color="rbxassetid://15998612264",normal="rbxassetid://15998612264",roughness="rbxassetid://15998612264",metalness="rbxassetid://15998612264"}},
+			{name="m4a1_circuit",display="Circuit",rarity="rare",textureID="13841653101",skinClass="Guns",sa={color="rbxassetid://13841654362",normal="rbxassetid://13841656305",roughness="rbxassetid://13841657147",metalness="rbxassetid://13841655173"}},
+			{name="m4a1_aureus",display="Aureus",rarity="legendary",textureID="13714597872",skinClass="Guns",sa={color="rbxassetid://13714578814",normal="rbxassetid://13714331534",roughness="rbxassetid://13714329843",metalness="rbxassetid://13714330861"}},
+			{name="m4a1_frostbite",display="Frostbite",rarity="legendary",textureID="15695458963",skinClass="Guns",sa={color="rbxassetid://15695458963",normal="rbxassetid://15695458963",roughness="rbxassetid://15695458963",metalness="rbxassetid://15695458963"}},
+			{name="m4a1_meltdown",display="Meltdown",rarity="legendary",textureID="105367863967017",skinClass="Guns",sa={color="rbxassetid://105367863967017",normal="",roughness="",metalness=""}},
+			{name="m4a1_patriot",display="Patriot",rarity="legendary",textureID="13945992974",skinClass="Guns",sa={color="rbxassetid://13945985275",normal="rbxassetid://13945989865",roughness="rbxassetid://13945990897",metalness="rbxassetid://13945986111"}},
+			{name="m4a1_heritage",display="Heritage",rarity="limited",textureID="18312055711",skinClass="Guns",sa={color="rbxassetid://18312055711",normal="rbxassetid://18312051579",roughness="rbxassetid://18312059297",metalness="rbxassetid://18312051579"}},
+			{name="m4a1_modern",display="Modern",rarity="limited",textureID="8371778205",skinClass="Guns",sa={color="rbxassetid://8371778205",normal="rbxassetid://8371775875",roughness="",metalness=""}},
+			{name="m4a1_opm",display="OPM",rarity="limited",textureID="16932839206",skinClass="Guns",sa={color="rbxassetid://16932838705",normal="rbxassetid://16932839768",roughness="rbxassetid://16932840076",metalness="rbxassetid://16932838927",customColor={8,2,27}}},
+			{name="m4a1_subzero",display="Subzero",rarity="limited",textureID="109664302456309",skinClass="Guns",sa={color="rbxassetid://74488290583882",normal="rbxassetid://135293141470993",roughness="rbxassetid://132524427491436",metalness="rbxassetid://118937932788409",customColor={165,235,255}}},
+		},
+		["M60"]={
+			{name="m60_woodsplitter",display="Woodsplitter",rarity="subcommon",textureID="108644929135165",skinClass="Guns",sa={color="rbxassetid://108644929135165",normal="",roughness="",metalness=""}},
+		},
+		["MAC-10"]={
+			{name="mac10_freedom",display="Freedom",rarity="common",textureID="13935277958",skinClass="Guns",sa={color="rbxassetid://13935272075",normal="rbxassetid://13935274344",roughness="rbxassetid://13935275139",metalness="rbxassetid://13935273127"}},
+			{name="mac10_lostnfound",display="Lost & Found",rarity="common",textureID="13841550040",skinClass="Guns",sa={color="rbxassetid://13841544929",normal="rbxassetid://13841547584",roughness="rbxassetid://13841548498",metalness="rbxassetid://13841546059"}},
+			{name="mac10_lovelycamo",display="Lovely Camo",rarity="common",textureID="16357659168",skinClass="Guns",sa={color="rbxassetid://16357659168",normal="rbxassetid://16357659168",roughness="rbxassetid://16357659168",metalness="rbxassetid://16357659168"}},
+			{name="mac10_urbandispatch",display="Urban Dispatch",rarity="common",textureID="15998655169",skinClass="Guns",sa={color="rbxassetid://15998655169",normal="rbxassetid://15998655169",roughness="rbxassetid://15998655169",metalness="rbxassetid://15998655169"}},
+			{name="mac10_cheese",display="& Cheese",rarity="uncommon",textureID="13556186332",skinClass="Guns",sa={color="rbxassetid://13556188816",normal="rbxassetid://13556191703",roughness="rbxassetid://13556192448",metalness="rbxassetid://13556190532"}},
+			{name="mac10_digital",display="Digital",rarity="uncommon",textureID="13388146611",skinClass="Guns",sa={color="rbxassetid://13388148081",normal="rbxassetid://13387827028",roughness="rbxassetid://13387824789",metalness="rbxassetid://13387826008"}},
+			{name="mac10_eaglespride",display="Eagle's Pride",rarity="uncommon",textureID="18213167058",skinClass="Guns",sa={color="rbxassetid://18213167058",normal="rbxassetid://18213167058",roughness="rbxassetid://18213167058",metalness="rbxassetid://18213167058"}},
+			{name="mac10_harvest",display="Harvest",rarity="uncommon",textureID="123346816049088",skinClass="Guns",sa={color="rbxassetid://123346816049088",normal="rbxassetid://8969383524",roughness="rbxassetid://8969384715",metalness="rbxassetid://8969382198"}},
+			{name="mac10_hazmac",display="Hazmac",rarity="uncommon",textureID="70974550171047",skinClass="Guns",sa={color="rbxassetid://70974550171047",normal="",roughness="",metalness=""}},
+			{name="mac10_cryofox",display="CryoFox",rarity="rare",textureID="133449450385008",skinClass="Guns",sa={color="rbxassetid://133449450385008",normal="",roughness="",metalness=""}},
+			{name="mac10_tropical",display="Tropical",rarity="rare",textureID="13712974251",skinClass="Guns",sa={color="rbxassetid://13712964810",normal="rbxassetid://13556191703",roughness="rbxassetid://13712967534",metalness="rbxassetid://13712966361"}},
+		},
+		["MP7"]={
+			{name="mp7_digital",display="Digital",rarity="common",textureID="13703243112",skinClass="Guns",sa={color="rbxassetid://13703243112",normal="rbxassetid://13703243112",roughness="rbxassetid://13703243112",metalness="rbxassetid://13703243112"}},
+			{name="mp7_navy",display="Navy",rarity="common",textureID="13714361744",skinClass="Guns",sa={color="rbxassetid://13714362770",normal="rbxassetid://13404160425",roughness="rbxassetid://13404161300",metalness="rbxassetid://13404142924"}},
+			{name="mp7_olive",display="Olive",rarity="common",textureID="13404171867",skinClass="Guns",sa={color="rbxassetid://13404159306",normal="rbxassetid://13404160425",roughness="rbxassetid://13404161300",metalness="rbxassetid://13404142924"}},
+			{name="mp7_zombified",display="Zombified",rarity="rare",textureID="15334894800",skinClass="Guns",sa=nil},
+			{name="mp7_hellrazor",display="Hellrazor",rarity="legendary",textureID="13842806014",skinClass="Guns",sa={color="rbxassetid://13842812065",normal="rbxassetid://13841893577",roughness="rbxassetid://13841894868",metalness="rbxassetid://13841892618"}},
+		},
+		["Machete"]={
+			{name="machete_slasher",display="Slasher",rarity="common",textureID="136864966436069",skinClass="Melees",sa={color="rbxassetid://136864966436069",normal="rbxassetid://136864966436069",roughness="rbxassetid://136864966436069",metalness="rbxassetid://136864966436069"}},
+			{name="machete_wallwriter",display="Wallwriter",rarity="common",textureID="16688358515",skinClass="Melees",sa={color="rbxassetid://16688357511",normal="rbxassetid://16688359032",roughness="rbxassetid://16688359499",metalness="rbxassetid://16688357868"}},
+			{name="machete_giftededge",display="Gifted Edge",rarity="uncommon",textureID="135651933018967",skinClass="Melees",sa={color="rbxassetid://135651933018967",normal="",roughness="",metalness=""}},
+			{name="machete_rainbow",display="Rainbow",rarity="uncommon",textureID="16952073758",skinClass="Melees",sa={color="rbxassetid://16952073307",normal="rbxassetid://16910957239",roughness="rbxassetid://16910956716",metalness="rbxassetid://16910957712"}},
+			{name="machete_tix",display="Tix",rarity="rare",textureID="15445249285",skinClass="Melees",sa={color="rbxassetid://15445249285",normal="rbxassetid://15445249285",roughness="rbxassetid://15445249285",metalness="rbxassetid://15445249285"}},
+			{name="machete_scepter",display="Scepter",rarity="legendary",textureID="14984201334",skinClass="Melees",sa={color="rbxassetid://14984201334",normal="rbxassetid://14984201334",roughness="rbxassetid://14984201334",metalness="rbxassetid://14984201334"}},
+			{name="machete_zk_blackpearl",display="Black Pearl",rarity="exotic",textureID="15448244904",skinClass="Melees",sa={color="rbxassetid://15448244904",normal="rbxassetid://15448244904",roughness="rbxassetid://15448244904",metalness="rbxassetid://15448244904"}},
+			{name="machete_zk_blackpearl",display="Black Pearl [ZK]",rarity="exotic",textureID="15448244904",skinClass="Melees",sa={color="rbxassetid://15448244904",normal="rbxassetid://15448244904",roughness="rbxassetid://15448244904",metalness="rbxassetid://15448244904"}},
+			{name="machete_zk_bluegem",display="Bluegem [ZK]",rarity="exotic",textureID="15039202907",skinClass="Melees",sa={color="rbxassetid://15039203215",normal="rbxassetid://15039202668",roughness="rbxassetid://15039203446",metalness="rbxassetid://15039203053"}},
+			{name="machete_zk_damascus",display="Damascus [ZK]",rarity="exotic",textureID="15039195623",skinClass="Melees",sa={color="rbxassetid://15039195623",normal="rbxassetid://15039195623",roughness="rbxassetid://15039195623",metalness="rbxassetid://15039195623"}},
+			{name="machete_zk_emerald",display="Emerald [ZK]",rarity="exotic",textureID="16303081728",skinClass="Melees",sa={color="rbxassetid://16303081728",normal="rbxassetid://16303081728",roughness="rbxassetid://16303081728",metalness="rbxassetid://16303081728"}},
+			{name="machete_zk_forest",display="Forest [ZK]",rarity="exotic",textureID="15039175283",skinClass="Melees",sa={color="rbxassetid://15039175283",normal="rbxassetid://15039175283",roughness="rbxassetid://15039175283",metalness="rbxassetid://15039175283"}},
+			{name="machete_zk_undead",display="Machete: ZK",rarity="exotic",textureID="15039210788",skinClass="Melees",sa={color="rbxassetid://15039210788",normal="rbxassetid://15039210788",roughness="rbxassetid://15039210788",metalness="rbxassetid://15039210788"}},
+			{name="machete_zk_rustic",display="Rustic [ZK]",rarity="exotic",textureID="15039186771",skinClass="Melees",sa={color="rbxassetid://15039186771",normal="rbxassetid://15039186771",roughness="rbxassetid://15039186771",metalness="rbxassetid://15039186771"}},
+			{name="machete_zk_vanilla",display="Vanilla [ZK]",rarity="exotic",textureID="15029004407",skinClass="Melees",sa={color="rbxassetid://15029004407",normal="rbxassetid://15029004407",roughness="rbxassetid://15029004407",metalness="rbxassetid://15029004407"}},
+			{name="machete_zk_olivedrift",display="ZK: Olivedrift",rarity="exotic",textureID="15070276224",skinClass="Melees",sa={color="rbxassetid://15070276224",normal="rbxassetid://15070275513",roughness="rbxassetid://15070275156",metalness="rbxassetid://15070275774"}},
+		},
+		["Magnum"]={
+			{name="magnum_bills",display="Bills",rarity="common",textureID="13935347512",skinClass="Guns",sa={color="rbxassetid://13935343468",normal="rbxassetid://13841632677",roughness="rbxassetid://13851639717",metalness="rbxassetid://13841628817"}},
+			{name="magnum_bronze",display="Bronze",rarity="common",textureID="13402004314",skinClass="Guns",sa={color="rbxassetid://13388529824",normal="rbxassetid://13388534835",roughness="rbxassetid://13388535886",metalness="rbxassetid://13388533297"}},
+			{name="magnum_rustborne",display="Rustborne",rarity="common",textureID="13395647452",skinClass="Guns",sa={color="rbxassetid://13395647452",normal="",roughness="",metalness=""}},
+			{name="magnum_abstract",display="Abstract",rarity="uncommon",textureID="13851642216",skinClass="Guns",sa={color="rbxassetid://13851638932",normal="rbxassetid://13841632677",roughness="rbxassetid://13851639717",metalness="rbxassetid://13841628817"}},
+			{name="magnum_arcticapex",display="Artic Apex",rarity="uncommon",textureID="15710939034",skinClass="Guns",sa={color="rbxassetid://15710939034",normal="rbxassetid://15710939034",roughness="rbxassetid://15710939034",metalness="rbxassetid://15710939034"}},
+			{name="magnum_ironhammer",display="Iron Hammer",rarity="uncommon",textureID="18319380961",skinClass="Guns",sa={color="rbxassetid://18319380961",normal="rbxassetid://18319380961",roughness="rbxassetid://18319380961",metalness="rbxassetid://18319380961"}},
+			{name="magnum_amour",display="Amour",rarity="rare",textureID="16355308299",skinClass="Guns",sa={color="rbxassetid://16355308299",normal="rbxassetid://16355308299",roughness="rbxassetid://16355308299",metalness="rbxassetid://16355308299"}},
+			{name="magnum_inferno",display="Inferno",rarity="limited",textureID="13565659313",skinClass="Guns",sa={color="rbxassetid://13565647644",normal="rbxassetid://13565652460",roughness="rbxassetid://13565654437",metalness="rbxassetid://13565650923",customColor={145,127,175}}},
+			{name="magnum_inferno",display="Inferno",rarity="limited",textureID="13565659313",skinClass="Guns",sa={color="rbxassetid://13565647644",normal="rbxassetid://13565652460",roughness="rbxassetid://13565654437",metalness="rbxassetid://13565650923",customColor={145,127,175}}},
+			{name="firemagnum",display="dont use this.",rarity="limited",textureID="0",skinClass="Guns",sa=nil},
+		},
+		["Mare"]={
+			{name="mare_frostecho",display="Frost Echo",rarity="common",textureID="15695474241",skinClass="Guns",sa={color="rbxassetid://15695474241",normal="rbxassetid://15695474241",roughness="rbxassetid://15695474241",metalness="rbxassetid://15695474241"}},
+			{name="mare_burial",display="Burial",rarity="uncommon",textureID="124598507519706",skinClass="Guns",sa={color="rbxassetid://124598507519706",normal="rbxassetid://124598507519706",roughness="rbxassetid://124598507519706",metalness="rbxassetid://124598507519706"}},
+			{name="mare_foamshot",display="Foamshot",rarity="uncommon",textureID="126702271620280",skinClass="Guns",sa={color="rbxassetid://126702271620280",normal="",roughness="",metalness=""}},
+			{name="mare_maritime",display="Maritime",rarity="uncommon",textureID="15998688712",skinClass="Guns",sa={color="rbxassetid://15998688712",normal="rbxassetid://15998688712",roughness="rbxassetid://15998688712",metalness="rbxassetid://15998688712"}},
+			{name="mare_stallion",display="Stallion",rarity="uncommon",textureID="13564997857",skinClass="Guns",sa={color="rbxassetid://13556460890",normal="rbxassetid://13556462708",roughness="rbxassetid://13556463568",metalness="rbxassetid://13556461661"}},
+			{name="mare_trickshot",display="Trickshot",rarity="limited",textureID="16907786775",skinClass="Guns",sa={color="rbxassetid://16907785827",normal="rbxassetid://16907787618",roughness="rbxassetid://16907788208",metalness="rbxassetid://16907786165"}},
+			{name="mare_trickshot",display="Trickshot",rarity="limited",textureID="16907786775",skinClass="Guns",sa={color="rbxassetid://16907785827",normal="rbxassetid://16907787618",roughness="rbxassetid://16907788208",metalness="rbxassetid://16907786165"}},
+			{name="mare_trickshot",display="Trickshot",rarity="limited",textureID="16907785827",skinClass="Guns",sa={color="rbxassetid://16907785827",normal="rbxassetid://16907787618",roughness="rbxassetid://16907788208",metalness="rbxassetid://16907786165"}},
+		},
+		["Metal-Bat"]={
+			{name="metalbat_battlescarred",display="Battlescarred",rarity="common",textureID="16688459862",skinClass="Melees",sa=nil},
+			{name="metalbat_spiffle",display="Spiffle",rarity="common",textureID="15445297130",skinClass="Melees",sa={color="rbxassetid://15445297130",normal="rbxassetid://15445297130",roughness="rbxassetid://15445297130",metalness="rbxassetid://15445297130"}},
+			{name="metalbat_urbanleather",display="Urban Leather",rarity="common",textureID="14982908326",skinClass="Melees",sa={color="rbxassetid://14982908326",normal="rbxassetid://14982908326",roughness="rbxassetid://14982908326",metalness="rbxassetid://14982908326"}},
+			{name="metalbat_candycorn",display="Candycorn",rarity="uncommon",textureID="15184166771",skinClass="Melees",sa={color="rbxassetid://15184166771",normal="rbxassetid://15184166771",roughness="rbxassetid://15184166771",metalness="rbxassetid://15184166771"}},
+			{name="metalbat_jinglebat",display="Jingle Bat",rarity="uncommon",textureID="84803493814625",skinClass="Melees",sa={color="rbxassetid://84803493814625",normal="",roughness="",metalness=""}},
+			{name="metalbat_tesla",display="Tesla-Coil",rarity="uncommon",textureID="137524582120989",skinClass="Melees",sa={color="rbxassetid://137524582120989",normal="",roughness="",metalness=""}},
+			{name="metalbat_vibecheck",display="Vibecheck`d",rarity="uncommon",textureID="15445259400",skinClass="Melees",sa={color="rbxassetid://15445259400",normal="rbxassetid://15445259400",roughness="rbxassetid://15445259400",metalness="rbxassetid://15445259400"}},
+			{name="metalbat_northpole",display="North Pole",rarity="legendary",textureID="15695386895",skinClass="Melees",sa={color="rbxassetid://15695386895",normal="rbxassetid://15695386895",roughness="rbxassetid://15695386895",metalness="rbxassetid://15695386895"}},
+			{name="metalbat_serpentine",display="Serpentine",rarity="legendary",textureID="15028975758",skinClass="Melees",sa={color="rbxassetid://15028975758",normal="rbxassetid://15028975758",roughness="rbxassetid://15028975758",metalness="rbxassetid://15028975758"}},
+		},
+		["RPG-7"]={
+			{name="rpg7_twotone",display="Two-Tone",rarity="uncommon",textureID="13388376607",skinClass="Guns",sa={color="rbxassetid://13388377781",normal="rbxassetid://13388379378",roughness="rbxassetid://13388380305",metalness="rbxassetid://13388378532"}},
+			{name="rpg7_boom",display="BOOM!",rarity="rare",textureID="10959329950",skinClass="Guns",sa={color="rbxassetid://10959333634",normal="rbxassetid://10959335179",roughness="rbxassetid://10959335703",metalness="rbxassetid://10959334502"}},
+			{name="rpg7_gold",display="Golden RPG",rarity="limited",textureID="13715204837",skinClass="Guns",sa={color="rbxassetid://13715204837",normal="rbxassetid://13715207167",roughness="rbxassetid://13715207920",metalness="rbxassetid://13715205903",customColor={255,170,0}}},
+			{name="rpg7_gold",display="Golden RPG",rarity="limited",textureID="13715204837",skinClass="Guns",sa={color="rbxassetid://13715204837",normal="rbxassetid://13715207167",roughness="rbxassetid://13715207920",metalness="rbxassetid://13715205903",customColor={255,170,0}}},
+		},
+		["Rambo"]={
+			{name="rambo_cocoa",display="Cocoa",rarity="common",textureID="15449254329",skinClass="Melees",sa={color="rbxassetid://15449254329",normal="rbxassetid://15449254329",roughness="rbxassetid://15449254329",metalness="rbxassetid://15449254329"}},
+			{name="rambo_rimecarver",display="Rimecarver",rarity="common",textureID="88056079326083",skinClass="Melees",sa={color="rbxassetid://88056079326083",normal="",roughness="",metalness=""}},
+			{name="rambo_slasha",display="Slasha",rarity="rare",textureID="14983934299",skinClass="Melees",sa={color="rbxassetid://14983934299",normal="rbxassetid://14983934299",roughness="rbxassetid://14983934299",metalness="rbxassetid://14983934299"}},
+			{name="rambo_scorched",display="Scorched",rarity="legendary",textureID="16688015251",skinClass="Melees",sa={color="rbxassetid://16688013963",normal="rbxassetid://16688015743",roughness="rbxassetid://16688016303",metalness="rbxassetid://16688014597"}},
+			{name="rambo_blackpearl",display="Black Pearl",rarity="exotic",textureID="16268374444",skinClass="Melees",sa=nil},
+			{name="rambo_bluegem",display="Blue gem",rarity="exotic",textureID="16268374887",skinClass="Melees",sa=nil},
+			{name="rambo_damascus",display="Damascus",rarity="exotic",textureID="16268375476",skinClass="Melees",sa=nil},
+			{name="rambo_emerald",display="Emerald",rarity="exotic",textureID="16268308309",skinClass="Melees",sa=nil},
+			{name="rambo_forest",display="Forest",rarity="exotic",textureID="16268376292",skinClass="Melees",sa=nil},
+			{name="rambo_olivedrift",display="Olive Drift",rarity="exotic",textureID="16268376667",skinClass="Melees",sa=nil},
+			{name="rambo_rustic",display="Rustic",rarity="exotic",textureID="16268377036",skinClass="Melees",sa=nil},
+			{name="rambo_vanilla",display="Vanilla",rarity="exotic",textureID="16268315355",skinClass="Melees",sa=nil},
+		},
+		["SCAR-H-1"]={
+			{name="scarh_torchbearer",display="Torch Bearer",rarity="common",textureID="18167599401",skinClass="Guns",sa={color="rbxassetid://18167599401",normal="rbxassetid://18167599401",roughness="rbxassetid://18167599401",metalness="rbxassetid://18167599401"}},
+			{name="scarh_gridlines",display="Gridlines",rarity="uncommon",textureID="16010528228",skinClass="Guns",sa={color="rbxassetid://16010528228",normal="rbxassetid://16010528228",roughness="rbxassetid://16010528228",metalness="rbxassetid://16010528228"}},
+			{name="scarh_milspec",display="MIL-SPEC",rarity="uncommon",textureID="13703883944",skinClass="Guns",sa={color="rbxassetid://13703885359",normal="rbxassetid://12548441857",roughness="rbxassetid://13703886985",metalness="rbxassetid://13703886217"}},
+		},
+		["SKS"]={
+			{name="sks_copper",display="Copper",rarity="common",textureID="13388317796",skinClass="Guns",sa={color="rbxassetid://13394135741",normal="rbxassetid://13388320318",roughness="rbxassetid://13388321173",metalness="rbxassetid://13388319734"}},
+			{name="sks_modern",display="Modern",rarity="common",textureID="13388174747",skinClass="Guns",sa={color="rbxassetid://13388175991",normal="rbxassetid://9341965058",roughness="rbxassetid://9341941167",metalness="rbxassetid://9341938929"}},
+			{name="sks_nevermore",display="Nevermore",rarity="common",textureID="99728168884950",skinClass="Guns",sa={color="rbxassetid://99728168884950",normal="rbxassetid://99728168884950",roughness="rbxassetid://99728168884950",metalness="rbxassetid://99728168884950"}},
+			{name="sks_paragon",display="Paragon",rarity="common",textureID="15998710650",skinClass="Guns",sa={color="rbxassetid://15998710650",normal="rbxassetid://15998710650",roughness="rbxassetid://15998710650",metalness="rbxassetid://15998710650"}},
+			{name="sks_snowcoat",display="Snow Coat",rarity="common",textureID="9276325654",skinClass="Guns",sa={color="rbxassetid://9276325654",normal="",roughness="",metalness=""}},
+			{name="sks_umbrella",display="Umbrella",rarity="uncommon",textureID="13841609325",skinClass="Guns",sa={color="rbxassetid://13841605579",normal="rbxassetid://13841607333",roughness="rbxassetid://13388321173",metalness="rbxassetid://13841606562"}},
+			{name="sks_jacko",display="Jack'O",rarity="rare",textureID="15177206758",skinClass="Guns",sa={color="rbxassetid://15177206758",normal="rbxassetid://15177206758",roughness="rbxassetid://15177206758",metalness="rbxassetid://15177206758"}},
+			{name="sks_jester",display="Jester",rarity="legendary",textureID="13343195152",skinClass="Guns",sa={color="rbxassetid://13343167267",normal="rbxassetid://13343168956",roughness="rbxassetid://13343169804",metalness="rbxassetid://13343167958"}},
+			{name="sks_gold",display="Golden SKS",rarity="limited",textureID="16300596462",skinClass="Guns",sa={color="rbxassetid://16300596462",normal="rbxassetid://16299700340",roughness="rbxassetid://16299699813",metalness="rbxassetid://16299699464",customColor={145,127,175}}},
+			{name="sks_gold",display="Golden SKS",rarity="limited",textureID="16300596462",skinClass="Guns",sa={color="rbxassetid://16300596462",normal="rbxassetid://16299700340",roughness="rbxassetid://16299699813",metalness="rbxassetid://16299699464",customColor={145,127,175}}},
+		},
+		["SKS	"]={
+			{name="sks_gold",display="Golden SKS",rarity="limited",textureID="15998559023",skinClass="Guns",sa={color="rbxassetid://16300596462",normal="rbxassetid://16299700340",roughness="rbxassetid://16299699813",metalness="rbxassetid://16299699464",customColor={145,127,175}}},
+		},
+		["Sawn-Off"]={
+			{name="sawnoff_radium",display="Radium Scatter",rarity="subcommon",textureID="94748131117032",skinClass="Guns",sa={color="rbxassetid://94748131117032",normal="",roughness="",metalness=""}},
+			{name="sawnoff_caution",display="Caution",rarity="common",textureID="10959354994",skinClass="Guns",sa={color="rbxassetid://10959371093",normal="rbxassetid://10959372567",roughness="",metalness="rbxassetid://10959371833"}},
+			{name="sawnoff_ectoplasm",display="Ectoplasm",rarity="common",textureID="99467907178773",skinClass="Guns",sa={color="rbxassetid://99467907178773",normal="rbxassetid://99467907178773",roughness="rbxassetid://99467907178773",metalness="rbxassetid://99467907178773"}},
+			{name="sawnoff_logs",display="Logs",rarity="common",textureID="13556265064",skinClass="Guns",sa={color="rbxassetid://13556252494",normal="rbxassetid://13556254217",roughness="rbxassetid://13556254787",metalness="rbxassetid://13556253379"}},
+			{name="sawnoff_multicam",display="Multicam",rarity="common",textureID="15998421683",skinClass="Guns",sa={color="rbxassetid://15998421683",normal="rbxassetid://15998421683",roughness="rbxassetid://15998421683",metalness="rbxassetid://15998421683"}},
+			{name="sawnoff_tarnished",display="Tarnished Holly",rarity="common",textureID="137388284721605",skinClass="Guns",sa={color="rbxassetid://137388284721605",normal="",roughness="",metalness=""}},
+			{name="sawnoff_banana",display="Banana",rarity="uncommon",textureID="13387477962",skinClass="Guns",sa={color="rbxassetid://13387455222",normal="rbxassetid://13387461274",roughness="rbxassetid://13387462843",metalness="rbxassetid://13387458782"}},
+			{name="sawnoff_webs",display="Webs",rarity="uncommon",textureID="15177076142",skinClass="Guns",sa={color="rbxassetid://15177076142",normal="rbxassetid://15177076142",roughness="rbxassetid://15177076142",metalness="rbxassetid://15177076142"}},
+			{name="sawnoff_glacial",display="Glacial",rarity="rare",textureID="13343271197",skinClass="Guns",sa={color="rbxassetid://13030805318",normal="rbxassetid://13030811843",roughness="rbxassetid://13030812846",metalness="rbxassetid://13030809551"}},
+			{name="sawnoff_grandprix",display="Grand Prix",rarity="rare",textureID="13842331455",skinClass="Guns",sa={color="rbxassetid://13841748041",normal="rbxassetid://13841750446",roughness="rbxassetid://13556254787",metalness="rbxassetid://13841749691"}},
+			{name="sawnoff_eros",display="Eros",rarity="limited",textureID="124136583812651",skinClass="Guns",sa={color="rbxassetid://94543327437589",normal="rbxassetid://96893785031392",roughness="rbxassetid://96893785031392",metalness="rbxassetid://140685658953144",customColor={243,107,255}}},
+			{name="sawnoff_gold",display="Golden Sawn-Off",rarity="limited",textureID="13714495559",skinClass="Guns",sa={color="rbxassetid://13714456145",normal="rbxassetid://13702871512",roughness="rbxassetid://13702872174",metalness="rbxassetid://13702869725",customColor={255,170,0}}},
+			{name="sawnoff_gold",display="Golden Sawn-Off",rarity="limited",textureID="13714495559",skinClass="Guns",sa={color="rbxassetid://13714456145",normal="rbxassetid://13702871512",roughness="rbxassetid://13702872174",metalness="rbxassetid://13702869725",customColor={255,170,0}}},
+		},
+		["Scout"]={
+			{name="scout_redwood",display="Redwood",rarity="uncommon",textureID="13713221958",skinClass="Guns",sa={color="rbxassetid://13713216013",normal="rbxassetid://13713217944",roughness="rbxassetid://13713218967",metalness="rbxassetid://13713216835"}},
+		},
+		["Shovel"]={
+			{name="shovel_conspiracy",display="Conspiracy",rarity="common",textureID="16911045144",skinClass="Melees",sa={color="rbxassetid://16911044501",normal="rbxassetid://16911046381",roughness="rbxassetid://16911045496",metalness="rbxassetid://16911045794"}},
+			{name="shovel_digital",display="Digital Digger",rarity="common",textureID="89332284546616",skinClass="Melees",sa={color="rbxassetid://89332284546616",normal="",roughness="",metalness=""}},
+			{name="shovel_oliveworn",display="Oliveworn",rarity="common",textureID="16688313893",skinClass="Melees",sa=nil},
+			{name="shovel_sightings",display="Sightings",rarity="common",textureID="15176959990",skinClass="Melees",sa={color="rbxassetid://15176959990",normal="rbxassetid://14983801496",roughness="rbxassetid://14984658723",metalness="rbxassetid://14984659961"}},
+			{name="shovel_heartbreaker",display="Heartbreaker",rarity="uncommon",textureID="16355297408",skinClass="Melees",sa={color="rbxassetid://16355295686",normal="rbxassetid://16355296613",roughness="rbxassetid://16355296920",metalness="rbxassetid://16355296031"}},
+			{name="shovel_smiley2",display="Smiley 2",rarity="uncommon",textureID="14984656389",skinClass="Melees",sa={color="rbxassetid://14984656389",normal="rbxassetid://14983801496",roughness="rbxassetid://14984658723",metalness="rbxassetid://14984659961"}},
+			{name="shovel_xray",display="X-ray",rarity="uncommon",textureID="87336044400444",skinClass="Melees",sa={color="rbxassetid://87336044400444",normal="rbxassetid://87336044400444",roughness="rbxassetid://87336044400444",metalness="rbxassetid://87336044400444"}},
+			{name="shovel_sovereign",display="Sovereign",rarity="legendary",textureID="15445272453",skinClass="Melees",sa={color="rbxassetid://15445272453",normal="rbxassetid://15445272453",roughness="rbxassetid://15445272453",metalness="rbxassetid://15445272453"}},
+		},
+		["Sledgehammer"]={
+			{name="sledgehammer_holidaymaul",display="Holiday Maul",rarity="common",textureID="15695483502",skinClass="Melees",sa={color="rbxassetid://140141455097259",normal="",roughness="",metalness=""}},
+			{name="sledgehammer_weightedbronze",display="Weightedbronze",rarity="common",textureID="16689250659",skinClass="Melees",sa=nil},
+			{name="sledgehammer_boss",display="Boss",rarity="uncommon",textureID="15695404278",skinClass="Melees",sa={color="rbxassetid://15695404278",normal="rbxassetid://15695404278",roughness="rbxassetid://15695404278",metalness="rbxassetid://15695404278"}},
+			{name="sledgehammer_porcelain",display="Porcelain",rarity="legendary",textureID="15447463984",skinClass="Melees",sa={color="rbxassetid://15447463984",normal="rbxassetid://15447463984",roughness="rbxassetid://15447463984",metalness="rbxassetid://15447463984"}},
+		},
+		["Super-Shorty"]={
+			{name="sshorty_firecracker",display="Firecracker",rarity="common",textureID="18149800264",skinClass="Guns",sa={color="rbxassetid://18149800264",normal="rbxassetid://18149800264",roughness="rbxassetid://18149800264",metalness="rbxassetid://18149800264"}},
+			{name="sshorty_loveletter",display="Love Letter",rarity="common",textureID="16355340290",skinClass="Guns",sa={color="rbxassetid://16355338517",normal="rbxassetid://16355339662",roughness="rbxassetid://16355340721",metalness="rbxassetid://16355338911"}},
+			{name="sshorty_steel",display="Steel",rarity="common",textureID="13394160404",skinClass="Guns",sa={color="rbxassetid://13394161570",normal="rbxassetid://13388284123",roughness="rbxassetid://13388283285",metalness="rbxassetid://13388284878"}},
+			{name="sshorty_checkmate",display="Checkmate",rarity="uncommon",textureID="13713148936",skinClass="Guns",sa={color="rbxassetid://13713146952",normal="rbxassetid://13713130525",roughness="rbxassetid://13713131369",metalness="rbxassetid://13713129636"}},
+		},
+		["TEC-9"]={
+			{name="tec9_burgundypine",display="Burgundy Pine",rarity="common",textureID="134671657569127",skinClass="Guns",sa={color="rbxassetid://134671657569127",normal="",roughness="",metalness=""}},
+			{name="tec9_import",display="Import",rarity="common",textureID="13556236652",skinClass="Guns",sa={color="rbxassetid://13556231753",normal="rbxassetid://13556233332",roughness="rbxassetid://13556234000",metalness="rbxassetid://13556232611"}},
+			{name="tec9_lilac",display="Lilac",rarity="common",textureID="13841536261",skinClass="Guns",sa={color="rbxassetid://13841531857",normal="rbxassetid://13841534362",roughness="rbxassetid://13841535132",metalness="rbxassetid://13841533434"}},
+			{name="tec9_snakeskin",display="Snakeskin",rarity="common",textureID="13566205064",skinClass="Guns",sa={color="rbxassetid://13566186022",normal="rbxassetid://13566188527",roughness="rbxassetid://13566189605",metalness="rbxassetid://13566187509"}},
+			{name="tec9_cottoncloud",display="Cotton Cloud",rarity="uncommon",textureID="15998727136",skinClass="Guns",sa={color="rbxassetid://15998727136",normal="rbxassetid://15998727136",roughness="rbxassetid://15998727136",metalness="rbxassetid://15998727136"}},
+			{name="tec9_liberty",display="Liberty",rarity="uncommon",textureID="13935391655",skinClass="Guns",sa={color="rbxassetid://13935385791",normal="rbxassetid://13935388242",roughness="rbxassetid://13935389032",metalness="rbxassetid://13935387111"}},
+			{name="tec9_star9",display="Star-9",rarity="uncommon",textureID="13387517349",skinClass="Guns",sa={color="rbxassetid://13387502788",normal="rbxassetid://13387508121",roughness="rbxassetid://13387509249",metalness="rbxassetid://13387506611"}},
+			{name="tec9_diner",display="Diner",rarity="rare",textureID="13713002732",skinClass="Guns",sa={color="rbxassetid://13712979305",normal="rbxassetid://13703915693",roughness="rbxassetid://13712990125",metalness="rbxassetid://13712980107"}},
+		},
+		["Taiga"]={
+			{name="taiga_current",display="Current Crash",rarity="subcommon",textureID="90247337759446",skinClass="Melees",sa={color="rbxassetid://90247337759446",normal="",roughness="",metalness=""}},
+			{name="taiga_conductor",display="Conductor",rarity="common",textureID="14982945679",skinClass="Melees",sa={color="rbxassetid://14982945679",normal="rbxassetid://14982945679",roughness="rbxassetid://14982945679",metalness="rbxassetid://14982945679"}},
+			{name="taiga_scalemail",display="Scalemail",rarity="common",textureID="16688381364",skinClass="Melees",sa=nil},
+			{name="taiga_scuffed",display="Scuffed",rarity="common",textureID="15449276653",skinClass="Melees",sa={color="rbxassetid://15449276653",normal="rbxassetid://15449276653",roughness="rbxassetid://15449276653",metalness="rbxassetid://15449276653"}},
+			{name="taiga_thornslash",display="Thorn Slash",rarity="common",textureID="16355282883",skinClass="Melees",sa={color="rbxassetid://16355282883",normal="rbxassetid://16355282883",roughness="rbxassetid://16355282883",metalness="rbxassetid://16355282883"}},
+			{name="taiga_bubblegum",display="Bubblegum",rarity="uncommon",textureID="14983876632",skinClass="Melees",sa={color="rbxassetid://14983876632",normal="rbxassetid://14983878474",roughness="rbxassetid://14983879458",metalness="rbxassetid://14983877458"}},
+			{name="taiga_icicle",display="Icicle",rarity="uncommon",textureID="15711030856",skinClass="Melees",sa={color="rbxassetid://15711030856",normal="rbxassetid://15711030856",roughness="rbxassetid://15711030856",metalness="rbxassetid://15711030856"}},
+			{name="taiga_404",display="404",rarity="rare",textureID="15448951687",skinClass="Melees",sa={color="rbxassetid://15448951687",normal="rbxassetid://15448951687",roughness="rbxassetid://15448951687",metalness="rbxassetid://15448951687"}},
+		},
+		["Tommy"]={
+			{name="tommy_currant",display="Currant",rarity="common",textureID="13841589575",skinClass="Guns",sa={color="rbxassetid://13841583772",normal="rbxassetid://13841586063",roughness="rbxassetid://13841586825",metalness="rbxassetid://13841584989"}},
+			{name="tommy_headstone",display="Headstone",rarity="common",textureID="15177096261",skinClass="Guns",sa={color="rbxassetid://15177096261",normal="rbxassetid://15177096261",roughness="rbxassetid://15177096261",metalness="rbxassetid://15177096261"}},
+			{name="tommy_plum",display="Plum",rarity="common",textureID="13388353769",skinClass="Guns",sa={color="rbxassetid://13388349585",normal="rbxassetid://13388350802",roughness="rbxassetid://13388351567",metalness="rbxassetid://13388350104"}},
+			{name="tommy_huntinglodge",display="Hunting Lodge",rarity="uncommon",textureID="105449250306908",skinClass="Guns",sa={color="rbxassetid://105449250306908",normal="",roughness="",metalness=""}},
+			{name="tommy_unclesam",display="Uncle Sam",rarity="rare",textureID="13936668999",skinClass="Guns",sa={color="rbxassetid://13936670325",normal="rbxassetid://13936671749",roughness="rbxassetid://13936672741",metalness="rbxassetid://13936670921"}},
+			{name="tommy_leatherworks",display="Leatherworks",rarity="legendary",textureID="13565052794",skinClass="Guns",sa={color="rbxassetid://13556313114",normal="rbxassetid://13556315610",roughness="rbxassetid://13556316435",metalness="rbxassetid://13556314814"}},
+			{name="tommy_gold",display="Golden Tommy",rarity="limited",textureID="15039147598",skinClass="Guns",sa={color="rbxassetid://15039147920",normal="rbxassetid://15039147363",roughness="rbxassetid://15039147120",metalness="rbxassetid://15039147721",customColor={145,127,175}}},
+			{name="tommy_gold",display="Golden Tommy",rarity="limited",textureID="15039147598",skinClass="Guns",sa={color="rbxassetid://15039147920",normal="rbxassetid://15039147363",roughness="rbxassetid://15039147120",metalness="rbxassetid://15039147721",customColor={145,127,175}}},
+		},
+		["UMP-45"]={
+			{name="ump_burntumber",display="Burnt Umber",rarity="common",textureID="13842577137",skinClass="Guns",sa={color="rbxassetid://13842574571",normal="rbxassetid://13841561295",roughness="rbxassetid://13713092610",metalness="rbxassetid://13841560451"}},
+			{name="ump_honeycomb",display="Honeycomb",rarity="uncommon",textureID="13713093970",skinClass="Guns",sa={color="rbxassetid://13713087658",normal="rbxassetid://13713089856",roughness="rbxassetid://13713092610",metalness="rbxassetid://13713088970"}},
+			{name="ump_lesion",display="Lesion",rarity="rare",textureID="15177224638",skinClass="Guns",sa={color="rbxassetid://15177224638",normal="rbxassetid://15177224638",roughness="rbxassetid://15177224638",metalness="rbxassetid://15177224638"}},
+		},
+		["Uzi"]={
+			{name="uzi_coldshell",display="Cold Shell",rarity="common",textureID="73784413219495",skinClass="Guns",sa={color="rbxassetid://73784413219495",normal="",roughness="",metalness=""}},
+			{name="uzi_grape",display="Grape",rarity="common",textureID="13387916321",skinClass="Guns",sa={color="rbxassetid://13387917991",normal="rbxassetid://13343337433",roughness="rbxassetid://13343338573",metalness="rbxassetid://13343336766"}},
+			{name="uzi_pumpkinspice",display="Pumpkin Spice",rarity="common",textureID="15177118472",skinClass="Guns",sa={color="rbxassetid://15177118472",normal="rbxassetid://15177118472",roughness="rbxassetid://15177118472",metalness="rbxassetid://15177118472"}},
+			{name="uzi_rust",display="Rust",rarity="common",textureID="13715501813",skinClass="Guns",sa={color="rbxassetid://13715502850",normal="rbxassetid://13715505019",roughness="rbxassetid://13715505740",metalness="rbxassetid://13715504263"}},
+			{name="uzi_crimsonjaw",display="Crimson Jaw",rarity="rare",textureID="13343333197",skinClass="Guns",sa={color="rbxassetid://13343335417",normal="rbxassetid://13343337433",roughness="rbxassetid://13343338573",metalness="rbxassetid://13343336766"}},
+			{name="uzi_grape2",display="Grapes II",rarity="rare",textureID="16952083915",skinClass="Guns",sa={color="rbxassetid://16952083501",normal="rbxassetid://16952084326",roughness="rbxassetid://16952084530",metalness="rbxassetid://16952083672"}},
+			{name="uzi_smiley",display="Smiley",rarity="rare",textureID="13841671610",skinClass="Guns",sa={color="rbxassetid://13841666943",normal="rbxassetid://13841669834",roughness="rbxassetid://13715505740",metalness="rbxassetid://13841669024"}},
+			{name="uzi_guilded",display="Guilded",rarity="legendary",textureID="15998742287",skinClass="Guns",sa={color="rbxassetid://15998742287",normal="rbxassetid://15998742287",roughness="rbxassetid://15998742287",metalness="rbxassetid://15998742287"}},
+		},
+		["Wrench"]={
+			{name="wrench_schematic",display="Schematic",rarity="subcommon",textureID="85334381763123",skinClass="Melees",sa={color="rbxassetid://85334381763123",normal="",roughness="",metalness=""}},
+			{name="wrench_aerospace",display="Aerospace",rarity="common",textureID="15695483502",skinClass="Melees",sa={color="rbxassetid://15695483502",normal="rbxassetid://15695483502",roughness="rbxassetid://15695483502",metalness="rbxassetid://15695483502"}},
+			{name="wrench_contractor",display="Contractor",rarity="common",textureID="14982816807",skinClass="Melees",sa={color="rbxassetid://14982816807",normal="rbxassetid://14982826845",roughness="rbxassetid://14982824116",metalness="rbxassetid://14982829131"}},
+			{name="wrench_mrwrench",display="Mr-Wrench",rarity="common",textureID="16688443083",skinClass="Melees",sa={color="rbxassetid://16688441788",normal="rbxassetid://16688443867",roughness="rbxassetid://16688444803",metalness="rbxassetid://16688442409"}},
+			{name="wrench_tendencies",display="Tendencies",rarity="common",textureID="15177056272",skinClass="Melees",sa={color="rbxassetid://15177056272",normal="rbxassetid://14982826845",roughness="rbxassetid://14982824116",metalness="rbxassetid://14982829131"}},
+			{name="wrench_greenmask",display="Green Mask",rarity="uncommon",textureID="15451673831",skinClass="Melees",sa={color="rbxassetid://15451673831",normal="rbxassetid://15451673831",roughness="rbxassetid://15451673831",metalness="rbxassetid://15451673831"}},
+			{name="wrench_hammer_blackpearl",display="Hammer: Blackpearl",rarity="exotic",textureID="15448181005",skinClass="Melees",sa={color="rbxassetid://15448181005",normal="rbxassetid://15448181005",roughness="rbxassetid://15448181005",metalness="rbxassetid://15448181005"}},
+			{name="wrench_hammer_bluegem",display="Hammer: Bluegem",rarity="exotic",textureID="15039886621",skinClass="Melees",sa={color="rbxassetid://15039886621",normal="rbxassetid://15039886621",roughness="rbxassetid://15039886621",metalness="rbxassetid://15039886621"}},
+			{name="wrench_hammer_corrosion",display="Hammer: Corrosion",rarity="exotic",textureID="15039908965",skinClass="Melees",sa={color="rbxassetid://15039908965",normal="rbxassetid://15039908965",roughness="rbxassetid://15039908965",metalness="rbxassetid://15039908965"}},
+			{name="wrench_hammer_damascus",display="Hammer: Damascus",rarity="exotic",textureID="15039883793",skinClass="Melees",sa={color="rbxassetid://15039883793",normal="rbxassetid://15039883793",roughness="rbxassetid://15039883793",metalness="rbxassetid://15039883793"}},
+			{name="wrench_hammer_emerald",display="Hammer: Emerald",rarity="exotic",textureID="15448075670",skinClass="Melees",sa={color="rbxassetid://15448075670",normal="rbxassetid://15448075670",roughness="rbxassetid://15448075670",metalness="rbxassetid://15448075670"}},
+			{name="wrench_hammer_olivedrift",display="Hammer: Olivedrift",rarity="exotic",textureID="15070249049",skinClass="Melees",sa={color="rbxassetid://15070249049",normal="rbxassetid://15070249049",roughness="rbxassetid://15070249049",metalness="rbxassetid://15070249049"}},
+			{name="wrench_hammer_rustic",display="Hammer: Rustic",rarity="exotic",textureID="15039905170",skinClass="Melees",sa={color="rbxassetid://15039905170",normal="rbxassetid://15039905170",roughness="rbxassetid://15039905170",metalness="rbxassetid://15039905170"}},
+			{name="wrench_hammer_vanilla",display="Hammer: Vanilla",rarity="exotic",textureID="14984302065",skinClass="Melees",sa={color="rbxassetid://14984302065",normal="rbxassetid://14984302065",roughness="rbxassetid://14984302065",metalness="rbxassetid://14984302065"}},
+			{name="wrench_hammer_kintsugi",display="Kintsugi",rarity="exotic",textureID="15039897126",skinClass="Melees",sa={color="rbxassetid://15039897126",normal="rbxassetid://15039897126",roughness="rbxassetid://15039897126",metalness="rbxassetid://15039897126"}},
+		},
+	}
+	local WEAPONS = {"AKM","AKS-74U","AWM","BBaton","BFG-1","Balisong","Bat","Bayonet","Beretta","Chainsaw","Crowbar","Deagle","FN-FAL","FNP-45","Fire-Axe","G-17","Golfclub","Ithaca-37","Katana","M1911","M320-1","M4A1-1","M60","MAC-10","MP7","Machete","Magnum","Mare","Metal-Bat","RPG-7","Rambo","SCAR-H-1","SKS","SKS	","Sawn-Off","Scout","Shovel","Sledgehammer","Super-Shorty","TEC-9","Taiga","Tommy","UMP-45","Uzi","Wrench"}
 
--- === DEV SKIN CHANGER — standalone, zero server dependency ===
+	-- === DEV SKIN CHANGER — standalone, zero server dependency ===
 
-local Players = game:GetService("Players")
-local UIS     = game:GetService("UserInputService")
-local lp      = Players.LocalPlayer
+	local Players = game:GetService("Players")
+	local UIS     = game:GetService("UserInputService")
+	local lp      = Players.LocalPlayer
 
-local RARITY_COLORS = {
-    common    = Color3.fromRGB(180,180,180),
-    uncommon  = Color3.fromRGB(100,200,100),
-    rare      = Color3.fromRGB(80,140,255),
-    legendary = Color3.fromRGB(200,100,255),
-    exotic    = Color3.fromRGB(255,180,50),
-    limited   = Color3.fromRGB(255,80,80),
-    custom    = Color3.fromRGB(255,220,0),
-}
+	local RARITY_COLORS = {
+		common    = Color3.fromRGB(180,180,180),
+		uncommon  = Color3.fromRGB(100,200,100),
+		rare      = Color3.fromRGB(80,140,255),
+		legendary = Color3.fromRGB(200,100,255),
+		exotic    = Color3.fromRGB(255,180,50),
+		limited   = Color3.fromRGB(255,80,80),
+		custom    = Color3.fromRGB(255,220,0),
+	}
 
-local currentTool    = nil
-local originalData   = {}
-local selectedWeapon = nil
-local weaponBtns     = {}
-local guiVisible     = true
+	local currentTool    = nil
+	local originalData   = {}
+	local selectedWeapon = nil
+	local weaponBtns     = {}
+	local guiVisible     = true
 
-local function makeCorner(p, r)
-    local c = Instance.new("UICorner", p)
-    c.CornerRadius = UDim.new(0, r or 8)
-end
-local function makePad(p, l, r, t, b)
-    local pad = Instance.new("UIPadding", p)
-    pad.PaddingLeft   = UDim.new(0, l or 0)
-    pad.PaddingRight  = UDim.new(0, r or 0)
-    pad.PaddingTop    = UDim.new(0, t or 0)
-    pad.PaddingBottom = UDim.new(0, b or 0)
-end
+	local function makeCorner(p, r)
+		local c = Instance.new("UICorner", p)
+		c.CornerRadius = UDim.new(0, r or 8)
+	end
+	local function makePad(p, l, r, t, b)
+		local pad = Instance.new("UIPadding", p)
+		pad.PaddingLeft   = UDim.new(0, l or 0)
+		pad.PaddingRight  = UDim.new(0, r or 0)
+		pad.PaddingTop    = UDim.new(0, t or 0)
+		pad.PaddingBottom = UDim.new(0, b or 0)
+	end
 
--- GUI
-local sg = Instance.new("ScreenGui")
-sg.Name = "DevSkinChanger"
-sg.ResetOnSpawn = false
-sg.IgnoreGuiInset = true
-sg.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-sg.Parent = lp.PlayerGui
+	-- GUI
+	local sg = Instance.new("ScreenGui")
+	sg.Name = "DevSkinChanger"
+	sg.ResetOnSpawn = false
+	sg.IgnoreGuiInset = true
+	sg.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	sg.Parent = lp.PlayerGui
 
-local main = Instance.new("Frame")
-main.Name = "Main"
-main.Size = UDim2.new(0,400,0,540)
-main.Position = UDim2.new(0,20,0.5,-270)
-main.BackgroundColor3 = Color3.fromRGB(14,14,20)
-main.BorderSizePixel = 0
-main.Active = true
-main.Draggable = true
-main.Parent = sg
-makeCorner(main, 10)
+	local main = Instance.new("Frame")
+	main.Name = "Main"
+	main.Size = UDim2.new(0,400,0,540)
+	main.Position = UDim2.new(0,20,0.5,-270)
+	main.BackgroundColor3 = Color3.fromRGB(14,14,20)
+	main.BorderSizePixel = 0
+	main.Active = true
+	main.Draggable = true
+	main.Parent = sg
+	makeCorner(main, 10)
 
--- Title bar
-local titleBar = Instance.new("Frame", main)
-titleBar.Size = UDim2.new(1,0,0,40)
-titleBar.BackgroundColor3 = Color3.fromRGB(24,24,36)
-titleBar.BorderSizePixel = 0
-titleBar.ZIndex = 2
-makeCorner(titleBar, 10)
-local tf = Instance.new("Frame", titleBar)
-tf.Size = UDim2.new(1,0,0,10)
-tf.Position = UDim2.new(0,0,1,-10)
-tf.BackgroundColor3 = Color3.fromRGB(24,24,36)
-tf.BorderSizePixel = 0
-tf.ZIndex = 2
+	-- Title bar
+	local titleBar = Instance.new("Frame", main)
+	titleBar.Size = UDim2.new(1,0,0,40)
+	titleBar.BackgroundColor3 = Color3.fromRGB(24,24,36)
+	titleBar.BorderSizePixel = 0
+	titleBar.ZIndex = 2
+	makeCorner(titleBar, 10)
+	local tf = Instance.new("Frame", titleBar)
+	tf.Size = UDim2.new(1,0,0,10)
+	tf.Position = UDim2.new(0,0,1,-10)
+	tf.BackgroundColor3 = Color3.fromRGB(24,24,36)
+	tf.BorderSizePixel = 0
+	tf.ZIndex = 2
 
-local dot = Instance.new("Frame", titleBar)
-dot.Size = UDim2.new(0,8,0,8)
-dot.Position = UDim2.new(0,12,0.5,-4)
-dot.BackgroundColor3 = Color3.fromRGB(80,200,120)
-dot.BorderSizePixel = 0
-dot.ZIndex = 3
-makeCorner(dot, 4)
+	local dot = Instance.new("Frame", titleBar)
+	dot.Size = UDim2.new(0,8,0,8)
+	dot.Position = UDim2.new(0,12,0.5,-4)
+	dot.BackgroundColor3 = Color3.fromRGB(80,200,120)
+	dot.BorderSizePixel = 0
+	dot.ZIndex = 3
+	makeCorner(dot, 4)
 
-local titleLbl = Instance.new("TextLabel", titleBar)
-titleLbl.Size = UDim2.new(1,-90,1,0)
-titleLbl.Position = UDim2.new(0,28,0,0)
-titleLbl.BackgroundTransparency = 1
-titleLbl.Text = "SKIN CHANGER | PRESS K TO TOGGLE ON/OFF"
-titleLbl.TextColor3 = Color3.fromRGB(220,220,230)
-titleLbl.Font = Enum.Font.GothamBold
-titleLbl.TextSize = 13
-titleLbl.TextXAlignment = Enum.TextXAlignment.Left
-titleLbl.ZIndex = 3
+	local titleLbl = Instance.new("TextLabel", titleBar)
+	titleLbl.Size = UDim2.new(1,-90,1,0)
+	titleLbl.Position = UDim2.new(0,28,0,0)
+	titleLbl.BackgroundTransparency = 1
+	titleLbl.Text = "SKIN CHANGER | PRESS K TO TOGGLE ON/OFF"
+	titleLbl.TextColor3 = Color3.fromRGB(220,220,230)
+	titleLbl.Font = Enum.Font.GothamBold
+	titleLbl.TextSize = 13
+	titleLbl.TextXAlignment = Enum.TextXAlignment.Left
+	titleLbl.ZIndex = 3
 
-local hintLbl = Instance.new("TextLabel", titleBar)
-hintLbl.Size = UDim2.new(0,60,1,0)
-hintLbl.Position = UDim2.new(1,-100,0,0)
-hintLbl.BackgroundTransparency = 1
-hintLbl.Text = "[K] hide"
-hintLbl.TextColor3 = Color3.fromRGB(80,80,110)
-hintLbl.Font = Enum.Font.Gotham
-hintLbl.TextSize = 10
-hintLbl.ZIndex = 3
+	local hintLbl = Instance.new("TextLabel", titleBar)
+	hintLbl.Size = UDim2.new(0,60,1,0)
+	hintLbl.Position = UDim2.new(1,-100,0,0)
+	hintLbl.BackgroundTransparency = 1
+	hintLbl.Text = "[K] hide"
+	hintLbl.TextColor3 = Color3.fromRGB(80,80,110)
+	hintLbl.Font = Enum.Font.Gotham
+	hintLbl.TextSize = 10
+	hintLbl.ZIndex = 3
 
--- Status
-local statusBar = Instance.new("Frame", main)
-statusBar.Size = UDim2.new(1,0,0,30)
-statusBar.Position = UDim2.new(0,0,0,40)
-statusBar.BackgroundColor3 = Color3.fromRGB(20,20,30)
-statusBar.BorderSizePixel = 0
-makePad(statusBar, 10, 10, 0, 0)
+	-- Status
+	local statusBar = Instance.new("Frame", main)
+	statusBar.Size = UDim2.new(1,0,0,30)
+	statusBar.Position = UDim2.new(0,0,0,40)
+	statusBar.BackgroundColor3 = Color3.fromRGB(20,20,30)
+	statusBar.BorderSizePixel = 0
+	makePad(statusBar, 10, 10, 0, 0)
 
-local statusLbl = Instance.new("TextLabel", statusBar)
-statusLbl.Size = UDim2.new(1,0,1,0)
-statusLbl.BackgroundTransparency = 1
-statusLbl.Text = "Equip a weapon, then pick a skin"
-statusLbl.TextColor3 = Color3.fromRGB(110,110,150)
-statusLbl.Font = Enum.Font.Gotham
-statusLbl.TextSize = 11
-statusLbl.TextXAlignment = Enum.TextXAlignment.Left
+	local statusLbl = Instance.new("TextLabel", statusBar)
+	statusLbl.Size = UDim2.new(1,0,1,0)
+	statusLbl.BackgroundTransparency = 1
+	statusLbl.Text = "Equip a weapon, then pick a skin"
+	statusLbl.TextColor3 = Color3.fromRGB(110,110,150)
+	statusLbl.Font = Enum.Font.Gotham
+	statusLbl.TextSize = 11
+	statusLbl.TextXAlignment = Enum.TextXAlignment.Left
 
--- Search
-local searchBox = Instance.new("TextBox", main)
-searchBox.Size = UDim2.new(1,-16,0,30)
-searchBox.Position = UDim2.new(0,8,0,74)
-searchBox.BackgroundColor3 = Color3.fromRGB(26,26,38)
-searchBox.BorderSizePixel = 0
-searchBox.PlaceholderText = "Search skins..."
-searchBox.PlaceholderColor3 = Color3.fromRGB(70,70,100)
-searchBox.Text = ""
-searchBox.TextColor3 = Color3.fromRGB(210,210,210)
-searchBox.Font = Enum.Font.Gotham
-searchBox.TextSize = 12
-searchBox.ClearTextOnFocus = false
-makeCorner(searchBox, 6)
-makePad(searchBox, 10, 0, 0, 0)
+	-- Search
+	local searchBox = Instance.new("TextBox", main)
+	searchBox.Size = UDim2.new(1,-16,0,30)
+	searchBox.Position = UDim2.new(0,8,0,74)
+	searchBox.BackgroundColor3 = Color3.fromRGB(26,26,38)
+	searchBox.BorderSizePixel = 0
+	searchBox.PlaceholderText = "Search skins..."
+	searchBox.PlaceholderColor3 = Color3.fromRGB(70,70,100)
+	searchBox.Text = ""
+	searchBox.TextColor3 = Color3.fromRGB(210,210,210)
+	searchBox.Font = Enum.Font.Gotham
+	searchBox.TextSize = 12
+	searchBox.ClearTextOnFocus = false
+	makeCorner(searchBox, 6)
+	makePad(searchBox, 10, 0, 0, 0)
 
--- Column headers
-local function colHeader(text, xPos, w)
-    local l = Instance.new("TextLabel", main)
-    l.Size = UDim2.new(0,w,0,16)
-    l.Position = UDim2.new(0,xPos,0,108)
-    l.BackgroundTransparency = 1
-    l.Text = text
-    l.TextColor3 = Color3.fromRGB(80,80,120)
-    l.Font = Enum.Font.GothamBold
-    l.TextSize = 9
-    l.TextXAlignment = Enum.TextXAlignment.Left
-end
-colHeader("WEAPON", 10, 118)
-colHeader("SKIN", 140, 240)
+	-- Column headers
+	local function colHeader(text, xPos, w)
+		local l = Instance.new("TextLabel", main)
+		l.Size = UDim2.new(0,w,0,16)
+		l.Position = UDim2.new(0,xPos,0,108)
+		l.BackgroundTransparency = 1
+		l.Text = text
+		l.TextColor3 = Color3.fromRGB(80,80,120)
+		l.Font = Enum.Font.GothamBold
+		l.TextSize = 9
+		l.TextXAlignment = Enum.TextXAlignment.Left
+	end
+	colHeader("WEAPON", 10, 118)
+	colHeader("SKIN", 140, 240)
 
--- Weapon scroll
-local weaponScroll = Instance.new("ScrollingFrame", main)
-weaponScroll.Size = UDim2.new(0,124,0,340)
-weaponScroll.Position = UDim2.new(0,8,0,126)
-weaponScroll.BackgroundColor3 = Color3.fromRGB(20,20,30)
-weaponScroll.BorderSizePixel = 0
-weaponScroll.ScrollBarThickness = 3
-weaponScroll.ScrollBarImageColor3 = Color3.fromRGB(70,70,110)
-weaponScroll.CanvasSize = UDim2.new(0,0,0,0)
-weaponScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
-makeCorner(weaponScroll, 6)
-Instance.new("UIListLayout", weaponScroll).Padding = UDim.new(0,2)
+	-- Weapon scroll
+	local weaponScroll = Instance.new("ScrollingFrame", main)
+	weaponScroll.Size = UDim2.new(0,124,0,340)
+	weaponScroll.Position = UDim2.new(0,8,0,126)
+	weaponScroll.BackgroundColor3 = Color3.fromRGB(20,20,30)
+	weaponScroll.BorderSizePixel = 0
+	weaponScroll.ScrollBarThickness = 3
+	weaponScroll.ScrollBarImageColor3 = Color3.fromRGB(70,70,110)
+	weaponScroll.CanvasSize = UDim2.new(0,0,0,0)
+	weaponScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	makeCorner(weaponScroll, 6)
+	Instance.new("UIListLayout", weaponScroll).Padding = UDim.new(0,2)
 
--- Skin scroll
-local skinScroll = Instance.new("ScrollingFrame", main)
-skinScroll.Size = UDim2.new(1,-150,0,340)
-skinScroll.Position = UDim2.new(0,140,0,126)
-skinScroll.BackgroundColor3 = Color3.fromRGB(20,20,30)
-skinScroll.BorderSizePixel = 0
-skinScroll.ScrollBarThickness = 3
-skinScroll.ScrollBarImageColor3 = Color3.fromRGB(70,70,110)
-skinScroll.CanvasSize = UDim2.new(0,0,0,0)
-skinScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
-makeCorner(skinScroll, 6)
-Instance.new("UIListLayout", skinScroll).Padding = UDim.new(0,2)
+	-- Skin scroll
+	local skinScroll = Instance.new("ScrollingFrame", main)
+	skinScroll.Size = UDim2.new(1,-150,0,340)
+	skinScroll.Position = UDim2.new(0,140,0,126)
+	skinScroll.BackgroundColor3 = Color3.fromRGB(20,20,30)
+	skinScroll.BorderSizePixel = 0
+	skinScroll.ScrollBarThickness = 3
+	skinScroll.ScrollBarImageColor3 = Color3.fromRGB(70,70,110)
+	skinScroll.CanvasSize = UDim2.new(0,0,0,0)
+	skinScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	makeCorner(skinScroll, 6)
+	Instance.new("UIListLayout", skinScroll).Padding = UDim.new(0,2)
 
--- Reset button
-local resetBtn = Instance.new("TextButton", main)
-resetBtn.Size = UDim2.new(1,-16,0,32)
-resetBtn.Position = UDim2.new(0,8,0,474)
-resetBtn.BackgroundColor3 = Color3.fromRGB(36,36,56)
-resetBtn.Text = "↺   Reset to Default"
-resetBtn.TextColor3 = Color3.fromRGB(160,160,200)
-resetBtn.Font = Enum.Font.GothamBold
-resetBtn.TextSize = 12
-resetBtn.BorderSizePixel = 0
-makeCorner(resetBtn, 6)
-resetBtn.MouseEnter:Connect(function() resetBtn.BackgroundColor3 = Color3.fromRGB(50,50,78) end)
-resetBtn.MouseLeave:Connect(function() resetBtn.BackgroundColor3 = Color3.fromRGB(36,36,56) end)
+	-- Reset button
+	local resetBtn = Instance.new("TextButton", main)
+	resetBtn.Size = UDim2.new(1,-16,0,32)
+	resetBtn.Position = UDim2.new(0,8,0,474)
+	resetBtn.BackgroundColor3 = Color3.fromRGB(36,36,56)
+	resetBtn.Text = "↺   Reset to Default"
+	resetBtn.TextColor3 = Color3.fromRGB(160,160,200)
+	resetBtn.Font = Enum.Font.GothamBold
+	resetBtn.TextSize = 12
+	resetBtn.BorderSizePixel = 0
+	makeCorner(resetBtn, 6)
+	resetBtn.MouseEnter:Connect(function() resetBtn.BackgroundColor3 = Color3.fromRGB(50,50,78) end)
+	resetBtn.MouseLeave:Connect(function() resetBtn.BackgroundColor3 = Color3.fromRGB(36,36,56) end)
 
--- Apply logic
-local function clearPreview(tool)
-    for _, v in pairs(tool:GetDescendants()) do
-        if v:IsA("SurfaceAppearance") and v:GetAttribute("DEV_PREVIEW") then v:Destroy() end
-    end
-end
-
-local function captureOriginal(tool)
-	originalData = {}
-	for _, v in pairs(tool:GetDescendants()) do
-		if v:IsA("MeshPart") then
-			originalData[v] = {v.TextureID, v.Color, v.Transparency}
+	-- Apply logic
+	local function clearPreview(tool)
+		for _, v in pairs(tool:GetDescendants()) do
+			if v:IsA("SurfaceAppearance") and v:GetAttribute("DEV_PREVIEW") then v:Destroy() end
 		end
 	end
-end
 
-local function applySkin(tool, meta)
-    clearPreview(tool)
+	local function captureOriginal(tool)
+		originalData = {}
+		for _, v in pairs(tool:GetDescendants()) do
+			if v:IsA("MeshPart") then
+				originalData[v] = {v.TextureID, v.Color, v.Transparency}
+			end
+		end
+	end
 
-    local sa = meta.sa
-    if sa then
-        for _, part in pairs(tool:GetDescendants()) do
-            if part:IsA("MeshPart") then
-                -- remove any existing preview SA on this part
-                for _, ch in pairs(part:GetChildren()) do
-                    if ch:IsA("SurfaceAppearance") and ch:GetAttribute("DEV_PREVIEW") then ch:Destroy() end
-                end
-                local saInst = Instance.new("SurfaceAppearance")
-                saInst.ColorMap     = sa.color
-                saInst.NormalMap    = sa.normal ~= "" and sa.normal or sa.color
-                saInst.RoughnessMap = sa.roughness ~= "" and sa.roughness or sa.color
-                saInst.MetalnessMap = sa.metalness ~= "" and sa.metalness or sa.color
-                saInst:SetAttribute("DEV_PREVIEW", true)
-                saInst.Parent = part
-            end
-        end
+	local function applySkin(tool, meta)
+		clearPreview(tool)
 
-        if sa.customColor and sa.customParts then
-            local col = Color3.fromRGB(sa.customColor[1], sa.customColor[2], sa.customColor[3])
-            for _, v in pairs(tool:GetDescendants()) do
-                if v:IsA("MeshPart") then
-                    for _, pName in ipairs(sa.customParts) do
-                        if v.Name == pName then
-                            v.Color = col
-                            v.Transparency = 0
-                        end
-                    end
-                end
-            end
-        end
-    end
+		local sa = meta.sa
+		if sa then
+			for _, part in pairs(tool:GetDescendants()) do
+				if part:IsA("MeshPart") then
+					-- remove any existing preview SA on this part
+					for _, ch in pairs(part:GetChildren()) do
+						if ch:IsA("SurfaceAppearance") and ch:GetAttribute("DEV_PREVIEW") then ch:Destroy() end
+					end
+					local saInst = Instance.new("SurfaceAppearance")
+					saInst.ColorMap     = sa.color
+					saInst.NormalMap    = sa.normal ~= "" and sa.normal or sa.color
+					saInst.RoughnessMap = sa.roughness ~= "" and sa.roughness or sa.color
+					saInst.MetalnessMap = sa.metalness ~= "" and sa.metalness or sa.color
+					saInst:SetAttribute("DEV_PREVIEW", true)
+					saInst.Parent = part
+				end
+			end
 
-    if meta.textureID ~= "" then
-        for _, v in pairs(tool:GetDescendants()) do
-            if v:IsA("MeshPart") and v:GetAttribute("SATP") then
-                v.TextureID = "rbxassetid://" .. meta.textureID
-            end
-        end
-    end
+			if sa.customColor and sa.customParts then
+				local col = Color3.fromRGB(sa.customColor[1], sa.customColor[2], sa.customColor[3])
+				for _, v in pairs(tool:GetDescendants()) do
+					if v:IsA("MeshPart") then
+						for _, pName in ipairs(sa.customParts) do
+							if v.Name == pName then
+								v.Color = col
+								v.Transparency = 0
+							end
+						end
+					end
+				end
+			end
+		end
 
-    local col = RARITY_COLORS[meta.rarity] or Color3.fromRGB(200,200,200)
-    statusLbl.Text = "✔  " .. meta.display .. "   |   " .. meta.rarity:upper()
-    statusLbl.TextColor3 = col
-end
+		if meta.textureID ~= "" then
+			for _, v in pairs(tool:GetDescendants()) do
+				if v:IsA("MeshPart") and v:GetAttribute("SATP") then
+					v.TextureID = "rbxassetid://" .. meta.textureID
+				end
+			end
+		end
 
-local function resetSkin(tool)
-    clearPreview(tool)
-    for part, orig in pairs(originalData) do
-        if part and part.Parent then
-            part.TextureID    = orig[1]
-            part.Color        = orig[2]
-            part.Transparency = orig[3]
-        end
-    end
-    statusLbl.Text = "Reset to default"
-    statusLbl.TextColor3 = Color3.fromRGB(110,110,150)
-end
+		local col = RARITY_COLORS[meta.rarity] or Color3.fromRGB(200,200,200)
+		statusLbl.Text = "✔  " .. meta.display .. "   |   " .. meta.rarity:upper()
+		statusLbl.TextColor3 = col
+	end
 
--- Tool detection
-local function onChar(char)
-    char.ChildAdded:Connect(function(child)
-        if child:IsA("Tool") then
-            currentTool = child
-            captureOriginal(child)
-            statusLbl.Text = "Equipped: " .. child.Name .. " — pick a skin"
-            statusLbl.TextColor3 = Color3.fromRGB(110,110,150)
-        end
-    end)
-    char.ChildRemoved:Connect(function(child)
-        if child == currentTool then
-            currentTool = nil
-            originalData = {}
-            statusLbl.Text = "No tool equipped"
-            statusLbl.TextColor3 = Color3.fromRGB(110,110,150)
-        end
-    end)
-    for _, v in pairs(char:GetChildren()) do
-        if v:IsA("Tool") then currentTool = v; captureOriginal(v) end
-    end
-end
-if lp.Character then onChar(lp.Character) end
-lp.CharacterAdded:Connect(onChar)
+	local function resetSkin(tool)
+		clearPreview(tool)
+		for part, orig in pairs(originalData) do
+			if part and part.Parent then
+				part.TextureID    = orig[1]
+				part.Color        = orig[2]
+				part.Transparency = orig[3]
+			end
+		end
+		statusLbl.Text = "Reset to default"
+		statusLbl.TextColor3 = Color3.fromRGB(110,110,150)
+	end
 
--- Skin list builder
-local function buildSkins(weapon, filter)
-    for _, v in pairs(skinScroll:GetChildren()) do
-        if not v:IsA("UIListLayout") then v:Destroy() end
-    end
-    local skins = SKINS[weapon]
-    if not skins then return end
-    filter = (filter or ""):lower()
+	-- Tool detection
+	local function onChar(char)
+		char.ChildAdded:Connect(function(child)
+			if child:IsA("Tool") then
+				currentTool = child
+				captureOriginal(child)
+				statusLbl.Text = "Equipped: " .. child.Name .. " — pick a skin"
+				statusLbl.TextColor3 = Color3.fromRGB(110,110,150)
+			end
+		end)
+		char.ChildRemoved:Connect(function(child)
+			if child == currentTool then
+				currentTool = nil
+				originalData = {}
+				statusLbl.Text = "No tool equipped"
+				statusLbl.TextColor3 = Color3.fromRGB(110,110,150)
+			end
+		end)
+		for _, v in pairs(char:GetChildren()) do
+			if v:IsA("Tool") then currentTool = v; captureOriginal(v) end
+		end
+	end
+	if lp.Character then onChar(lp.Character) end
+	lp.CharacterAdded:Connect(onChar)
 
-    local order = 0
-    for _, s in ipairs(skins) do
-        if filter == "" or s.display:lower():find(filter,1,true) or s.rarity:lower():find(filter,1,true) then
-            order += 1
-            local btn = Instance.new("TextButton", skinScroll)
-            btn.Size = UDim2.new(1,-4,0,38)
-            btn.BackgroundColor3 = Color3.fromRGB(26,26,38)
-            btn.BorderSizePixel = 0
-            btn.LayoutOrder = order
-            btn.Text = ""
-            btn.AutoButtonColor = false
-            makeCorner(btn, 4)
+	-- Skin list builder
+	local function buildSkins(weapon, filter)
+		for _, v in pairs(skinScroll:GetChildren()) do
+			if not v:IsA("UIListLayout") then v:Destroy() end
+		end
+		local skins = SKINS[weapon]
+		if not skins then return end
+		filter = (filter or ""):lower()
 
-            local bar = Instance.new("Frame", btn)
-            bar.Size = UDim2.new(0,3,0.7,0)
-            bar.Position = UDim2.new(0,0,0.15,0)
-            bar.BackgroundColor3 = RARITY_COLORS[s.rarity] or Color3.fromRGB(200,200,200)
-            bar.BorderSizePixel = 0
-            makeCorner(bar, 2)
+		local order = 0
+		for _, s in ipairs(skins) do
+			if filter == "" or s.display:lower():find(filter,1,true) or s.rarity:lower():find(filter,1,true) then
+				order += 1
+				local btn = Instance.new("TextButton", skinScroll)
+				btn.Size = UDim2.new(1,-4,0,38)
+				btn.BackgroundColor3 = Color3.fromRGB(26,26,38)
+				btn.BorderSizePixel = 0
+				btn.LayoutOrder = order
+				btn.Text = ""
+				btn.AutoButtonColor = false
+				makeCorner(btn, 4)
 
-            local nameLbl = Instance.new("TextLabel", btn)
-            nameLbl.Size = UDim2.new(1,-14,0.55,0)
-            nameLbl.Position = UDim2.new(0,10,0,3)
-            nameLbl.BackgroundTransparency = 1
-            nameLbl.Text = s.display
-            nameLbl.TextColor3 = Color3.fromRGB(215,215,225)
-            nameLbl.Font = Enum.Font.GothamBold
-            nameLbl.TextSize = 11
-            nameLbl.TextXAlignment = Enum.TextXAlignment.Left
-            nameLbl.TextTruncate = Enum.TextTruncate.AtEnd
+				local bar = Instance.new("Frame", btn)
+				bar.Size = UDim2.new(0,3,0.7,0)
+				bar.Position = UDim2.new(0,0,0.15,0)
+				bar.BackgroundColor3 = RARITY_COLORS[s.rarity] or Color3.fromRGB(200,200,200)
+				bar.BorderSizePixel = 0
+				makeCorner(bar, 2)
 
-            local rarLbl = Instance.new("TextLabel", btn)
-            rarLbl.Size = UDim2.new(1,-14,0.38,0)
-            rarLbl.Position = UDim2.new(0,10,0.6,0)
-            rarLbl.BackgroundTransparency = 1
-            rarLbl.Text = s.rarity:upper()
-            rarLbl.TextColor3 = RARITY_COLORS[s.rarity] or Color3.fromRGB(150,150,150)
-            rarLbl.Font = Enum.Font.Gotham
-            rarLbl.TextSize = 9
-            rarLbl.TextXAlignment = Enum.TextXAlignment.Left
+				local nameLbl = Instance.new("TextLabel", btn)
+				nameLbl.Size = UDim2.new(1,-14,0.55,0)
+				nameLbl.Position = UDim2.new(0,10,0,3)
+				nameLbl.BackgroundTransparency = 1
+				nameLbl.Text = s.display
+				nameLbl.TextColor3 = Color3.fromRGB(215,215,225)
+				nameLbl.Font = Enum.Font.GothamBold
+				nameLbl.TextSize = 11
+				nameLbl.TextXAlignment = Enum.TextXAlignment.Left
+				nameLbl.TextTruncate = Enum.TextTruncate.AtEnd
 
-            btn.MouseButton1Click:Connect(function()
-                if not currentTool then
-                    statusLbl.Text = "⚠  Equip a weapon first!"
-                    statusLbl.TextColor3 = Color3.fromRGB(255,100,60)
-                    return
-                end
-                applySkin(currentTool, s)
-            end)
-            btn.MouseEnter:Connect(function() btn.BackgroundColor3 = Color3.fromRGB(36,36,54) end)
-            btn.MouseLeave:Connect(function() btn.BackgroundColor3 = Color3.fromRGB(26,26,38) end)
-        end
-    end
-end
+				local rarLbl = Instance.new("TextLabel", btn)
+				rarLbl.Size = UDim2.new(1,-14,0.38,0)
+				rarLbl.Position = UDim2.new(0,10,0.6,0)
+				rarLbl.BackgroundTransparency = 1
+				rarLbl.Text = s.rarity:upper()
+				rarLbl.TextColor3 = RARITY_COLORS[s.rarity] or Color3.fromRGB(150,150,150)
+				rarLbl.Font = Enum.Font.Gotham
+				rarLbl.TextSize = 9
+				rarLbl.TextXAlignment = Enum.TextXAlignment.Left
 
--- Weapon list builder
-local function selectWeapon(w)
-    selectedWeapon = w
-    for name, btn in pairs(weaponBtns) do
-        btn.BackgroundColor3 = name == w and Color3.fromRGB(50,50,90) or Color3.fromRGB(24,24,36)
-    end
-    buildSkins(w, searchBox.Text)
-end
+				btn.MouseButton1Click:Connect(function()
+					if not currentTool then
+						statusLbl.Text = "⚠  Equip a weapon first!"
+						statusLbl.TextColor3 = Color3.fromRGB(255,100,60)
+						return
+					end
+					applySkin(currentTool, s)
+				end)
+				btn.MouseEnter:Connect(function() btn.BackgroundColor3 = Color3.fromRGB(36,36,54) end)
+				btn.MouseLeave:Connect(function() btn.BackgroundColor3 = Color3.fromRGB(26,26,38) end)
+			end
+		end
+	end
 
-for i, w in ipairs(WEAPONS) do
-    if SKINS[w] then
-        local btn = Instance.new("TextButton", weaponScroll)
-        btn.Size = UDim2.new(1,-4,0,28)
-        btn.BackgroundColor3 = Color3.fromRGB(24,24,36)
-        btn.BorderSizePixel = 0
-        btn.LayoutOrder = i
-        btn.Text = ""
-        btn.AutoButtonColor = false
-        weaponBtns[w] = btn
-        makeCorner(btn, 4)
+	-- Weapon list builder
+	local function selectWeapon(w)
+		selectedWeapon = w
+		for name, btn in pairs(weaponBtns) do
+			btn.BackgroundColor3 = name == w and Color3.fromRGB(50,50,90) or Color3.fromRGB(24,24,36)
+		end
+		buildSkins(w, searchBox.Text)
+	end
 
-        local lbl = Instance.new("TextLabel", btn)
-        lbl.Size = UDim2.new(1,-8,1,0)
-        lbl.Position = UDim2.new(0,6,0,0)
-        lbl.BackgroundTransparency = 1
-        lbl.Text = w
-        lbl.TextColor3 = Color3.fromRGB(190,190,210)
-        lbl.Font = Enum.Font.Gotham
-        lbl.TextSize = 11
-        lbl.TextXAlignment = Enum.TextXAlignment.Left
-        lbl.TextTruncate = Enum.TextTruncate.AtEnd
+	for i, w in ipairs(WEAPONS) do
+		if SKINS[w] then
+			local btn = Instance.new("TextButton", weaponScroll)
+			btn.Size = UDim2.new(1,-4,0,28)
+			btn.BackgroundColor3 = Color3.fromRGB(24,24,36)
+			btn.BorderSizePixel = 0
+			btn.LayoutOrder = i
+			btn.Text = ""
+			btn.AutoButtonColor = false
+			weaponBtns[w] = btn
+			makeCorner(btn, 4)
 
-        btn.MouseButton1Click:Connect(function() selectWeapon(w) end)
-        btn.MouseEnter:Connect(function()
-            if selectedWeapon ~= w then btn.BackgroundColor3 = Color3.fromRGB(34,34,50) end
-        end)
-        btn.MouseLeave:Connect(function()
-            if selectedWeapon ~= w then btn.BackgroundColor3 = Color3.fromRGB(24,24,36) end
-        end)
-    end
-end
+			local lbl = Instance.new("TextLabel", btn)
+			lbl.Size = UDim2.new(1,-8,1,0)
+			lbl.Position = UDim2.new(0,6,0,0)
+			lbl.BackgroundTransparency = 1
+			lbl.Text = w
+			lbl.TextColor3 = Color3.fromRGB(190,190,210)
+			lbl.Font = Enum.Font.Gotham
+			lbl.TextSize = 11
+			lbl.TextXAlignment = Enum.TextXAlignment.Left
+			lbl.TextTruncate = Enum.TextTruncate.AtEnd
 
-searchBox:GetPropertyChangedSignal("Text"):Connect(function()
-    if selectedWeapon then buildSkins(selectedWeapon, searchBox.Text) end
-end)
+			btn.MouseButton1Click:Connect(function() selectWeapon(w) end)
+			btn.MouseEnter:Connect(function()
+				if selectedWeapon ~= w then btn.BackgroundColor3 = Color3.fromRGB(34,34,50) end
+			end)
+			btn.MouseLeave:Connect(function()
+				if selectedWeapon ~= w then btn.BackgroundColor3 = Color3.fromRGB(24,24,36) end
+			end)
+		end
+	end
 
-resetBtn.MouseButton1Click:Connect(function()
-    if currentTool then resetSkin(currentTool) end
-end)
+	searchBox:GetPropertyChangedSignal("Text"):Connect(function()
+		if selectedWeapon then buildSkins(selectedWeapon, searchBox.Text) end
+	end)
 
-UIS.InputBegan:Connect(function(inp, busy)
-    if busy then return end
-    if inp.KeyCode == Enum.KeyCode.K then
-        guiVisible = not guiVisible
-        main.Visible = guiVisible
-    end
-end)
+	resetBtn.MouseButton1Click:Connect(function()
+		if currentTool then resetSkin(currentTool) end
+	end)
 
-if WEAPONS[1] then selectWeapon(WEAPONS[1]) end
+	UIS.InputBegan:Connect(function(inp, busy)
+		if busy then return end
+		if inp.KeyCode == Enum.KeyCode.K then
+			guiVisible = not guiVisible
+			main.Visible = guiVisible
+		end
+	end)
+
+	if WEAPONS[1] then selectWeapon(WEAPONS[1]) end
 end
 
 do
@@ -6135,6 +6136,92 @@ do
 			end
 		})
 	end
+	
+	local EmotesSection = MiscTab:AddSection("Emotes")
+
+	local EMOTES = {
+	billie = "rbxassetid://97788430027274",
+	chrono = "rbxassetid://133471368520672",
+	drip = "rbxassetid://89616731719213",
+	goth = "rbxassetid://104550908976541",
+	hustle = "rbxassetid://72328510486966",
+	poplock = "rbxassetid://131348460063092",
+	shuffle = "rbxassetid://101724393380941",
+	soviet1 = "rbxassetid://101535811525741",
+	soviet2 = "rbxassetid://103335495300175",
+	sponge = "rbxassetid://120039726805243",
+	stomp = "rbxassetid://120924074533444",
+	thriller = "rbxassetid://100347498923734",
+	twist = "rbxassetid://77734471624185",
+}
+
+	local SelectedEmote
+	
+	EmotesSection:AddDropdown("SELECT_EMOTES",{
+	 Title = "Select Emote",
+	 Values = EMOTES,
+	 Default = 1,
+	 Callback = function(Value)
+		SelectedEmote = Value
+	 end
+	})
+
+	EmotesSection:AddButton({
+		Title = "Play Emote",
+		Description = "Plays the selected emote.",
+		Callback = function()
+			if not SelectedEmote then
+				Fluent:Notify({
+					Title = "No Emote Selected",
+					Content = "Please select an emote from the dropdown menu.",
+					Duration = 3,
+				})
+				return
+			end
+
+			local character = LocalPlayer.Character
+			if not character then
+				Fluent:Notify({
+					Title = "Character Not Found",
+					Content = "Your character could not be found. Please try again.",
+					Duration = 3,
+				})
+				return
+			end
+
+			local humanoid = character:FindFirstChildOfClass("Humanoid")
+			if not humanoid then
+				Fluent:Notify({
+					Title = "Humanoid Not Found",
+					Content = "Your character's humanoid could not be found. Please try again.",
+					Duration = 3,
+				})
+				return
+			end
+
+			local emoteId = EMOTES[SelectedEmote]
+			if not emoteId then
+				Fluent:Notify({
+					Title = "Invalid Emote",
+					Content = "The selected emote is invalid. Please try again.",
+					Duration = 3,
+				})
+				return
+			end
+			local animation = Instance.new("Animation")
+			animation.AnimationId = emoteId
+			local animTrack = humanoid:WaitForChild("Animator"):LoadAnimation(animation)
+
+			--only play when player is standing still / alive, stop when dead/moving, do not add notify
+			if humanoid.MoveDirection.Magnitude == 0 and humanoid.Health > 1 then
+				animTrack:Play()
+				else
+				animTrack:Stop()
+			end
+			
+		end
+	})
+	
 end
 
 if state.IsOnMobile then
@@ -6236,7 +6323,7 @@ task.spawn(function()
 					elseif isTeammate then
 						color = Color3.fromRGB(0, 150, 255) -- Blue for teammates
 					else
-						color = Color3.fromRGB(255, 165, 0) -- Orange for enemies
+						color = Color3.fromRGB(66, 19, 255) -- Orange for enemies
 					end
 
 					-- Update highlight color
@@ -6321,7 +6408,7 @@ task.spawn(function()
 			return
 		end
 
-		task.wait(0.1)
+		task.wait() -- frame
 	end
 end)
 
