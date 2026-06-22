@@ -4173,10 +4173,11 @@ local function isDealer(model)
 end
 
 local function checkDealerStock(itemName)
+	local Value
 	for _, dealer in ipairs(world.Shopz:GetChildren()) do
 		if isDealer(dealer) then
 			local CurrentStocksFolder = dealer:FindFirstChild("CurrentStocks")
-			local Value
+			
 			-- check if it is a value and is it a IntConstrainedValue
 			if CurrentStocksFolder and CurrentStocksFolder:FindFirstChild(itemName) and CurrentStocksFolder[itemName]:IsA("IntConstrainedValue") then
 				Value = CurrentStocksFolder:FindFirstChild(itemName).Value
@@ -4377,11 +4378,13 @@ local function AutoFarm(enable)
 						if obj.Name == "Crowbar" then hasCrowbar = true end
 					end
 				end
-				
-				local dealer = findNearestDealer()
 
-				-- buy missing items
-				if not hasLockpick or not hasCrowbar then
+				local dealer, dist = findNearestDealer()
+				
+				print(dealer, dist)
+
+					-- buy missing items
+					if not hasLockpick or not hasCrowbar then
 					local lockpickStock = checkDealerStock("Lockpick") or 0
 					local crowbarStock = checkDealerStock("Crowbar") or 0
 					local EssentialItems = math.min(lockpickStock, crowbarStock)
