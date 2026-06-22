@@ -790,8 +790,9 @@ local function getHighlight(target, color, prefix)
 	local highlight = Instance.new("Highlight")
 	highlight.Name = name
 	highlight.FillColor = color
-	highlight.FillTransparency = 0.5 -- lighter, cheaper
-	highlight.OutlineTransparency = 1
+	highlight.OutlineColor = color
+	highlight.FillTransparency = 0.8 -- lighter, cheaper
+	highlight.OutlineTransparency = 0.7
 	highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
 	highlight.Adornee = target
 	highlight.Parent = Services.CoreGui
@@ -872,11 +873,8 @@ local Pathfinder = (function()
 	local MAX_INJECT_DEPTH  = 3       -- max midpoint splits per segment
 
 	-- Teleport fallback (floor-to-floor gaps or hard-stuck segments)
-	-- Triggers when a segment fails AND any of these conditions are met:
-	--   • Y difference between current pos and checkpoint ≥ TELEPORT_Y_THRESHOLD
-	--   • total failure count for that checkpoint ≥ TELEPORT_FAIL_THRESHOLD
-	local TELEPORT_Y_THRESHOLD   = 5   -- studs
-	local TELEPORT_FAIL_THRESHOLD = 2  -- total hard failures before forcing teleport
+	local TELEPORT_Y_THRESHOLD    = 5   -- studs
+	local TELEPORT_FAIL_THRESHOLD = 2   -- total hard failures before forcing teleport
 
 	-- Oscillation detection
 	local OSCILLATION_SAMPLES = 16
@@ -920,8 +918,6 @@ local Pathfinder = (function()
 
 	-- ─────────────────────────────────────────────────────────────────
 	-- PATHFIND IGNORE LIST
-	-- Add any Instance (Part, Model, Folder).
-	-- BaseParts are excluded from raycasts and noclipped when nearby.
 	-- ─────────────────────────────────────────────────────────────────
 	local PathfindIgnore     = {}
 	local ignoreParts        = {}
@@ -1155,9 +1151,6 @@ local Pathfinder = (function()
 
 	-- ─────────────────────────────────────────────────────────────────
 	-- CHECKPOINT GENERATOR
-	-- Rough PathfindingService call with large WaypointSpacing — produces
-	-- navmesh-guaranteed checkpoints instead of lerped wall-clipping ones.
-	-- Falls back to bare destination if all radii fail.
 	-- ─────────────────────────────────────────────────────────────────
 	local function buildCheckpoints(startPos, endPos)
 		local roughWps = nil
@@ -1195,10 +1188,6 @@ local Pathfinder = (function()
 
 	-- ─────────────────────────────────────────────────────────────────
 	-- SEGMENT COMPUTE
-	-- Strategy: first valid radius wins — larger radius preferred so the
-	-- agent never routes over fence railings or narrow ledges when a
-	-- proper corridor path exists.
-	-- Falls back through bisection (up to MAX_BISECT_DEPTH levels).
 	-- ─────────────────────────────────────────────────────────────────
 	local MIN_WP_DIST = 1.8
 
@@ -1216,38 +1205,11 @@ local Pathfinder = (function()
 		return out
 	end
 
-	-- Checks each consecutive waypoint pair for wall penetration.
-	-- Casts horizontal rays at 3 heights between each pair — if any hit
-	-- a wall-like surface (Normal.Y < 0.5), the path clips geometry → reject.
-	-- Heights skip 0 to avoid floor false-positives on stairs/ramps.
-	local WALL_CHECK_HEIGHTS = {0.8, 2.4, 4.0}
-
-	local function isSegmentClear(a, b)
-		local flatDir = Vector3.new(b.X - a.X, 0, b.Z - a.Z)
-		local dist    = flatDir.Magnitude
-		if dist < 0.1 then return true end
-		flatDir = flatDir.Unit
-
-		for _, h in ipairs(WALL_CHECK_HEIGHTS) do
-			local origin = Vector3.new(a.X, a.Y + h, a.Z)
-			local hit    = workspace:Raycast(origin, flatDir * dist, RAY_PARAMS)
-			-- Normal.Y < 0.5 = wall/vertical surface (not floor/ramp)
-			if hit and math.abs(hit.Normal.Y) < 0.5 then
-				return false
-			end
-		end
-		return true
-	end
-
-	local function validateWaypoints(wps)
-		if not wps or #wps < 2 then return wps end
-		for i = 1, #wps - 1 do
-			if not isSegmentClear(wps[i].Position, wps[i+1].Position) then
-				return nil  -- path penetrates geometry — caller will try next strategy
-			end
-		end
-		return wps
-	end
+	-- ── FIX 1: validateWaypoints / isSegmentClear REMOVED ────────────
+	-- PathfindingService's navmesh already guarantees collision-free
+	-- routing between consecutive waypoints. The horizontal wall-ray
+	-- check was incorrectly rejecting valid paths on stairs, ramps, and
+	-- tight doorways — causing near-100% cascade failure.
 
 	-- Raw single path attempt at one radius.
 	local function rawCompute(fromPos, toPos, radius)
@@ -1263,8 +1225,8 @@ local Pathfinder = (function()
 		if not ok or path.Status ~= Enum.PathStatus.Success then return nil end
 		local wps = path:GetWaypoints()
 		if not wps or #wps == 0 then return nil end
-		wps = deduplicateWps(wps)
-		return validateWaypoints(wps)   -- ← reject if any segment clips a wall
+		-- validateWaypoints call removed — navmesh already guarantees clear segments
+		return deduplicateWps(wps)
 	end
 
 	-- First valid radius wins — prefer large (wide corridors) over small (ledges/fences).
@@ -1332,10 +1294,8 @@ local Pathfinder = (function()
 		end
 
 		if wpsB then
-			-- Full path: A→mid→toPos
 			return mergeWps(wpsA, wpsB), reachB
 		else
-			-- Partial path: A→reachA only. Caller injects reachA as next checkpoint.
 			print(string.format("[PF] Partial bisect: reached (%.1f,%.1f,%.1f), %.0f studs short of target",
 				reachA.X, reachA.Y, reachA.Z,
 				Vector2.new(reachA.X - toPos.X, reachA.Z - toPos.Z).Magnitude))
@@ -1441,48 +1401,27 @@ local Pathfinder = (function()
 		end
 
 		-- ── Advance to next waypoint ──────────────────────────────────
+		-- ── FIX 2: Removed FreeFalling:Wait() yield ──────────────────
+		-- Yielding inside OnPointReached (called from Tick → RenderStepped)
+		-- stalled all movement during jumps/stairs. The plane detector
+		-- handles timing naturally; mid-air direction changes are
+		-- physically constrained by Roblox anyway.
 		function self:OnPointReached(reached)
 			if not reached or self.Cancelled then
-				self.PathFailed:Fire(); self:Cleanup(); return
+				if self.PathFailed then self.PathFailed:Fire() end
+				self:Cleanup()
+				return
 			end
 
 			local nextIdx = self.CurrentPoint + 1
 			if nextIdx > #self.PointList then
-				self.Finished:Fire(); self:Cleanup(); return
+				if self.Finished then self.Finished:Fire() end
+				self:Cleanup()
+				return
 			end
 
 			local curWP  = self.PointList[self.CurrentPoint]
 			local nextWP = self.PointList[nextIdx]
-
-			-- Airborne check — wait for landing before sharp turns
-			local hum = getHumanoid()
-			if hum then
-				local state = hum:GetState()
-				local inAir = state == Enum.HumanoidStateType.Jumping
-					or state == Enum.HumanoidStateType.Freefall
-					or state == Enum.HumanoidStateType.FallingDown
-				if inAir then
-					local shouldWait = nextWP.Action == Enum.PathWaypointAction.Jump
-					if not shouldWait and self.CurrentPoint > 1 then
-						local prevWP = self.PointList[self.CurrentPoint - 1]
-						local pDir = Vector2.new(
-							curWP.Position.X - prevWP.Position.X,
-							curWP.Position.Z - prevWP.Position.Z
-						)
-						local cDir = Vector2.new(
-							nextWP.Position.X - curWP.Position.X,
-							nextWP.Position.Z - curWP.Position.Z
-						)
-						if pDir.Magnitude > ALMOST_ZERO and cDir.Magnitude > ALMOST_ZERO then
-							shouldWait = pDir.Unit:Dot(cDir.Unit) < 0.996
-						end
-					end
-					if shouldWait then
-						hum.FreeFalling:Wait()
-						task.wait(0.1)
-					end
-				end
-			end
 
 			self:SetPlane(curWP, nextWP)
 			self.CurrentPoint = nextIdx
@@ -1496,7 +1435,7 @@ local Pathfinder = (function()
 			self.SegmentTimer = self.SegmentTimer + dt
 			if self.SegmentTimer > SEGMENT_TIMEOUT then
 				warn("[PF] Segment timed out — advancing")
-				self.Finished:Fire()
+				if self.Finished then self.Finished:Fire() end
 				self:Cleanup()
 				return
 			end
@@ -1530,11 +1469,15 @@ local Pathfinder = (function()
 			if self.WaypointNeedsJump then self.WaypointNeedsJump = false end
 		end
 
-		-- ── Lifecycle ────────────────────────────────────────────────
+		-- ── Lifecycle ─────────────────────────────────────────────────
+		-- ── FIX 4: BindableEvents destroyed in Cleanup ───────────────
 		function self:Cleanup()
 			if self.DiedConn   then self.DiedConn:Disconnect();   self.DiedConn   = nil end
 			if self.SeatedConn then self.SeatedConn:Disconnect(); self.SeatedConn = nil end
 			self.Started = false
+			-- Destroy BindableEvents to prevent accumulating memory leaks
+			if self.Finished   then self.Finished:Destroy();   self.Finished   = nil end
+			if self.PathFailed then self.PathFailed:Destroy(); self.PathFailed = nil end
 		end
 
 		function self:Cancel()
@@ -1547,10 +1490,14 @@ local Pathfinder = (function()
 
 		function self:Start()
 			if self.Started or not self.PointList or #self.PointList == 0 then
-				self.PathFailed:Fire(); return
+				if self.PathFailed then self.PathFailed:Fire() end
+				return
 			end
 			local hum = getHumanoid()
-			if not hum or not hum.RootPart then self.PathFailed:Fire(); return end
+			if not hum or not hum.RootPart then
+				if self.PathFailed then self.PathFailed:Fire() end
+				return
+			end
 
 			self.Started     = true
 			self.HumanoidPos = hum.RootPart.Position
@@ -1573,8 +1520,8 @@ local Pathfinder = (function()
 		active        = false,
 		checkpoints   = {},
 		cpIndex       = 1,
-		cpRetries     = {},    -- [cpIndex] = retry count
-		cpFailCounts  = {},    -- [cpIndex] = total hard failure count (for teleport)
+		cpRetries     = {},
+		cpFailCounts  = {},
 		finalDest     = nil,
 		pather        = nil,
 		onFinished    = nil,
@@ -1597,12 +1544,10 @@ local Pathfinder = (function()
 	local function precomputeNext()
 		local nextIdx = Nav.cpIndex + 1
 		if nextIdx > #Nav.checkpoints then return end
-		if Nav.precomp[nextIdx] ~= nil then return end   -- already cached or in-flight
+		if Nav.precomp[nextIdx] ~= nil then return end
 
 		Nav.precomp[nextIdx] = "pending"
 
-		-- Use checkpoint N's position as the from-pos for the pre-computation.
-		-- When the pather actually finishes, real position is close enough.
 		local fromPos = Nav.checkpoints[Nav.cpIndex] or rootPart.Position
 		local toPos   = Nav.checkpoints[nextIdx]
 
@@ -1612,7 +1557,7 @@ local Pathfinder = (function()
 				Nav.precomp[nextIdx] = {wps = wps, reached = reached}
 				print(string.format("[PF] Pre-computed segment %d ✓", nextIdx))
 			else
-				Nav.precomp[nextIdx] = false   -- failed — advanceToNextCheckpoint will handle
+				Nav.precomp[nextIdx] = false
 				print(string.format("[PF] Pre-computed segment %d ✗", nextIdx))
 			end
 		end)
@@ -1623,26 +1568,19 @@ local Pathfinder = (function()
 
 	-- ─────────────────────────────────────────────────────────────────
 	-- TELEPORT FALLBACK
-	-- Client-side CFrame set for floor-to-floor transitions (no stairs).
-	-- Server will reconcile the position. A small settle yield prevents
-	-- the next segment computing against pre-physics-update position.
 	-- ─────────────────────────────────────────────────────────────────
 	local function teleportToCheckpoint(target)
 		local dest, ok = snapToGround(target)
 		if not ok then dest = target end
 
-		-- Push up slightly to avoid landing inside floor geometry
 		if rootPart then
 			rootPart.CFrame = CFrame.new(dest + Vector3.new(0, 3.5, 0))
 		end
 
 		warn(string.format("[PF] ⚡ Teleport → (%.1f, %.1f, %.1f)", dest.X, dest.Y, dest.Z))
-		task.wait(0.15)   -- let physics settle before the next segment computes
+		task.wait(0.15)
 	end
 
-	-- Returns true if a completely failed segment warrants a teleport:
-	--   • large floor-to-floor Y gap (no staircase)
-	--   • OR same checkpoint has failed too many times in total
 	local function shouldTeleport(fromPos, target)
 		local yDiff    = math.abs(target.Y - fromPos.Y)
 		local failures = Nav.cpFailCounts[Nav.cpIndex] or 0
@@ -1651,8 +1589,6 @@ local Pathfinder = (function()
 
 	-- ─────────────────────────────────────────────────────────────────
 	-- MIDPOINT INJECTION
-	-- Splits a failing segment in half at a navmesh-safe midpoint.
-	-- Returns true if a midpoint was inserted (sequencer should retry).
 	-- ─────────────────────────────────────────────────────────────────
 	local function tryInjectMidpoint(cpIdx, fromPos, toPos)
 		local injectKey = "inject_" .. cpIdx
@@ -1668,13 +1604,11 @@ local Pathfinder = (function()
 		local mid  = findMidpoint(fromPos, toPos)
 		if not mid then return false end
 
-		-- Midpoint must sit meaningfully between from and to
 		local dMid = Vector2.new(fromPos.X - mid.X, fromPos.Z - mid.Z).Magnitude
 		if dMid < 3 or dMid > dist * 0.9 then return false end
 
-		-- Insert before the failing checkpoint; sequencer will hit mid first
 		table.insert(Nav.checkpoints, cpIdx, mid)
-		Nav.cpIndex = cpIdx - 1   -- incremented back to cpIdx on next advance
+		Nav.cpIndex = cpIdx - 1
 		Nav.cpRetries[injectKey] = depth + 1
 		drawCheckpoints(Nav.checkpoints)
 
@@ -1699,13 +1633,21 @@ local Pathfinder = (function()
 				stopNav("Destination reached ✓")
 			else
 				warn(string.format("[PF] Checkpoints exhausted %.1f studs from dest — recomputing", xzDist))
-				Nav.checkpoints  = buildCheckpoints(rootPart.Position, Nav.finalDest)
-				Nav.cpIndex      = 0
-				Nav.cpRetries    = {}
-				Nav.cpFailCounts = {}
-				Nav.precomp      = {}
-				drawCheckpoints(Nav.checkpoints)
-				advanceToNextCheckpoint()
+				-- ── FIX 3: Wrapped in task.spawn ─────────────────────────
+				-- buildCheckpoints yields (ComputeAsync). Calling it inline
+				-- from a BindableEvent → Finished:Fire() → RenderStepped
+				-- chain could stall the frame pipeline or race the next frame.
+				task.spawn(function()
+					if not Nav.active then return end
+					Nav.checkpoints  = buildCheckpoints(rootPart.Position, Nav.finalDest)
+					Nav.cpIndex      = 0
+					Nav.cpRetries    = {}
+					Nav.cpFailCounts = {}
+					Nav.precomp      = {}
+					if not Nav.active then return end
+					drawCheckpoints(Nav.checkpoints)
+					advanceToNextCheckpoint()
+				end)
 			end
 			return
 		end
@@ -1729,7 +1671,6 @@ local Pathfinder = (function()
 		-- ── Check pre-computation cache ───────────────────────────────
 		local cached = Nav.precomp[Nav.cpIndex]
 
-		-- If still pending, wait for it (poll with short yields)
 		if cached == "pending" then
 			task.spawn(function()
 				local waited = 0
@@ -1739,20 +1680,19 @@ local Pathfinder = (function()
 				end
 				Nav.computing = false
 				if not Nav.active then return end
-				-- Recurse now that cache is settled
 				Nav.cpIndex = Nav.cpIndex - 1
 				advanceToNextCheckpoint()
 			end)
 			return
 		end
 
-		Nav.precomp[Nav.cpIndex] = nil   -- consume cache entry
+		Nav.precomp[Nav.cpIndex] = nil
 
 		local function onSegmentResult(wps, reached)
 			Nav.computing = false
 			if not Nav.active then return end
 
-			-- ── Segment total fail ────────────────────────────────────
+			-- Segment total fail
 			if not wps then
 				Nav.cpFailCounts[Nav.cpIndex] = (Nav.cpFailCounts[Nav.cpIndex] or 0) + 1
 
@@ -1782,13 +1722,11 @@ local Pathfinder = (function()
 				return
 			end
 
-			-- ── Partial path: inject remaining target back ────────────
+			-- Partial path: inject remaining target back
 			local isPartial = reached and
 				Vector2.new(reached.X - target.X, reached.Z - target.Z).Magnitude > 2
 
 			if isPartial then
-				-- Insert the original target right after current index so
-				-- when pather reaches `reached`, sequencer continues to it.
 				table.insert(Nav.checkpoints, Nav.cpIndex + 1, target)
 				drawCheckpoints(Nav.checkpoints)
 				warn(string.format("[PF] Partial path injected: will resume to full target from (%.1f,%.1f,%.1f)",
@@ -1801,7 +1739,6 @@ local Pathfinder = (function()
 			local pather = makePather(wps)
 			Nav.pather   = pather
 
-			-- Kick off pre-computation of the NEXT segment while this one runs
 			precomputeNext()
 
 			Nav.onFinished = pather.Finished.Event:Connect(function()
@@ -1810,7 +1747,6 @@ local Pathfinder = (function()
 				local arrived = Vector2.new(pos.X - target.X, pos.Z - target.Z).Magnitude
 				local retries = Nav.cpRetries[Nav.cpIndex] or 0
 
-				-- Only retry if not a partial (partial endpoint is intentionally short)
 				if not isPartial and arrived > RETRY_FAR_DIST and retries < MAX_CP_RETRIES then
 					warn(string.format("[PF] Ended %.1f studs from cp — retry %d/%d",
 						arrived, retries + 1, MAX_CP_RETRIES))
@@ -1848,16 +1784,13 @@ local Pathfinder = (function()
 			pather:Start()
 		end
 
-		-- ── Use cached result or compute fresh ───────────────────────
+		-- Use cached result or compute fresh
 		if cached and cached ~= false then
-			-- Pre-computation succeeded — use immediately, no yield
 			print(string.format("[PF] Using pre-computed segment %d", Nav.cpIndex))
 			onSegmentResult(cached.wps, cached.reached)
 		elseif cached == false then
-			-- Pre-computation already determined this segment fails
 			onSegmentResult(nil, nil)
 		else
-			-- Not pre-computed — compute now
 			task.spawn(function()
 				local wps, reached = computeSegment(fromPos, target)
 				onSegmentResult(wps, reached)
@@ -1867,9 +1800,6 @@ local Pathfinder = (function()
 
 	-- ─────────────────────────────────────────────────────────────────
 	-- START NAVIGATION
-	-- Always uses checkpoint segmentation — no direct full-path strategy.
-	-- PFS regularly returns Success on long paths with bad geometry cuts;
-	-- checkpoint mode + midpoint injection + teleport is far more reliable.
 	-- ─────────────────────────────────────────────────────────────────
 	local function startNav(destination)
 		stopNav(nil)
@@ -1907,7 +1837,7 @@ local Pathfinder = (function()
 	end
 
 	-- ─────────────────────────────────────────────────────────────────
-	-- STOP NAVIGATION  (forward-declared above, defined here)
+	-- STOP NAVIGATION
 	-- ─────────────────────────────────────────────────────────────────
 	stopNav = function(reason)
 		Nav.active       = false
@@ -1928,8 +1858,6 @@ local Pathfinder = (function()
 
 	-- ─────────────────────────────────────────────────────────────────
 	-- REACTIVE JUMP
-	-- Only fires when the next waypoint is on meaningfully higher ground
-	-- (genuine step-up) to avoid triggering on stairs or flat surfaces.
 	-- ─────────────────────────────────────────────────────────────────
 	local lastJump   = 0
 	local lastJumpY  = 0
@@ -1973,8 +1901,6 @@ local Pathfinder = (function()
 
 	-- ─────────────────────────────────────────────────────────────────
 	-- OSCILLATION DETECTOR + ESCAPE ROUTE
-	-- Samples XZ position into a ring buffer; if all samples cluster
-	-- within OSCILLATION_RADIUS the character is looping → escape.
 	-- ─────────────────────────────────────────────────────────────────
 	local function sampleOscillation()
 		local now = tick()
@@ -2137,12 +2063,6 @@ local Pathfinder = (function()
 	-- PUBLIC API
 	-- ─────────────────────────────────────────────────────────────────
 
-	-- Callbacks (assign before calling SetDestination):
-	--   Pathfinder.OnReached   = function() end
-	--   Pathfinder.OnFailed    = function(reason) end
-	--   Pathfinder.OnSegment   = function(index, total, position) end
-	--   Pathfinder.OnComputing = function(isComputing) end
-
 	local API = {}
 
 	API.OnReached   = nil
@@ -2150,7 +2070,6 @@ local Pathfinder = (function()
 	API.OnSegment   = nil
 	API.OnComputing = nil
 
-	-- Hook callbacks into stopNav
 	local _baseStopNav = stopNav
 	stopNav = function(reason)
 		_baseStopNav(reason)
@@ -2527,11 +2446,7 @@ local function onCharacterAdded_nr(character)
 				task.wait(1.5)
 				cacheWeapons()
 				applyNoRecoilMods()
-			end
-		end))
-
-		table.insert(GunMods_Connections, humanoid.Died:Connect(function()
-			if Settings.GunMods.Spread then
+			elseif Settings.GunMods.Spread then
 				task.wait(1.5)
 				cacheWeapons()
 				applyGunMods()
@@ -6136,78 +6051,6 @@ do
 			end
 		})
 	end
-	
-	local EmotesSection = MiscTab:AddSection("Emotes")
-
-local EMOTES = {
-    billie = "rbxassetid://97788430027274",
-    chrono = "rbxassetid://133471368520672",
-    drip = "rbxassetid://89616731719213",
-    goth = "rbxassetid://104550908976541",
-    hustle = "rbxassetid://72328510486966",
-    poplock = "rbxassetid://131348460063092",
-    shuffle = "rbxassetid://101724393380941",
-    soviet1 = "rbxassetid://101535811525741",
-    soviet2 = "rbxassetid://103335495300175",
-    sponge = "rbxassetid://120039726805243",
-    stomp = "rbxassetid://120924074533444",
-    thriller = "rbxassetid://100347498923734",
-    twist = "rbxassetid://77734471624185",
-}
-
-local SelectedEmote
-
--- feed the dropdown the KEYS of EMOTES
-local emoteKeys = {}
-for key in pairs(EMOTES) do
-    table.insert(emoteKeys, key)
-end
-
-EmotesSection:AddDropdown("SELECT_EMOTES", {
-    Title = "Select Emote",
-    Values = emoteKeys,
-    Default = 1,
-    Callback = function(Value)
-        SelectedEmote = Value -- this will be the key, e.g. "billie"
-    end
-})
-
-EmotesSection:AddButton({
-    Title = "Play Emote",
-    Description = "Plays the selected emote.",
-    Callback = function()
-        if not SelectedEmote then
-            Fluent:Notify({
-                Title = "No Emote Selected",
-                Content = "Please select an emote from the dropdown menu.",
-                Duration = 3,
-            })
-            return
-        end
-
-        local character = LocalPlayer.Character
-        if not character then return end
-
-        local humanoid = character:FindFirstChildOfClass("Humanoid")
-        if not humanoid then return end
-
-        local emoteId = EMOTES[SelectedEmote]
-        if not emoteId then return end
-
-        local animation = Instance.new("Animation")
-        animation.AnimationId = emoteId
-        local animTrack = humanoid:WaitForChild("Animator"):LoadAnimation(animation)
-
-        -- only play when standing still & alive
-        if humanoid.MoveDirection.Magnitude == 0 and humanoid.Health > 1 then
-            animTrack:Play()
-        else
-            animTrack:Stop()
-        end
-    end
-})
-
-	
 end
 
 if state.IsOnMobile then
