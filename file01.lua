@@ -836,7 +836,7 @@ do -- create assist node
 	folder.Name = "FedNodeAssist"
 	folder.Parent = workspace  -- bug 4 fix
 
-	local function CreateNode(name, pos, number)
+	local function CreateNode(name, pos, number, BypassCollision, CanIgnore, MustTeleport)
 		local node = Instance.new("Part")
 		node.Name = "Assist_" .. name .. "_N" .. number  -- bug 1 + 3 fix
 		node.Size = Vector3.new(1, 1, 1)
@@ -846,19 +846,20 @@ do -- create assist node
 		node.Transparency = 0.5
 		node.Material = Enum.Material.Neon
 		node.Color = Color3.fromRGB(255, 255, 0)
-		node:SetAttribute("CanIgnore", false)
-		node:SetAttribute("BypassCollision", false)
+		node:SetAttribute("CanIgnore", CanIgnore)
+		node:SetAttribute("BypassCollision", BypassCollision)
+		node:SetAtrribute("MustTeleport", MustTeleport)
 		node.Parent = folder
 		return node
 	end
 
 	-- begin create nodes
-	CreateNode("MediumSafe_TS_20", CFrame.new(-4595.591, 3.949, -152.515), 1)
-	CreateNode("MediumSafe_TS_20", CFrame.new(-4613.393, 3.949, -152.515), 2)
+	CreateNode("MediumSafe_TS_20", CFrame.new(-4595.591, 3.949, -152.515), 1, true, false, false)
+	CreateNode("MediumSafe_TS_20", CFrame.new(-4613.393, 3.949, -152.515), 2, true, false, false)
 end
 
 --ADVANCED PATHFINDER
--- Wrap the pathfinder in an IIFE to keep its locals scoped.
+-- Wrap the pathfinder in an IIFE to keep its locals scoped. ////////////////////////////////////////////////////////////////////////////////////////
 local Pathfinder = (function()
 
 	-- ─────────────────────────────────────────────────────────────────
@@ -1061,22 +1062,21 @@ local Pathfinder = (function()
 	--   CanIgnore   (bool attr, default false) — if true, skip this node
 	--   BypassCollision (bool attr, default false) — if true, auto-add to PathfindIgnore
 	-- ─────────────────────────────────────────────────────────────────
+	-- ─────────────────────────────────────────────────────────────────
+	-- NODE ASSIST (patched with destName awareness)
+	-- ─────────────────────────────────────────────────────────────────
 	local NodeAssist = {}
 	do
-		-- Internal graph: groups[destName] = { [index] = {part, pos, bypass} }
 		local groups = {}
 
 		local function parseNodeName(name)
-			-- Must start with "Assist_"
-			if not name:sub(1, 7) == "Assist_" then return nil, nil end
-			local body = name:sub(8)   -- strip "Assist_"
-			-- Find last "_N<digits>" segment
+			if name:sub(1, 7) ~= "Assist_" then return nil, nil end
+			local body = name:sub(8)
 			local destName, idxStr = body:match("^(.+)_N(%d+)$")
 			if not destName or not idxStr then return nil, nil end
 			return destName, tonumber(idxStr)
 		end
 
-		-- Load (or reload) all nodes from workspace.FedNodeAssist
 		function NodeAssist.Load()
 			groups = {}
 			local folder = workspace:FindFirstChild("FedNodeAssist")
@@ -1086,206 +1086,131 @@ local Pathfinder = (function()
 			end
 
 			local bypassParts = {}
-
 			for _, part in ipairs(folder:GetChildren()) do
 				if not part:IsA("BasePart") then continue end
-
-				local canIgnore = part:GetAttribute("CanIgnore")
-				if canIgnore == true then continue end   -- skip opted-out nodes
+				if part:GetAttribute("CanIgnore") == true then continue end
 
 				local destName, idx = parseNodeName(part.Name)
 				if not destName then
-					warn(string.format("[NodeAssist] Skipping '%s' — name doesn't match Assist_<Dest>_N<#>", part.Name))
+					warn(string.format("[NodeAssist] Skipping '%s' — bad name", part.Name))
 					continue
 				end
 
-				local bypass = part:GetAttribute("BypassCollision") == true
-
+				local bypass       = part:GetAttribute("BypassCollision") == true
+				local mustTeleport = part:GetAttribute("MustTeleport") == true
 				if not groups[destName] then groups[destName] = {} end
 				groups[destName][idx] = {
-					part   = part,
-					pos    = part.Position,
-					bypass = bypass,
+					part         = part,
+					pos          = part.Position,
+					bypass       = bypass,
+					mustTeleport = mustTeleport,
 				}
 
-				if bypass then
-					table.insert(bypassParts, part)
-				end
+				if bypass then table.insert(bypassParts, part) end
 			end
 
-			-- Register bypass parts into PathfindIgnore so noclip handles them
 			for _, p in ipairs(bypassParts) do
 				local alreadyIn = false
 				for _, v in ipairs(PathfindIgnore) do
 					if v == p then alreadyIn = true; break end
 				end
-				if not alreadyIn then
-					table.insert(PathfindIgnore, p)
-				end
+				if not alreadyIn then table.insert(PathfindIgnore, p) end
 			end
 			refreshIgnore()
 
 			local groupCount, nodeCount = 0, 0
 			for _, g in pairs(groups) do
-				groupCount = groupCount + 1
-				for _ in pairs(g) do nodeCount = nodeCount + 1 end
+				groupCount += 1
+				for _ in pairs(g) do nodeCount += 1 end
 			end
 			print(string.format("[NodeAssist] Loaded %d nodes across %d groups", nodeCount, groupCount))
 		end
 
-		-- Return ordered Vector3 list for a named group, or nil
 		local function getGroupChain(destName)
 			local g = groups[destName]
-			if not g then return nil end
-			-- Collect and sort by index
+			if not g then return nil, nil end
 			local sorted = {}
 			for idx, data in pairs(g) do
-				table.insert(sorted, {idx = idx, pos = data.pos})
+				table.insert(sorted, {idx = idx, pos = data.pos, mustTeleport = data.mustTeleport})
 			end
-			if #sorted == 0 then return nil end
 			table.sort(sorted, function(a, b) return a.idx < b.idx end)
-			local chain = {}
+			local chain, mustTeleportFlags = {}, {}
 			for _, entry in ipairs(sorted) do
 				table.insert(chain, entry.pos)
+				table.insert(mustTeleportFlags, entry.mustTeleport or false)
 			end
-			return chain
+			return chain, mustTeleportFlags
 		end
 
-		-- Find the nearest node position across ALL groups, returns (pos, distSq) or nil
-		local function nearestNodePos(pos)
-			local best, bestDist = nil, math.huge
-			for _, g in pairs(groups) do
-				for _, data in pairs(g) do
-					local d = (data.pos - pos).Magnitude
-					if d < bestDist then
-						bestDist = d
-						best     = data.pos
-					end
+		-- Route by destination name first, fallback to proximity
+		function NodeAssist.Route(fromPos, toPos, destName)
+			if destName then
+				local chain, mustTeleportFlags = getGroupChain(destName)
+				if chain and #chain > 0 then
+					return chain, mustTeleportFlags
 				end
 			end
-			return best, bestDist
+			-- fallback: proximity logic (optional)
+			return nil, nil
 		end
 
-		-- A* over the sequential group chains.
-		-- Build a flat node list with sequential edges, then A*.
-		local function buildFlatGraph()
-			local nodes = {}   -- list of {pos, neighbors:[index]}
-			local posToIdx = {}
-
-			local function addNode(pos)
-				local key = string.format("%.2f_%.2f_%.2f", pos.X, pos.Y, pos.Z)
-				if posToIdx[key] then return posToIdx[key] end
-				table.insert(nodes, {pos = pos, neighbors = {}})
-				local i = #nodes
-				posToIdx[key] = i
-				return i
-			end
-
-			for _, g in pairs(groups) do
-				local sorted = {}
-				for idx, data in pairs(g) do
-					table.insert(sorted, {idx = idx, pos = data.pos})
-				end
-				table.sort(sorted, function(a, b) return a.idx < b.idx end)
-
-				local prevIdx = nil
-				for _, entry in ipairs(sorted) do
-					local ni = addNode(entry.pos)
-					if prevIdx then
-						table.insert(nodes[prevIdx].neighbors, ni)
-						table.insert(nodes[ni].neighbors, prevIdx)   -- bidirectional
-					end
-					prevIdx = ni
-				end
-			end
-
-			return nodes
-		end
-
-		local function astar(nodes, startI, goalI)
-			if startI == goalI then return {nodes[startI].pos} end
-
-			local open     = {startI}
-			local cameFrom = {}
-			local gScore   = {[startI] = 0}
-			local fScore   = {[startI] = (nodes[startI].pos - nodes[goalI].pos).Magnitude}
-
-			local function lowestF()
-				local best, bestF = nil, math.huge
-				for _, n in ipairs(open) do
-					local f = fScore[n] or math.huge
-					if f < bestF then best = n; bestF = f end
-				end
-				return best
-			end
-			local function inOpen(n)
-				for _, v in ipairs(open) do if v == n then return true end end
-				return false
-			end
-
-			while #open > 0 do
-				local cur = lowestF()
-				if cur == goalI then
-					local path = {}
-					local c = cur
-					while c do
-						table.insert(path, 1, nodes[c].pos)
-						c = cameFrom[c]
-					end
-					return path
-				end
-				for i, v in ipairs(open) do
-					if v == cur then table.remove(open, i); break end
-				end
-				for _, nb in ipairs(nodes[cur].neighbors) do
-					local tg = (gScore[cur] or math.huge) + (nodes[cur].pos - nodes[nb].pos).Magnitude
-					if tg < (gScore[nb] or math.huge) then
-						cameFrom[nb] = cur
-						gScore[nb]   = tg
-						fScore[nb]   = tg + (nodes[nb].pos - nodes[goalI].pos).Magnitude
-						if not inOpen(nb) then table.insert(open, nb) end
-					end
-				end
-			end
-			return nil
-		end
-
-		-- High-level route: given two world positions, return ordered Vector3 list or nil.
-		-- Returns nil when nodes are too far from either endpoint (falls back to navmesh).
-		function NodeAssist.Route(fromPos, toPos)
-			local flatNodes = buildFlatGraph()
-			if #flatNodes == 0 then return nil end
-
-			-- Find nearest node to start and goal
-			local startI, startDist = nil, math.huge
-			local goalI,  goalDist  = nil, math.huge
-
-			for i, node in ipairs(flatNodes) do
-				local ds = (node.pos - fromPos).Magnitude
-				local dg = (node.pos - toPos).Magnitude
-				if ds < startDist then startDist = ds; startI = i end
-				if dg < goalDist  then goalDist  = dg; goalI  = i end
-			end
-
-			-- Both endpoints must be reasonably close to the graph
-			if startDist > NODE_SNAP_DIST or goalDist > NODE_SNAP_DIST then
-				return nil
-			end
-			if startI == goalI then return nil end
-
-			local path = astar(flatNodes, startI, goalI)
-			if not path or #path == 0 then return nil end
-			return path
-		end
-
-		-- Optional: reload nodes on-the-fly (call after adding parts at runtime)
 		function NodeAssist.Reload()
 			NodeAssist.Load()
 		end
 	end
 
-	-- Load nodes immediately at startup
 	NodeAssist.Load()
+
+	-- ─────────────────────────────────────────────────────────────────
+	-- DESTINATION NAME RESOLUTION  ← NEW BLOCK
+	-- Resolves a destName string (e.g. "MediumSafe_TS_20", or the tail
+	-- segment of an Instance:GetFullName()) to a world Vector3 by
+	-- searching workspace, skipping our own debug/marker folders so we
+	-- never accidentally match one of our own parts.
+	-- ─────────────────────────────────────────────────────────────────
+	local IGNORED_SEARCH_FOLDERS = {
+		FedNodeAssist  = true,
+		FedDest        = true,
+		FedCheckpoints = true,
+		FedPF_Debug    = true,
+		FedPF_Segment  = true,
+	}
+
+	local function simpleNameOf(name)
+		-- Accepts either a plain name ("MediumSafe_TS_20") or a dotted
+		-- Instance:GetFullName() path ("Workspace.Zone.MediumSafe_TS_20")
+		-- and returns just the final segment.
+		return name:match("[^%.]+$") or name
+	end
+
+	local function getInstancePosition(inst)
+		if inst:IsA("BasePart") then
+			return inst.Position
+		elseif inst:IsA("Attachment") then
+			return inst.WorldPosition
+		elseif inst:IsA("PVInstance") then
+			local ok, cf = pcall(function() return inst:GetPivot() end)
+			if ok then return cf.Position end
+		end
+		return nil
+	end
+
+	local function resolveDestinationPosition(name)
+		local key = simpleNameOf(name)
+		for _, top in ipairs(workspace:GetChildren()) do
+			if IGNORED_SEARCH_FOLDERS[top.Name] then continue end
+			if top.Name == key then
+				local pos = getInstancePosition(top)
+				if pos then return pos end
+			end
+			local found = top:FindFirstChild(key, true)
+			if found then
+				local pos = getInstancePosition(found)
+				if pos then return pos end
+			end
+		end
+		return nil
+	end
 
 	-- ─────────────────────────────────────────────────────────────────
 	-- DEBUG  (unchanged)
@@ -1380,15 +1305,17 @@ local Pathfinder = (function()
 
 	local function clearCheckpointMarkers() cpFolder:ClearAllChildren() end
 
-	local function drawCheckpoints(cps)
+	local function drawCheckpoints(cps, teleportFlags)
 		clearCheckpointMarkers()
 		if not DEBUG then return end
-		for _, cp in ipairs(cps) do
+		for i, cp in ipairs(cps) do
 			local p = Instance.new("Part")
 			p.Shape = Enum.PartType.Ball; p.Size = Vector3.new(1.2,1.2,1.2)
 			p.Position = cp; p.Anchored = true; p.CanCollide = false
 			p.CastShadow = false; p.Material = Enum.Material.Neon
-			p.Color = Color3.fromRGB(0,200,255); p.Transparency = 0.1
+			local isTeleport = teleportFlags and teleportFlags[i]
+			p.Color = isTeleport and Color3.fromRGB(255,0,220) or Color3.fromRGB(0,200,255)
+			p.Transparency = 0.1
 			p.Parent = cpFolder
 		end
 	end
@@ -1404,30 +1331,29 @@ local Pathfinder = (function()
 	end
 
 	-- ─────────────────────────────────────────────────────────────────
-	-- CHECKPOINT GENERATOR  ← PATCHED: NodeAssist consulted first
+	-- CHECKPOINT GENERATOR (patched to use destName)
 	-- ─────────────────────────────────────────────────────────────────
-	local function buildCheckpoints(startPos, endPos)
-
-		-- ── 1. Try NodeAssist graph ───────────────────────────────────
-		local graphRoute = NodeAssist.Route(startPos, endPos)
+	local function buildCheckpoints(startPos, endPos, destName)
+		-- 1. Try NodeAssist by name
+		local graphRoute, graphFlags = NodeAssist.Route(startPos, endPos, destName)
 		if graphRoute and #graphRoute >= 1 then
-			print(string.format("[PF] NodeAssist route: %d hops", #graphRoute))
-			local checkpoints = {}
-			for _, wp in ipairs(graphRoute) do
+			print(string.format("[PF] NodeAssist route for %s: %d hops", destName, #graphRoute))
+			local checkpoints, mustTeleportFlags = {}, {}
+			for i, wp in ipairs(graphRoute) do
 				table.insert(checkpoints, wp)
+				table.insert(mustTeleportFlags, (graphFlags and graphFlags[i]) or false)
 			end
-			-- Append true destination if the last node is far from it
 			local lastPt = checkpoints[#checkpoints]
 			if (lastPt - endPos).Magnitude > 8 then
 				table.insert(checkpoints, endPos)
+				table.insert(mustTeleportFlags, false)
 			end
-			drawCheckpoints(checkpoints)
-			return checkpoints
+			drawCheckpoints(checkpoints, mustTeleportFlags)
+			return checkpoints, mustTeleportFlags
 		end
 
-		-- ── 2. Fallback: navmesh rough-path  (original logic) ─────────
+		-- 2. Fallback: navmesh rough-path
 		local roughWps = nil
-
 		for _, radius in ipairs({AGENT_RADIUS, 1.0, 0.5}) do
 			local roughPath = PathfindingService:CreatePath({
 				AgentRadius     = radius,
@@ -1455,11 +1381,10 @@ local Pathfinder = (function()
 			local snappedEnd, snapOk = snapToGround(endPos)
 			table.insert(checkpoints, snapOk and snappedEnd or endPos)
 		end
-
-		return checkpoints
+		return checkpoints, {}
 	end
 
--- ─────────────────────────────────────────────────────────────────
+	-- ─────────────────────────────────────────────────────────────────
 	-- SEGMENT COMPUTE
 	-- ─────────────────────────────────────────────────────────────────
 	local MIN_WP_DIST = 1.8
@@ -1761,17 +1686,19 @@ local Pathfinder = (function()
 	-- NAVIGATION STATE
 	-- ─────────────────────────────────────────────────────────────────
 	local Nav = {
-		active        = false,
-		checkpoints   = {},
-		cpIndex       = 1,
-		cpRetries     = {},
-		cpFailCounts  = {},
-		finalDest     = nil,
-		pather        = nil,
-		onFinished    = nil,
-		onFailed      = nil,
-		computing     = false,
-		precomp       = {},
+		active         = false,
+		checkpoints    = {},
+		cpMustTeleport = {},
+		cpIndex        = 1,
+		cpRetries      = {},
+		cpFailCounts   = {},
+		finalDest      = nil,
+		finalDestName  = nil,
+		pather         = nil,
+		onFinished     = nil,
+		onFailed       = nil,
+		computing      = false,
+		precomp        = {},
 	}
 
 	local oscBuffer     = {}
@@ -1788,6 +1715,7 @@ local Pathfinder = (function()
 	local function precomputeNext()
 		local nextIdx = Nav.cpIndex + 1
 		if nextIdx > #Nav.checkpoints then return end
+		if Nav.cpMustTeleport[nextIdx] then return end
 		if Nav.precomp[nextIdx] ~= nil then return end
 
 		Nav.precomp[nextIdx] = "pending"
@@ -1830,9 +1758,10 @@ local Pathfinder = (function()
 		if dMid < 3 or dMid > dist * 0.9 then return false end
 
 		table.insert(Nav.checkpoints, cpIdx, mid)
+		table.insert(Nav.cpMustTeleport, cpIdx, false)
 		Nav.cpIndex = cpIdx - 1
 		Nav.cpRetries[injectKey] = depth + 1
-		drawCheckpoints(Nav.checkpoints)
+		drawCheckpoints(Nav.checkpoints, Nav.cpMustTeleport)
 
 		warn(string.format("[PF] Midpoint injected before cp%d (depth %d): (%.1f, %.1f, %.1f)",
 			cpIdx, depth + 1, mid.X, mid.Y, mid.Z))
@@ -1856,13 +1785,14 @@ local Pathfinder = (function()
 				warn(string.format("[PF] Checkpoints exhausted %.1f studs from dest — recomputing", xzDist))
 				task.spawn(function()
 					if not Nav.active then return end
-					Nav.checkpoints  = buildCheckpoints(rootPart.Position, Nav.finalDest)
+					Nav.checkpoints, Nav.cpMustTeleport =
+						buildCheckpoints(rootPart.Position, Nav.finalDest, Nav.finalDestName)
 					Nav.cpIndex      = 0
 					Nav.cpRetries    = {}
 					Nav.cpFailCounts = {}
 					Nav.precomp      = {}
 					if not Nav.active then return end
-					drawCheckpoints(Nav.checkpoints)
+					drawCheckpoints(Nav.checkpoints, Nav.cpMustTeleport)
 					advanceToNextCheckpoint()
 				end)
 			end
@@ -1871,6 +1801,15 @@ local Pathfinder = (function()
 
 		local target  = Nav.checkpoints[Nav.cpIndex]
 		local fromPos = rootPart.Position
+
+		if Nav.cpMustTeleport[Nav.cpIndex] then
+			print(string.format("[PF] cp%d/%d is teleport-only → warping to (%.1f,%.1f,%.1f)",
+				Nav.cpIndex, #Nav.checkpoints, target.X, target.Y, target.Z))
+			rootPart.AssemblyLinearVelocity = ZERO_V3
+			character:PivotTo(CFrame.new(target) * rootPart.CFrame.Rotation)
+			advanceToNextCheckpoint()
+			return
+		end
 
 		if Vector2.new(fromPos.X - target.X, fromPos.Z - target.Z).Magnitude < 3 then
 			advanceToNextCheckpoint()
@@ -1931,7 +1870,8 @@ local Pathfinder = (function()
 
 			if isPartial then
 				table.insert(Nav.checkpoints, Nav.cpIndex + 1, target)
-				drawCheckpoints(Nav.checkpoints)
+				table.insert(Nav.cpMustTeleport, Nav.cpIndex + 1, Nav.cpMustTeleport[Nav.cpIndex] or false)
+				drawCheckpoints(Nav.checkpoints, Nav.cpMustTeleport)
 				warn(string.format("[PF] Partial path injected: will resume to full target from (%.1f,%.1f,%.1f)",
 					reached.X, reached.Y, reached.Z))
 			end
@@ -1999,26 +1939,28 @@ local Pathfinder = (function()
 	-- ─────────────────────────────────────────────────────────────────
 	-- START NAVIGATION
 	-- ─────────────────────────────────────────────────────────────────
-	local function startNav(destination)
+	local function startNav(destination, destName)
 		stopNav(nil)
 
 		local startPos        = rootPart.Position
 		local snappedDest, ok = snapToGround(destination)
 		if not ok then snappedDest = destination end
 
-		Nav.active       = true
-		Nav.finalDest    = snappedDest
-		Nav.cpIndex      = 0
-		Nav.cpRetries    = {}
-		Nav.cpFailCounts = {}
-		Nav.computing    = true
+		Nav.active        = true
+		Nav.finalDest     = snappedDest
+		Nav.finalDestName = destName
+		Nav.cpIndex       = 0
+		Nav.cpRetries     = {}
+		Nav.cpFailCounts  = {}
+		Nav.computing     = true
 
 		showDest(snappedDest)
-		print(string.format("[PF] ── New navigation → (%.1f, %.1f, %.1f)",
-			snappedDest.X, snappedDest.Y, snappedDest.Z))
+		print(string.format("[PF] ── New navigation → (%.1f, %.1f, %.1f)%s",
+			snappedDest.X, snappedDest.Y, snappedDest.Z,
+			destName and (" [" .. destName .. "]") or ""))
 
 		task.spawn(function()
-			Nav.checkpoints = buildCheckpoints(startPos, snappedDest)
+			Nav.checkpoints, Nav.cpMustTeleport = buildCheckpoints(startPos, snappedDest, destName)
 			Nav.computing   = false
 			Nav.precomp     = {}
 			if not Nav.active then return end
@@ -2028,7 +1970,7 @@ local Pathfinder = (function()
 				return
 			end
 
-			drawCheckpoints(Nav.checkpoints)
+			drawCheckpoints(Nav.checkpoints, Nav.cpMustTeleport)
 			print(string.format("[PF] %d checkpoints", #Nav.checkpoints))
 			advanceToNextCheckpoint()
 		end)
@@ -2038,12 +1980,13 @@ local Pathfinder = (function()
 	-- STOP NAVIGATION
 	-- ─────────────────────────────────────────────────────────────────
 	stopNav = function(reason)
-		Nav.active       = false
-		Nav.computing    = false
-		Nav.cpRetries    = {}
-		Nav.cpFailCounts = {}
-		oscBuffer        = {}
-		Nav.precomp      = {}
+		Nav.active         = false
+		Nav.computing      = false
+		Nav.cpRetries      = {}
+		Nav.cpFailCounts   = {}
+		Nav.cpMustTeleport = {}
+		oscBuffer          = {}
+		Nav.precomp        = {}
 		cleanupPather()
 		hideDest()
 		clearDebug()
@@ -2159,12 +2102,13 @@ local Pathfinder = (function()
 						Nav.onFinished = esc.Finished.Event:Connect(function()
 							cleanupPather()
 							if not Nav.active then return end
-							Nav.checkpoints  = buildCheckpoints(rootPart.Position, Nav.finalDest)
+							Nav.checkpoints, Nav.cpMustTeleport =
+								buildCheckpoints(rootPart.Position, Nav.finalDest, Nav.finalDestName)
 							Nav.cpIndex      = 0
 							Nav.cpRetries    = {}
 							Nav.cpFailCounts = {}
 							Nav.precomp      = {}
-							drawCheckpoints(Nav.checkpoints)
+							drawCheckpoints(Nav.checkpoints, Nav.cpMustTeleport)
 							advanceToNextCheckpoint()
 						end)
 						Nav.onFailed = esc.PathFailed.Event:Connect(function()
@@ -2184,12 +2128,13 @@ local Pathfinder = (function()
 			if not escaped then
 				warn("[PF] Escape route failed — forcing checkpoint rebuild")
 				if not Nav.active then return end
-				Nav.checkpoints  = buildCheckpoints(rootPart.Position, Nav.finalDest)
+				Nav.checkpoints, Nav.cpMustTeleport =
+					buildCheckpoints(rootPart.Position, Nav.finalDest, Nav.finalDestName)
 				Nav.cpIndex      = 0
 				Nav.cpRetries    = {}
 				Nav.cpFailCounts = {}
 				Nav.precomp      = {}
-				drawCheckpoints(Nav.checkpoints)
+				drawCheckpoints(Nav.checkpoints, Nav.cpMustTeleport)
 				advanceToNextCheckpoint()
 			end
 		end)
@@ -2281,6 +2226,19 @@ local Pathfinder = (function()
 		if API.OnComputing then task.spawn(API.OnComputing, true) end
 	end
 
+	function API.SetDestinationName(name)
+		assert(type(name) == "string", "SetDestinationName: expected string")
+		local position = resolveDestinationPosition(name)
+		if not position then
+			warn(string.format("[PF] SetDestinationName: could not find '%s' in the game", name))
+			if API.OnFailed then task.spawn(API.OnFailed, "Destination not found: " .. name) end
+			return false
+		end
+		startNav(position, simpleNameOf(name))
+		if API.OnComputing then task.spawn(API.OnComputing, true) end
+		return true
+	end
+
 	function API.CancelDestination()
 		stopNav("Cancelled")
 	end
@@ -2295,6 +2253,10 @@ local Pathfinder = (function()
 
 	function API.GetDestination()
 		return Nav.finalDest
+	end
+
+	function API.GetDestinationName()
+		return Nav.finalDestName
 	end
 
 	function API.GetProgress()
