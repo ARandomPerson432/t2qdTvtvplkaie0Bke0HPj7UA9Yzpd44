@@ -4362,13 +4362,12 @@ local function AutoFarm(enable)
 							local lockpickStock = checkDealerStock("Lockpick", dealer) or 0
 							local crowbarStock  = checkDealerStock("Crowbar", dealer) or 0
 
-							-- if dealer has at least one of the missing items
-							if (not hasLockpick and lockpickStock > 0) or (not hasCrowbar and crowbarStock > 0) then
+							-- require both items to be available
+							if lockpickStock > 0 and crowbarStock > 0 then
 								foundDealer = dealer
 								break
 							end
 
-							-- mark this dealer as tried
 							tried[dealer] = true
 
 							-- find next nearest dealer not yet tried
@@ -4399,18 +4398,44 @@ local function AutoFarm(enable)
 									local t1 = tick()
 									while Pathfinder.IsNavigating() and (tick() - t1) < 60 do task.wait(0.2) end
 								end
+
+								-- attempt purchases
 								if not hasLockpick then buyItemAtDealer(foundDealer, "Lockpick", "Misc") end
 								if not hasCrowbar then buyItemAtDealer(foundDealer, "Crowbar", "Melee") end
-								tried = {}
+								task.wait(0.8)
+
+								-- confirm check: rescan inventory
+								hasLockpick, hasCrowbar = false, false
+								for _, obj in ipairs(LocalPlayer.Backpack:GetChildren()) do
+									if obj:IsA("Tool") then
+										if obj.Name == "Lockpick" then hasLockpick = true end
+										if obj.Name == "Crowbar" then hasCrowbar = true end
+									end
+								end
+								for _, obj in ipairs(char:GetChildren()) do
+									if obj:IsA("Tool") then
+										if obj.Name == "Lockpick" then hasLockpick = true end
+										if obj.Name == "Crowbar" then hasCrowbar = true end
+									end
+								end
+
+								if not (hasLockpick and hasCrowbar) then
+									Fluent:Notify({Title = "AutoFarm", Content = "Purchase failed, retrying next dealer", Duration = 4})
+									tried[foundDealer] = true
+									dealer = nil -- force loop to continue next cycle
+								else
+									tried = {} -- wipe so restock can be checked next cycle
+								end
 							end
 						else
-							Fluent:Notify({Title = "AutoFarm", Content = "No dealer with stock found", Duration = 4})
+							Fluent:Notify({Title = "AutoFarm", Content = "No dealer with both items in stock", Duration = 4})
 							task.wait(2)
 						end
 					else
 						Fluent:Notify({Title = "AutoFarm", Content = "No dealer found nearby", Duration = 4})
 						task.wait(2)
 					end
+
 				end
 
 				-- go to the nearest safe (skip blacklisted names)
