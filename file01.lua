@@ -4315,40 +4315,6 @@ local function ToggleDoorCollision(disable)
 	end
 end
 
--- Teleport helpers (max step + cooldown)
-local lastTeleportTime = 0
-local TELEPORT_MAX = 200
-local TELEPORT_COOLDOWN = 15
-local function snapToGroundPoint(pos)
-	local rayParams = RaycastParams.new()
-	rayParams.FilterType = Enum.RaycastFilterType.Exclude
-	rayParams.FilterDescendantsInstances = {LocalPlayer.Character}
-	local from = pos + Vector3.new(0,50,0)
-	local result = workspace:Raycast(from, Vector3.new(0,-200,0), rayParams)
-	if result then
-		return Vector3.new(pos.X, result.Position.Y + 2, pos.Z)
-	else
-		return pos
-	end
-end
-
-local function TeleportTowards(destPos, maxStep)
-	if tick() - lastTeleportTime < TELEPORT_COOLDOWN then return false end
-	local char = LocalPlayer.Character
-	local hrp = char and char:FindFirstChild("HumanoidRootPart")
-	if not hrp then return false end
-	local cur = hrp.Position
-	local dir = destPos - cur
-	local d = dir.Magnitude
-	if d <= 1 then return false end
-	local step = math.min(maxStep or TELEPORT_MAX, d)
-	local target = cur + dir.Unit * step
-	target = snapToGroundPoint(target)
-	pcall(function() hrp.CFrame = CFrame.new(target + Vector3.new(0,2,0)) end)
-	lastTeleportTime = tick()
-	return true
-end
-
 local autoFarmThread
 local function AutoFarm(enable)
 	if state.scriptUnloaded then return end
@@ -4388,29 +4354,61 @@ local function AutoFarm(enable)
 					local lockpickStock = checkDealerStock("Lockpick") or 0
 					local crowbarStock = checkDealerStock("Crowbar") or 0
 					local EssentialItems = math.min(lockpickStock, crowbarStock)
-					if dealer and EssentialItems > 1 then
-						local main = dealer:FindFirstChild("MainPart") or dealer.PrimaryPart or dealer:FindFirstChildWhichIsA("BasePart")
-						if main then
-							Pathfinder.SetDestination(main.Position)
-							local t0 = tick()
-							while Pathfinder.IsNavigating() and (tick() - t0) < 60 do task.wait(0.2) end
-							-- If pathfinder stopped but didn't reach destination, attempt teleport fallback (eat ban if teleport)
-							if hrp and (hrp.Position - main.Position).Magnitude > 8 then
-								--TeleportTowards(main.Position, TELEPORT_MAX)
-								task.wait(0.6)
-								-- retry navigation once after teleport
-								Pathfinder.SetDestination(main.Position)
-								local t1 = tick()
-								while Pathfinder.IsNavigating() and (tick() - t1) < 60 do task.wait(0.2) end
+					if dealer then
+						local tried = {}
+						local foundDealer
+
+						while dealer do
+							local lockpickStock = checkDealerStock("Lockpick", dealer) or 0
+							local crowbarStock  = checkDealerStock("Crowbar", dealer) or 0
+
+							-- if dealer has at least one of the missing items
+							if (not hasLockpick and lockpickStock > 0) or (not hasCrowbar and crowbarStock > 0) then
+								foundDealer = dealer
+								break
 							end
-							if not hasLockpick then buyItemAtDealer(dealer, "Lockpick", "Misc") end
-							if not hasCrowbar then buyItemAtDealer(dealer, "Crowbar", "Melee") end
-							task.wait(0.8)
+
+							-- mark this dealer as tried
+							tried[dealer] = true
+
+							-- find next nearest dealer not yet tried
+							local nextDealer, dist = nil, nil
+							for _, d in ipairs(world.Shopz:GetChildren()) do
+								if isDealer(d) and not tried[d] then
+									local main = d:FindFirstChild("MainPart") or d.PrimaryPart or d:FindFirstChildWhichIsA("BasePart")
+									if main and hrp then
+										local dd = (hrp.Position - main.Position).Magnitude
+										if not dist or dd < dist then
+											nextDealer, dist = d, dd
+										end
+									end
+								end
+							end
+							dealer = nextDealer
+						end
+
+						if foundDealer then
+							local main = foundDealer:FindFirstChild("MainPart") or foundDealer.PrimaryPart or foundDealer:FindFirstChildWhichIsA("BasePart")
+							if main then
+								Pathfinder.SetDestination(main.Position)
+								local t0 = tick()
+								while Pathfinder.IsNavigating() and (tick() - t0) < 60 do task.wait(0.2) end
+								if hrp and (hrp.Position - main.Position).Magnitude > 8 then
+									task.wait(0.6)
+									Pathfinder.SetDestination(main.Position)
+									local t1 = tick()
+									while Pathfinder.IsNavigating() and (tick() - t1) < 60 do task.wait(0.2) end
+								end
+								if not hasLockpick then buyItemAtDealer(foundDealer, "Lockpick", "Misc") end
+								if not hasCrowbar then buyItemAtDealer(foundDealer, "Crowbar", "Melee") end
+								tried = {}
+							end
+						else
+							Fluent:Notify({Title = "AutoFarm", Content = "No dealer with stock found", Duration = 4})
+							task.wait(2)
 						end
 					else
-						pcall(function()
-							Fluent:Notify({Title = "AutoFarm", Content = "No dealer found nearby", Duration = 4})
-						end)
+						Fluent:Notify({Title = "AutoFarm", Content = "No dealer found nearby", Duration = 4})
 						task.wait(2)
 					end
 				end
@@ -4425,8 +4423,6 @@ local function AutoFarm(enable)
 						while Pathfinder.IsNavigating() and (tick() - t0) < 90 do task.wait(0.2) end
 						-- teleport fallback if stuck far from safe
 						if hrp and (hrp.Position - primary.Position).Magnitude > 8 then
-							TeleportTowards(primary.Position, TELEPORT_MAX)
-							task.wait(0.6)
 							Pathfinder.SetDestination(primary.Position)
 							local t2 = tick()
 							while Pathfinder.IsNavigating() and (tick() - t2) < 90 do task.wait(0.2) end
@@ -4450,8 +4446,6 @@ local function AutoFarm(enable)
 		ToggleDoorCollision(false)
 	end
 end
-
-
 
 local function ToggleAutoFarm(boolean)
 	AutoFarm(boolean)
