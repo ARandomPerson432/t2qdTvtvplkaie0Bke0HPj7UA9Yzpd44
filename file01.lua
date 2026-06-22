@@ -2825,9 +2825,9 @@ do
 			if target and Services.UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
 				local speed, accel, fireRate = getCurrentWeaponBulletStats()
 				ShootRage(target, speed, accel)
-				task.wait(fireRate > 0 and (1 / fireRate) or 0.1)
+				task.wait()
 			else
-				task.wait(0.1)
+				task.wait()
 			end
 		end
 		silentAim_Target = nil
