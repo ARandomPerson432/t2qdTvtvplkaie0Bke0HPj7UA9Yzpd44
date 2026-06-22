@@ -1810,25 +1810,6 @@ local Pathfinder = (function()
 	local stopNav
 
 	-- ─────────────────────────────────────────────────────────────────
-	-- TELEPORT FALLBACK
-	-- ─────────────────────────────────────────────────────────────────
-	local function teleportToCheckpoint(target)
-		local dest, ok = snapToGround(target)
-		if not ok then dest = target end
-		if rootPart then
-			rootPart.CFrame = CFrame.new(dest + Vector3.new(0, 3.5, 0))
-		end
-		warn(string.format("[PF] ⚡ Teleport → (%.1f, %.1f, %.1f)", dest.X, dest.Y, dest.Z))
-		task.wait(0.15)
-	end
-
-	local function shouldTeleport(fromPos, target)
-		local yDiff    = math.abs(target.Y - fromPos.Y)
-		local failures = Nav.cpFailCounts[Nav.cpIndex] or 0
-		return yDiff >= TELEPORT_Y_THRESHOLD or failures >= TELEPORT_FAIL_THRESHOLD
-	end
-
-	-- ─────────────────────────────────────────────────────────────────
 	-- MIDPOINT INJECTION
 	-- ─────────────────────────────────────────────────────────────────
 	local function tryInjectMidpoint(cpIdx, fromPos, toPos)
@@ -1930,25 +1911,14 @@ local Pathfinder = (function()
 			if not wps then
 				Nav.cpFailCounts[Nav.cpIndex] = (Nav.cpFailCounts[Nav.cpIndex] or 0) + 1
 
-				if shouldTeleport(fromPos, target) then
-					local reason = math.abs(target.Y - fromPos.Y) >= TELEPORT_Y_THRESHOLD
-						and "floor gap" or "repeated failure"
-					warn(string.format("[PF] ⚡ Teleporting to cp%d (%s)", Nav.cpIndex, reason))
-					teleportToCheckpoint(target)
-					Nav.cpFailCounts[Nav.cpIndex] = nil
-					advanceToNextCheckpoint()
-					return
-				end
-
 				if tryInjectMidpoint(Nav.cpIndex, fromPos, target) then
 					advanceToNextCheckpoint()
 					return
 				end
 
 				if Nav.cpIndex == #Nav.checkpoints then
-					warn("[PF] Final segment unreachable — teleporting")
-					teleportToCheckpoint(target)
-					stopNav("Destination reached ✓")
+					warn("[PF] Final segment unreachable — giving up")
+					stopNav("Failed: final segment unreachable")
 				else
 					warn(string.format("[PF] cp%d unreachable — skipping", Nav.cpIndex))
 					advanceToNextCheckpoint()
@@ -2004,11 +1974,7 @@ local Pathfinder = (function()
 				end
 
 				Nav.cpRetries[Nav.cpIndex] = nil
-				if shouldTeleport(rootPart.Position, target) then
-					warn(string.format("[PF] ⚡ Pather failed cp%d — teleporting", Nav.cpIndex))
-					teleportToCheckpoint(target)
-					Nav.cpFailCounts[Nav.cpIndex] = nil
-				elseif not tryInjectMidpoint(Nav.cpIndex, rootPart.Position, target) then
+				if not tryInjectMidpoint(Nav.cpIndex, rootPart.Position, target) then
 					warn(string.format("[PF] cp%d failed — skipping", Nav.cpIndex))
 				end
 				advanceToNextCheckpoint()
@@ -2351,14 +2317,6 @@ local Pathfinder = (function()
 			if v == instance then table.remove(PathfindIgnore, i); break end
 		end
 		refreshIgnore()
-	end
-
-	function API.SetTeleportYThreshold(studs)
-		TELEPORT_Y_THRESHOLD = studs
-	end
-
-	function API.SetTeleportFailThreshold(count)
-		TELEPORT_FAIL_THRESHOLD = count
 	end
 
 	function API.SetDebug(enabled)
