@@ -3848,6 +3848,7 @@ local function highlightATM(model, baseColor)
 	end
 
 	highlight.FillColor = baseColor
+	highlight.OutlineColor = baseColor
 end
 
 -- Safes / Registers
@@ -3864,12 +3865,16 @@ local function highlightModel(model, baseColor, prefix)
 		local modelName = (model and model.Name) or "Unknown"
 		if broken and broken.Value == true then
 			highlight.FillColor = Color3.fromRGB(255,0,0)
+			highlight.OutlineColor = Color3.fromRGB(255,0,0)
 			textLabel.Text = modelName-- .. " | Broken"
 			textLabel.TextColor3 = Color3.fromRGB(255,0,0)
+			highlight.OutlineColor = Color3.fromRGB(255,0,0)
 		else
+
 			highlight.FillColor = baseColor
 			textLabel.Text = modelName-- .. " | Intact"
 			textLabel.TextColor3 = baseColor
+			highlight.OutlineColor = baseColor
 		end
 	end
 
@@ -3903,6 +3908,7 @@ local function highlightCrate(model)
 		textLabel.TextColor3 = baseColor
 	end
 	highlight.FillColor = baseColor
+	highlight.OutlineColor = baseColor
 end
 
 --// Players
