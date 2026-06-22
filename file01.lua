@@ -856,6 +856,18 @@ do -- create assist node
 	-- begin create nodes
 	CreateNode("MediumSafe_TS_20", CFrame.new(-4595.591, 3.949, -152.515), 1, true, false, false)
 	CreateNode("MediumSafe_TS_20", CFrame.new(-4613.393, 3.949, -152.515), 2, true, false, false)
+	
+	CreateNode("MediumSafe_SW_9", CFrame.new(-4609.63, 2.309, -694.567), 1, true, false, false)
+	CreateNode("MediumSafe_SW_9", CFrame.new(-4652.049, -19.309, -694.567), 2, true, false, false)
+	CreateNode("MediumSafe_SW_9", CFrame.new(-4681.143, -31.926, -694.567), 3, true, false, false)
+	CreateNode("MediumSafe_SW_9", CFrame.new(-4696.722, -31.926, -694.567), 4, true, false, false)
+	
+	CreateNode("SmallSafe_SW_26", CFrame.new(-4766.839, -31.926, -694.567), 1, true, false, false)
+	
+	CreateNode("SmallSafe_SW_11", CFrame.new(-4703.758, -31.926, -714.068), 1, true , false, false)
+	CreateNode("SmallSafe_SW_11", CFrame.new(-4703.758, -31.926, -745.646), 2, true , false, true)
+	
+	
 end
 
 --ADVANCED PATHFINDER
