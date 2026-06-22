@@ -848,7 +848,7 @@ do -- create assist node
 		node.Color = Color3.fromRGB(255, 255, 0)
 		node:SetAttribute("CanIgnore", CanIgnore)
 		node:SetAttribute("BypassCollision", BypassCollision)
-		node:SetAtrribute("MustTeleport", MustTeleport)
+		node:SetAttribute("MustTeleport", MustTeleport)
 		node.Parent = folder
 		return node
 	end
