@@ -1343,13 +1343,14 @@ local Pathfinder = (function()
 				table.insert(checkpoints, wp)
 				table.insert(mustTeleportFlags, (graphFlags and graphFlags[i]) or false)
 			end
+			local nodeChainCount = #checkpoints
 			local lastPt = checkpoints[#checkpoints]
 			if (lastPt - endPos).Magnitude > 8 then
 				table.insert(checkpoints, endPos)
 				table.insert(mustTeleportFlags, false)
 			end
 			drawCheckpoints(checkpoints, mustTeleportFlags)
-			return checkpoints, mustTeleportFlags
+			return checkpoints, mustTeleportFlags, nodeChainCount
 		end
 
 		-- 2. Fallback: navmesh rough-path
@@ -1381,7 +1382,7 @@ local Pathfinder = (function()
 			local snappedEnd, snapOk = snapToGround(endPos)
 			table.insert(checkpoints, snapOk and snappedEnd or endPos)
 		end
-		return checkpoints, {}
+		return checkpoints, {}, 0
 	end
 
 	-- ─────────────────────────────────────────────────────────────────
@@ -1689,6 +1690,7 @@ local Pathfinder = (function()
 		active         = false,
 		checkpoints    = {},
 		cpMustTeleport = {},
+		nodeChainCount = 0,
 		cpIndex        = 1,
 		cpRetries      = {},
 		cpFailCounts   = {},
@@ -1733,6 +1735,19 @@ local Pathfinder = (function()
 				print(string.format("[PF] Pre-computed segment %d ✗", nextIdx))
 			end
 		end)
+	end
+
+	-- On any recompute/rebuild mid-nav: once we've already moved past every
+	-- node-chain checkpoint, NodeAssist has nothing left to offer — querying
+	-- it again would just hand back the *entire original chain* (it ignores
+	-- current position) and walk the character back through nodes it already
+	-- passed. So once exhausted, drop destName and let buildCheckpoints fall
+	-- straight through to plain navmesh pathing toward the real destination.
+	local function destNameForRebuild()
+		if Nav.cpIndex > Nav.nodeChainCount then
+			return nil
+		end
+		return Nav.finalDestName
 	end
 
 	local stopNav
@@ -4362,6 +4377,8 @@ local function AutoFarm(enable)
 						if obj.Name == "Crowbar" then hasCrowbar = true end
 					end
 				end
+				
+				local dealer = findNearestDealer()
 
 				-- buy missing items
 				if not hasLockpick or not hasCrowbar then
