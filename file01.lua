@@ -2825,9 +2825,9 @@ do
 			if target and Services.UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
 				local speed, accel, fireRate = getCurrentWeaponBulletStats()
 				ShootRage(target, speed, accel)
-				task.wait()
+				task.wait(1 / firerate)
 			else
-				task.wait()
+				task.wait(0.1)
 			end
 		end
 		silentAim_Target = nil
@@ -4401,12 +4401,12 @@ local function AutoFarm(enable)
 						if foundDealer then
 							local main = foundDealer:FindFirstChild("MainPart") or foundDealer.PrimaryPart or foundDealer:FindFirstChildWhichIsA("BasePart")
 							if main then
-								Pathfinder.SetDestination(main.Position)
+								Pathfinder.SetDestinationName(foundDealer) -- expect a string
 								local t0 = tick()
 								while Pathfinder.IsNavigating() and (tick() - t0) < 60 do task.wait(0.2) end
 								if hrp and (hrp.Position - main.Position).Magnitude > 8 then
 									task.wait(0.6)
-									Pathfinder.SetDestination(main.Position)
+									Pathfinder.SetDestinationName(foundDealer) -- expect a string
 									local t1 = tick()
 									while Pathfinder.IsNavigating() and (tick() - t1) < 60 do task.wait(0.2) end
 								end
